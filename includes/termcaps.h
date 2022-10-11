@@ -20,7 +20,6 @@
 #define UP          0x0105
 #define DOWN        0x0106
 #define LEFT        0x0107
-// #define CTRL_LEFT   0x0107
 #define RIGHT       0x0108
 #define BACKSPACE	0x007F
 #define TAB			0x0009
