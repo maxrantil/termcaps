@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 12:24:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:11:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,12 @@ int main(void)
 			else if (c == 'b')
 				alt_move(input);
         }
-        else if (c == ENTER || c == CTRL_D)
+        else if (c == ENTER)
             break;
+		else if ( c == CTRL_D && cursor < bytes)
+		{
+			/* code here */
+		}
         else if (c == LEFT && cursor)
         {
             cursor--;
@@ -176,7 +180,7 @@ int main(void)
             bytes++;
         }
     }
-	if (c == ENTER || c == CTRL_D)
+	if (c == ENTER)
 	{
 		ft_putchar('\n');
 		ft_putstr_fd(input, STDOUT_FILENO);

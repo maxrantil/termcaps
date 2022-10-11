@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:49:38 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/11 12:18:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 13:43:39 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	alt_move(char *input)
 {
 	char		*ptr;
+	char 		*y;
 	static int	word;
 	int			x;
 	int			b;
@@ -30,10 +31,10 @@ void	alt_move(char *input)
 	while (x >= 0 && ptr[x] == ' ')
 	{
 		x--;
-		b++;
+		/* b++; */
 	}
 	word = ft_strlen(input) - x;
-	char *y = ft_itoa(b);
+	y = ft_itoa(b);
 	write(1, "\033[", 2);
 	write(1, y, ft_strlen(y));
 	write(1, "D", 1);
