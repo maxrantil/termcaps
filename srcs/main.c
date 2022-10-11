@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 21:32:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:58:30 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ static void print_trail(char *input, int cursor)
 	ft_putstr("\033[H");
 	ft_putstr("\033[u");
 }
+static void clear_trail(void)
+{
+	ft_putstr("\033[K");
+}
 
 static void delete(char *input, int *i, int *cur)
 {
@@ -117,10 +121,6 @@ static void delete(char *input, int *i, int *cur)
 	print_trail(input, *cur);
 }
 
-static void clear_trail(void)
-{
-	ft_putstr("\033[K");
-}
 
 static void backspace(char *input, int *i, int *cur)
 {
@@ -163,7 +163,7 @@ static void char_print(char *input, int *i, int *cur, int c)
 	i[0]++;
 }
 
-static void alt_mv(char *input, int *cur, int c)
+static void alt_mv(char *input, int *i, int *cur, int c)
 {
 	c = get_input();
 	if (c == '[')
@@ -175,7 +175,7 @@ static void alt_mv(char *input, int *cur, int c)
 	}
 	if (c == 'f')
 	{
-		alt_mv_right(cur, input);
+		alt_mv_right(cur, input, i);
 		return ;
 	}
 }
@@ -204,12 +204,9 @@ int main(void)
 		else if (c == ENTER)
 			break;
 		else if ( c == CTRL_D && cursor < bytes)
-		{
 			delete(input, &bytes, &cursor);
-			
-		}
 		if (c == ESCAPE)
-			alt_mv(input, &cursor, c);
+			alt_mv(input, &bytes, &cursor, c);
 		if (c == LEFT && cursor)
 			move_left(&cursor);
 		if (c == RIGHT && (cursor < bytes))

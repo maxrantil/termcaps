@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   alt_mv_right.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:49:38 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/11 16:42:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 21:59:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-void	alt_mv_right(int *cursor, char *input)
+void	alt_mv_right(int *cursor, char *input, int *i) // feed byte into this
 {
 	int	b;
-	int	len;
 
-	len = ft_strlen(input);
 	b = 0;
-	while (cursor[0] < len && ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *i && ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;
 	}
-	while (cursor[0] < len && !ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *i && !ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;

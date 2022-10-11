@@ -27,6 +27,6 @@
 static struct termios orig_termios;
 
 void	alt_mv_left(int *cursor, char *input);
-void	alt_mv_right(int *cursor, char *input);
+void	alt_mv_right(int *cursor, char *input, int *i);
 
 #endif

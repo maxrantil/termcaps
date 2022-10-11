@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alt_mv_left.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:49:38 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/11 16:45:56 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 21:56:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	alt_mv_left(int *cursor, char *input)
 	int	b;
 
 	b = 0;
-	while (cursor[0] > 0 && ft_isspace(&input[cursor[0]]))
+	while (cursor[0] > 0 && ft_isspace(&input[cursor[0] - 1]))
 	{
 		b++;
 		cursor[0]--;
 	}
-	while (cursor[0] > 0 && !ft_isspace(&input[cursor[0]]))
+	while (cursor[0] > 0 && !ft_isspace(&input[cursor[0] - 1]))
 	{
 		b++;
 		cursor[0]--;
