@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 14:11:44 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:30:18 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,22 @@ static int	init_raw(void)
 	return (1);
 }
 
+static void delete(char *input, int *i, int *cur)
+{
+    int cur_cpy;
+
+    cur_cpy = *cur;
+    input[cur_cpy] = '\0';
+    while (&input[cur_cpy] < &input[*i])
+    {
+        input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
+        input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
+        input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
+        cur_cpy++;
+    }
+    i[0]--;
+}
+
 int main(void)
 {
     int     c;
@@ -136,19 +152,24 @@ int main(void)
             break;
 		else if ( c == CTRL_D && cursor < bytes)
 		{
-			/* code here */
+			delete(input, &bytes, &cursor);
+            ft_putstr("\033[s");
+            ft_putstr("\033[K");
+            ft_putstr(&input[cursor]);
+            ft_putstr("\033[H");
+            ft_putstr("\033[u");
 		}
-        else if (c == LEFT && cursor)
+        if (c == LEFT && cursor)
         {
             cursor--;
             write(1, "\033[1D", 4);
         }
-        else if (c == RIGHT && (cursor < bytes))
+        if (c == RIGHT && (cursor < bytes))
         {
             cursor++;
             write(1, "\033[1C", 4);
         }
-        else if (c == DEL && cursor >= 0)
+        else if (c == BACKSPACE && cursor >= 0)
         {
             write(1, "\033[1D", 4);
             ft_putstr("\033[K");
