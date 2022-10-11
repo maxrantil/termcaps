@@ -6,36 +6,28 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:49:38 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/11 13:43:39 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/11 16:21:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-void	alt_move(char *input)
+void	alt_move(int *cursor, char *input)
 {
-	char		*ptr;
-	char 		*y;
-	static int	word;
-	int			x;
-	int			b;
-	
+	int	b;
+
 	b = 0;
-	ptr = input;
-	x = ft_strlen(input) - word;
-	while (x >= 0 && ptr[x] != ' ')
+	while (cursor[0] > 0 && ft_isspace(&input[cursor[0]]))
 	{
-		x--;
 		b++;
+		cursor[0]--;
 	}
-	while (x >= 0 && ptr[x] == ' ')
+	while (cursor[0] > 0 && !ft_isspace(&input[cursor[0]]))
 	{
-		x--;
-		/* b++; */
+		b++;
+		cursor[0]--;
 	}
-	word = ft_strlen(input) - x;
-	y = ft_itoa(b);
 	write(1, "\033[", 2);
-	write(1, y, ft_strlen(y));
+	write(1, ft_itoa(b), ft_intlen(b));
 	write(1, "D", 1);
 }

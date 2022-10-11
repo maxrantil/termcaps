@@ -27,6 +27,6 @@
 
 static struct termios orig_termios;
 
-void	alt_move(char *input);
+void	alt_move(int *cursor, char *input);
 
 #endif
