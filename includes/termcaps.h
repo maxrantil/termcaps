@@ -22,7 +22,7 @@
 #define LEFT        0x0107
 // #define CTRL_LEFT   0x0107
 #define RIGHT       0x0108
-#define DEL			0x007F
+#define BACKSPACE	0x007F
 #define TAB			0x0009
 
 static struct termios orig_termios;
