@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/11 11:51:08 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/11 16:39:15 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,8 +61,9 @@ H_FILES 	= 	termcaps
 TERMCAPS	=	-ltermcap
 
 
-FILES 		= 	main \
-				alt_move \
+FILES 		= 	alt_mv_left \
+				alt_mv_right \
+				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
