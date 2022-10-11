@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lain.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/10 13:23:40 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:24:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
+
+static void	disableRawMode(void)
+{
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+}
 
 static void kill_process(int sig)
 {
 	if (sig == 3)
 	{
 		write(STDOUT_FILENO, "^C", 2);
+		disableRawMode();
 		kill(getpid(), SIGINT);
 	}
-
-}
-static void	disableRawMode(void)
-{
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
 static void shift_bits(char *input, int i, int cur)
@@ -121,17 +122,19 @@ int main(void)
     while (c != -1)
     {
     	c = get_input();
-		if (c == 3)
+		if (c == KILL)
 			kill_process(c);
-        if (c == ESCAPE)
+        else if (c == ESCAPE)
         {
             c = get_input();
             if (c == '[')
                 c = esc_parse(c);
+			else if (c == 'b')
+				alt_move(input);
         }
-        if (c == ENTER || c == 4)
+        else if (c == ENTER || c == CTRL_D)
             break;
-        if (c == LEFT && cursor)
+        else if (c == LEFT && cursor)
         {
             cursor--;
             write(1, "\033[1D", 4);
@@ -173,7 +176,7 @@ int main(void)
             bytes++;
         }
     }
-	if (c == ENTER || c == 4)
+	if (c == ENTER || c == CTRL_D)
 	{
 		ft_putchar('\n');
 		ft_putstr_fd(input, STDOUT_FILENO);

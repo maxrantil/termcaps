@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+#define KILL		3
+#define CTRL_D		4
 #define ESCAPE      0x001b
 #define ENTER       0x000a
 #define UP          0x0105
@@ -24,5 +26,7 @@
 #define TAB			0x0009
 
 static struct termios orig_termios;
+
+void	alt_move(char *input);
 
 #endif
