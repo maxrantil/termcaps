@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 14:30:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:48:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,14 +140,6 @@ int main(void)
     	c = get_input();
 		if (c == KILL)
 			kill_process(c);
-        else if (c == ESCAPE)
-        {
-            c = get_input();
-            if (c == '[')
-                c = esc_parse(c);
-			else if (c == 'b')
-				alt_move(input);
-        }
         else if (c == ENTER)
             break;
 		else if ( c == CTRL_D && cursor < bytes)
@@ -159,12 +151,28 @@ int main(void)
             ft_putstr("\033[H");
             ft_putstr("\033[u");
 		}
+        if (c == ESCAPE)
+        {
+            c = get_input();
+            if (c == '[')
+                c = esc_parse(c);
+			if (c == 'b')
+			{
+				alt_mv_left(&cursor, input);
+				continue ;
+			}
+			else if (c == 'f')
+			{
+				alt_mv_right(&cursor, input);
+				continue ;
+			}
+        }
         if (c == LEFT && cursor)
         {
             cursor--;
             write(1, "\033[1D", 4);
         }
-        if (c == RIGHT && (cursor < bytes))
+        else if (c == RIGHT && (cursor < bytes))
         {
             cursor++;
             write(1, "\033[1C", 4);
