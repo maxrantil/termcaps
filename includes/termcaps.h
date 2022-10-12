@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 09:54:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:13:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,19 @@
 
 # define KILL		3
 # define CTRL_D		4
-# define ESCAPE      0x001b
-# define ENTER       0x000a
-# define UP          0x0105
-# define DOWN        0x0106
-# define LEFT        0x0107
-# define RIGHT       0x0108
+# define ESCAPE     0x001b
+# define ENTER      0x000a
+# define UP         0x0105
+# define DOWN       0x0106
+# define LEFT       0x0107
+# define RIGHT      0x0108
 # define BACKSPACE	0x007F
-# define TAB			0x0009
+# define TAB		0x0009
 
-# define DEL			0x0000
-# define BCK			0x0001
+# define DEL		0x0000
+# define BCK		0x0001
+
+# define BUFFSIZE   4096
 
 static struct termios	g_orig_termios;
 
@@ -46,6 +48,8 @@ void	cursor_left(int *cursor);
 void	cursor_right(int *cursor);
 void	alt_mv_left(int *cursor, char *input);
 void	alt_mv_right(int *cursor, char *input, int *i);
+void    cursor_beginning(int *cur);
+void    cursor_end(int *cur, int *i);
 
 /*				 Utils				*/
 int		get_input(void);
@@ -57,9 +61,10 @@ void	insertion_shift(char *input, int *i, int cur);
 void	deletion_shift(char *input, int *i, int *cur, int mode);
 
 /*		   Input Functions			*/
-void	cursor_mv(char *input, int *i, int *cur, int c);
+void	cursor_mv(int *i, int *cur, int c);
 void	char_print(char *input, int *i, int *cur, int c);
 void	backspace(char *input, int *i, int *cur);
 void	delete(char *input, int *i, int *cur);
+void	esc_parse(char *input, int *i, int *cur, int *c);
 
 #endif
