@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 09:53:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:42:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,16 @@ static int	init_raw(void)
 	return (1);
 }
 
-int	main(void)
+int	ft_termcaps(char *input)
 {
 	int		c;
 	int		bytes;
 	int		cursor;
-	char	input[1096];
 
 	c = 0;
 	bytes = 0;
 	cursor = 0;
-	memset(input, '\0', 1096);
+	ft_memset(input, '\0', BUFFSIZE);
 	if (init_raw() < 0)
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
@@ -68,20 +67,28 @@ int	main(void)
 			break ;
 		else if (c == CTRL_D && cursor < bytes)
 			delete(input, &bytes, &cursor);
-		if (c == ESCAPE)
-			cursor_mv(input, &bytes, &cursor, c);
-		if (c == BACKSPACE && cursor > 0)
+		else if (c == BACKSPACE && cursor > 0)
 			backspace(input, &bytes, &cursor);
+		if (c == ESCAPE)
+			esc_parse(input, &bytes, &cursor, &c);
 		if (isprint(c))
 			char_print(input, &bytes, &cursor, c);
 	}
+	if (c == -1)
+		ft_putstr_fd("error, read\n", STDERR_FILENO);
+	disable_raw_mode();
+	return (0);
+}
+
+int main(void)
+{
+	char input[BUFFSIZE];
+
+	ft_termcaps(input);
 	/*			Displaying Output					*/
 	ft_putchar('\n');
 	ft_putstr_fd(input, STDOUT_FILENO);
 	ft_putchar('\n');
 	/*			Displaying Output					*/
-	if (c == -1)
-		ft_putstr_fd("error, read\n", STDERR_FILENO);
-	disable_raw_mode();
 	return (0);
 }

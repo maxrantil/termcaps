@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 09:44:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:14:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,30 @@ void	alt_mv_right(int *cursor, char *input, int *i)
 		ft_strdel(&tofree);
 		write(1, "C", 1);
 	}
+}
+
+void cursor_beginning(int *cur)
+{
+	char *tofree;
+
+	tofree = NULL;
+	write(1, "\033[", 2);
+	tofree = ft_itoa(*cur);
+	write(1, tofree, ft_intlen(*cur));
+	ft_strdel(&tofree);
+	write(1, "D", 1);
+	cur[0] = 0;
+}
+
+void cursor_end(int *cur, int *i)
+{
+	char *tofree;
+
+	tofree = NULL;
+	write(1, "\033[", 2);
+	tofree = ft_itoa(*i - *cur);
+	write(1, tofree, ft_intlen(*i - *cur));
+	ft_strdel(&tofree);
+	write(1, "C", 1);
+	cur[0] = *i;
 }
