@@ -6,67 +6,34 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/11 21:58:30 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/12 09:53:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-static void	disableRawMode(void)
+static void	disable_raw_mode(void)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
 }
 
-static void kill_process(int sig)
+static void	kill_process(int sig)
 {
 	if (sig == 3)
 	{
 		write(STDOUT_FILENO, "^C", 2);
-		disableRawMode();
+		disable_raw_mode();
 		kill(getpid(), SIGINT);
 	}
 }
 
-static void shift_bits(char *input, int i, int cur)
-{
-	while (&input[i] >= &input[cur])
-	{
-		input[i] = input[i] ^ input[i + 1];
-		input[i + 1] = input[i] ^ input[i + 1];
-		input[i] = input[i] ^ input[i + 1];
-		i--;
-	}
-}
-
-static int get_input(void)
-{
-	int c;
-
-	c = 0;
-	read(STDIN_FILENO, &c, 1);
-	return (c);
-}
-
-static int esc_parse(int c)
-{
-	if (c == '[')
-	{
-		c = get_input();
-		if (c == 'D')
-			c = LEFT;
-		if (c == 'C')
-			c = RIGHT;
-	}
-	return (c);
-}
-
 static int	init_raw(void)
 {
-	struct termios raw;
-	
-	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
+	struct termios	raw;
+
+	if (tcgetattr(STDIN_FILENO, &g_orig_termios) == -1)
 		return (0);
-	raw = orig_termios;
+	raw = g_orig_termios;
 	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
 	raw.c_iflag &= ~(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
@@ -76,116 +43,12 @@ static int	init_raw(void)
 	return (1);
 }
 
-
-static void move_right(int *cursor)
+int	main(void)
 {
-	if (cursor)
-		cursor[0]++;
-	write(1, "\033[1C", 4);
-}
-
-static void move_left(int *cursor)
-{
-	if (cursor)
-		cursor[0]--;
-	write(1, "\033[1D", 4);
-}
-
-static void print_trail(char *input, int cursor)
-{
-	ft_putstr("\033[s");
-	ft_putstr(&input[cursor]);
-	ft_putstr("\033[H");
-	ft_putstr("\033[u");
-}
-static void clear_trail(void)
-{
-	ft_putstr("\033[K");
-}
-
-static void delete(char *input, int *i, int *cur)
-{
-	int cur_cpy;
-
-	cur_cpy = *cur;
-	input[cur_cpy] = '\0';
-	while (&input[cur_cpy] < &input[*i])
-	{
-		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
-		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
-		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
-		cur_cpy++;
-	}
-	i[0]--;
-	clear_trail();
-	print_trail(input, *cur);
-}
-
-
-static void backspace(char *input, int *i, int *cur)
-{
-	int cur_cpy;
-	
-	move_left(NULL);
-	clear_trail();
-	if (*cur == *i)
-	{
-		i[0]--;
-		cur[0]--;
-		input[*cur] = '\0';
-	}
-	else
-	{
-		cur[0]--;
-		cur_cpy = *cur;
-		input[cur_cpy] = '\0';
-		while (&input[cur_cpy] < &input[*i])
-		{
-			input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
-			input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
-			input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
-			cur_cpy++;
-		}
-		i[0]--;
-	}
-	if (input[*cur])
-		print_trail(input, *cur);
-}
-
-static void char_print(char *input, int *i, int *cur, int c)
-{
-	write(1, &c, 1);
-	if (input[*cur])
-		shift_bits(input, *i, *cur);
-	input[cur[0]++] = c;
-	if (input[*cur])
-		print_trail(input, *cur);
-	i[0]++;
-}
-
-static void alt_mv(char *input, int *i, int *cur, int c)
-{
-	c = get_input();
-	if (c == '[')
-		c = esc_parse(c);
-	if (c == 'b')
-	{
-		alt_mv_left(cur, input);
-		return ;
-	}
-	if (c == 'f')
-	{
-		alt_mv_right(cur, input, i);
-		return ;
-	}
-}
-
-int main(void)
-{
-	int     c;
-	int     bytes;
-	int     cursor;
-	char    input[1096];
+	int		c;
+	int		bytes;
+	int		cursor;
+	char	input[1096];
 
 	c = 0;
 	bytes = 0;
@@ -202,15 +65,11 @@ int main(void)
 		if (c == KILL)
 			kill_process(c);
 		else if (c == ENTER)
-			break;
-		else if ( c == CTRL_D && cursor < bytes)
+			break ;
+		else if (c == CTRL_D && cursor < bytes)
 			delete(input, &bytes, &cursor);
 		if (c == ESCAPE)
-			alt_mv(input, &bytes, &cursor, c);
-		if (c == LEFT && cursor)
-			move_left(&cursor);
-		if (c == RIGHT && (cursor < bytes))
-			move_right(&cursor);
+			cursor_mv(input, &bytes, &cursor, c);
 		if (c == BACKSPACE && cursor > 0)
 			backspace(input, &bytes, &cursor);
 		if (isprint(c))
@@ -223,6 +82,6 @@ int main(void)
 	/*			Displaying Output					*/
 	if (c == -1)
 		ft_putstr_fd("error, read\n", STDERR_FILENO);
-	disableRawMode();
-	return 0;
+	disable_raw_mode();
+	return (0);
 }

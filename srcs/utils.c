@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   alt_mv_left.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/11 11:49:38 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/11 21:56:25 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/10/12 09:45:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-void	alt_mv_left(int *cursor, char *input)
+int	get_input(void)
 {
-	int	b;
+	int	c;
 
-	b = 0;
-	while (cursor[0] > 0 && ft_isspace(&input[cursor[0] - 1]))
-	{
-		b++;
-		cursor[0]--;
-	}
-	while (cursor[0] > 0 && !ft_isspace(&input[cursor[0] - 1]))
-	{
-		b++;
-		cursor[0]--;
-	}
-	if (b)
-	{
-		write(1, "\033[", 2);
-		write(1, ft_itoa(b), ft_intlen(b));
-		write(1, "D", 1);
-	}
+	c = 0;
+	read(STDIN_FILENO, &c, 1);
+	return (c);
+}
+
+void	print_trail(char *input, int cursor)
+{
+	ft_putstr("\033[s");
+	ft_putstr(&input[cursor]);
+	ft_putstr("\033[H");
+	ft_putstr("\033[u");
+}
+
+void	clear_trail(void)
+{
+	ft_putstr("\033[K");
 }

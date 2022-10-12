@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/11 16:39:15 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/12 09:27:59 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,9 +61,11 @@ H_FILES 	= 	termcaps
 TERMCAPS	=	-ltermcap
 
 
-FILES 		= 	alt_mv_left \
-				alt_mv_right \
-				main \
+FILES 		= 	main \
+				utils \
+				shifting_bits \
+				cursor_movement \
+				input_functions \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
