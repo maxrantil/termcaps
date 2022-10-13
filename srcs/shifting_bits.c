@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   shifting_bits.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 09:45:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:51:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-void	insertion_shift(char *input, int *i, int cur)
+void	insertion_shift(char *input, int *bytes, int cur)
 {
-	int	i_cpy;
+	int	bytes_cpy;
 
-	i_cpy = *i;
-	while (&input[i_cpy] >= &input[cur])
+	bytes_cpy = *bytes;
+	while (&input[bytes_cpy] >= &input[cur])
 	{
-		input[i_cpy] = input[i_cpy] ^ input[i_cpy + 1];
-		input[i_cpy + 1] = input[i_cpy] ^ input[i_cpy + 1];
-		input[i_cpy] = input[i_cpy] ^ input[i_cpy + 1];
-		i_cpy--;
+		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
+		input[bytes_cpy + 1] = input[bytes_cpy] ^ input[bytes_cpy + 1];
+		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
+		bytes_cpy--;
 	}
 }
 
-void	deletion_shift(char *input, int *i, int *cur, int mode)
+void	deletion_shift(char *input, int *bytes, int *cur, int mode)
 {
 	int	cur_cpy;
 
@@ -37,12 +37,12 @@ void	deletion_shift(char *input, int *i, int *cur, int mode)
 		*cur = cur_cpy;
 	}
 	input[cur_cpy] = '\0';
-	while (&input[cur_cpy] < &input[*i])
+	while (&input[cur_cpy] < &input[*bytes])
 	{
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		cur_cpy++;
 	}
-	i[0]--;
+	bytes[0]--;
 }

@@ -3,58 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   input_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:23:01 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 13:17:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:51:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "termcaps.h"
 
-void	delete(char *input, int *i, int *cur)
+void	delete(char *input, int *bytes, int *cur)
 {
-	deletion_shift(input, i, cur, DEL);
+	deletion_shift(input, bytes, cur, DEL);
 	clear_trail();
 	print_trail(input, *cur);
 }
 
-void	backspace(char *input, int *i, int *cur)
+void	backspace(char *input, int *bytes, int *cur)
 {
 	cursor_left(NULL);
 	clear_trail();
-	if (*cur == *i)
+	if (*cur == *bytes)
 	{
-		i[0]--;
+		bytes[0]--;
 		cur[0]--;
 		input[*cur] = '\0';
 	}
 	else
-		deletion_shift(input, i, cur, BCK);
+		deletion_shift(input, bytes, cur, BCK);
 	if (input[*cur])
 		print_trail(input, *cur);
 }
 
-void	cursor_mv(int *i, int *cur, int c)
+void	cursor_mv(int *bytes, int *cur, int c)
 {
 	if (c == LEFT && *cur)
 		cursor_left(cur);
-	if (c == RIGHT && (*cur < *i))
+	if (c == RIGHT && (*cur < *bytes))
 		cursor_right(cur);
 }
 
-void	char_print(char *input, int *i, int *cur, int c)
+void	char_print(char *input, int *bytes, int *cur, int c)
 {
 	write(1, &c, 1);
 	if (input[*cur])
-		insertion_shift(input, i, *cur);
+		insertion_shift(input, bytes, *cur);
 	input[cur[0]++] = c;
 	if (input[*cur])
 		print_trail(input, *cur);
-	i[0]++;
+	bytes[0]++;
 }
 
-void	esc_parse(char *input, int *i, int *cur, int *c)
+void	esc_parse(char *input, int *bytes, int *cur, int *c)
 {
 	c[0] = get_input();
 	if (*c == '[')
@@ -66,8 +66,8 @@ void	esc_parse(char *input, int *i, int *cur, int *c)
 			*c = RIGHT;
 		if (*c == 'H' && *cur)
 			cursor_beginning(cur);
-		if (*c == 'F' && *cur < *i)
-			cursor_end(cur, i);
+		if (*c == 'F' && *cur < *bytes)
+			cursor_end(cur, bytes);
 		if (*c == '1') // when shift is pressed
 		{
 			c[0] = get_input();
@@ -75,14 +75,14 @@ void	esc_parse(char *input, int *i, int *cur, int *c)
 			c[0] = get_input();
 			if (*c == 'D' && *cur)
 				cursor_beginning(cur);
-			if (*c == 'C' && *cur < *i)
-				cursor_end(cur, i);
+			if (*c == 'C' && *cur < *bytes)
+				cursor_end(cur, bytes);
 		}
-		cursor_mv(i, cur, *c);
+		cursor_mv(bytes, cur, *c);
 	}
 	if (*c == 'b')
 		alt_mv_left(cur, input);
 	if (*c == 'f')
-		alt_mv_right(cur, input, i);
+		alt_mv_right(cur, input, bytes);
 	c[0] = 0;
 }

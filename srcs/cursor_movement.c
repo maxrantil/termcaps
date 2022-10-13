@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 13:14:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:52:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ void	alt_mv_left(int *cursor, char *input)
 	}
 }
 
-void	alt_mv_right(int *cursor, char *input, int *i)
+void	alt_mv_right(int *cursor, char *input, int *bytes)
 {
 	int		b;
 	char	*tofree;
 
 	b = 0;
 	tofree = NULL;
-	while (cursor[0] < *i && ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *bytes && ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;
 	}
-	while (cursor[0] < *i && !ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *bytes && !ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;
@@ -93,15 +93,15 @@ void cursor_beginning(int *cur)
 	cur[0] = 0;
 }
 
-void cursor_end(int *cur, int *i)
+void cursor_end(int *cur, int *bytes)
 {
 	char *tofree;
 
 	tofree = NULL;
 	write(1, "\033[", 2);
-	tofree = ft_itoa(*i - *cur);
-	write(1, tofree, ft_intlen(*i - *cur));
+	tofree = ft_itoa(*bytes - *cur);
+	write(1, tofree, ft_intlen(*bytes - *cur));
 	ft_strdel(&tofree);
 	write(1, "C", 1);
-	cur[0] = *i;
+	cur[0] = *bytes;
 }

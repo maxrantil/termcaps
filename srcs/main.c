@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 12:42:10 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:31:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ static void	kill_process(int sig)
 {
 	if (sig == 3)
 	{
-		write(STDOUT_FILENO, "^C", 2);
 		disable_raw_mode();
-		kill(getpid(), SIGINT);
+		kill(getpid(), SIGINT); //should not kill just give prompt again
 	}
 }
 
@@ -53,7 +52,7 @@ int	ft_termcaps(char *input)
 	bytes = 0;
 	cursor = 0;
 	ft_memset(input, '\0', BUFFSIZE);
-	if (init_raw() < 0)
+	if (!init_raw())
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
 		exit(1);
