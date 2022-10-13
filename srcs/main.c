@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 14:31:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:13:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ int	ft_termcaps(char *input)
 	int		c;
 	int		bytes;
 	int		cursor;
+	int		quote;
 
 	c = 0;
 	bytes = 0;
 	cursor = 0;
+	quote = 0;
 	ft_memset(input, '\0', BUFFSIZE);
 	if (!init_raw())
 	{
@@ -60,10 +62,22 @@ int	ft_termcaps(char *input)
 	while (c != -1)
 	{
 		c = get_input();
+		if (c == D_QUOTE || c == S_QUOTE)
+		{
+			if (!quote)
+				quote = c;
+			else
+				quote = 0;
+		}
 		if (c == KILL)
 			kill_process(c);
 		else if (c == ENTER)
-			break ;
+		{
+			if (!quote)
+				break ;
+			else
+				char_print(input, &bytes, &cursor, c); //can we get here cleaner? isprint stops it..
+		}
 		else if (c == CTRL_D && cursor < bytes)
 			delete(input, &bytes, &cursor);
 		else if (c == BACKSPACE && cursor > 0)

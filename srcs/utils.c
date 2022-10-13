@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/12 09:45:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:12:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	get_input(void)
 
 	c = 0;
 	read(STDIN_FILENO, &c, 1);
+	// printf("c[%d] ", c);
 	return (c);
 }
 
