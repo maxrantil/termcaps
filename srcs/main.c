@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 15:13:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:20:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_termcaps(char *input)
 		{
 			if (!quote)
 				quote = c;
-			else
+			else if (quote == c)
 				quote = 0;
 		}
 		if (c == KILL)
