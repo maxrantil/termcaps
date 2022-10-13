@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 14:53:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:05:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # define KILL		3
 # define CTRL_D		4
+# define D_QUOTE	34
+# define S_QUOTE	39
 # define ESCAPE     0x001b
 # define ENTER      0x000a
 # define UP         0x0105
