@@ -42,7 +42,7 @@ static int	init_raw(void)
 	return (1);
 }
 
-static void	input_cycle(char *input, int *bytes, int *cur, int *ch)
+static void	input_cycle(char *input, int *bytes, int *cur, int *ch, int *row)
 {
 	int		quote;
 
@@ -61,7 +61,7 @@ static void	input_cycle(char *input, int *bytes, int *cur, int *ch)
 		else if (*ch == BACKSPACE && *cur > 0)
 			backspace(input, bytes, cur);
 		if (*ch == ESCAPE)
-			esc_parse(input, bytes, cur, ch);
+			esc_parse(input, bytes, cur, ch, row);
 		if (isprint(*ch) || (*ch == ENTER && quote))
 		{
 			char_print(input, bytes, cur, *ch);
@@ -76,17 +76,19 @@ int	ft_termcaps(char *input)
 	int		ch;
 	int		bytes;
 	int		cursor;
+	int		row;
 
 	ch = 0;
 	bytes = 0;
 	cursor = 0;
+	row = 0;
 	ft_memset(input, '\0', BUFFSIZE);
 	if (!init_raw())
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
 		exit(1);
 	}
-	input_cycle(input, &bytes, &cursor, &ch);
+	input_cycle(input, &bytes, &cursor, &ch, &row);
 	if (ch == -1)
 		ft_putstr_fd("error, read\n", STDERR_FILENO);
 	disable_raw_mode();

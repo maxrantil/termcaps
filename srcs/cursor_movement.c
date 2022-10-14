@@ -26,6 +26,20 @@ void	cursor_left(int *cursor)
 	write(1, "\033[1D", 4);
 }
 
+void	cursor_up(int *row)
+{
+	if (row)
+		row[0]--;
+	write(1, "\033[1A", 4);
+}
+
+void	cursor_down(int *row)
+{
+	if (row)
+		row[0]++;
+	write(1, "\033[1B", 4);
+}
+
 void	alt_mv_left(int *cursor, char *input)
 {
 	int		b;

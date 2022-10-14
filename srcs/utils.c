@@ -18,6 +18,7 @@ int	get_input(void)
 
 	c = 0;
 	read(STDIN_FILENO, &c, 1);
+	// printf("c[%d]\n", c);		//save this for testing
 	return (c);
 }
 

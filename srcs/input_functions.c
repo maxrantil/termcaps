@@ -35,12 +35,16 @@ void	backspace(char *input, int *bytes, int *cur)
 		print_trail(input, *cur);
 }
 
-void	cursor_mv(int *bytes, int *cur, int c)
+void	cursor_mv(int *bytes, int *cur, int c, int *row)
 {
 	if (c == LEFT && *cur)
 		cursor_left(cur);
 	if (c == RIGHT && (*cur < *bytes))
 		cursor_right(cur);
+	if (c == DOWN)// && *cur)
+		cursor_down(row);
+	if (c == UP && *row) //&& *cur)
+		cursor_up(row);
 }
 
 void	char_print(char *input, int *bytes, int *cur, int c)

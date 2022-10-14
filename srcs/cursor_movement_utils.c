@@ -49,7 +49,7 @@ static void	shift(int *bytes, int *cur, int *c)
 		cursor_end(cur, bytes);
 }
 
-void	esc_parse(char *input, int *bytes, int *cur, int *c)
+void	esc_parse(char *input, int *bytes, int *cur, int *c, int *row)
 {
 	c[0] = get_input();
 	if (*c == '[')
@@ -59,13 +59,24 @@ void	esc_parse(char *input, int *bytes, int *cur, int *c)
 			*c = LEFT;
 		if (*c == 'C')
 			*c = RIGHT;
+		if (*c == 'A')
+		{
+			*c = UP;
+			if (*row)
+				*row--;
+		}
+		if (*c == 'B')
+		{
+			*c = DOWN;
+			*row++;		//have a check for terminal border here?
+		}
 		if (*c == 'H' && *cur)
 			cursor_beginning(cur);
 		if (*c == 'F' && *cur < *bytes)
 			cursor_end(cur, bytes);
 		if (*c == '1')
 			shift(bytes, cur, c);
-		cursor_mv(bytes, cur, *c);
+		cursor_mv(bytes, cur, *c, row);
 	}
 	if (*c == 'b')
 		alt_mv_left(cur, input);

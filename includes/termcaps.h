@@ -31,8 +31,8 @@
 # define S_QUOTE	39
 # define ESCAPE     0x001b
 # define ENTER      0x000a
-# define UP         0x0105
-# define DOWN       0x0106
+# define DOWN		0x0105
+# define UP			0x0106
 # define LEFT       0x0107
 # define RIGHT      0x0108
 # define BACKSPACE	0x007F
@@ -48,6 +48,8 @@ static struct termios	g_orig_termios;
 /*		    Cursor Movement			*/
 void	cursor_left(int *cursor);
 void	cursor_right(int *cursor);
+void	cursor_up(int *row);
+void	cursor_down(int *row);
 void	alt_mv_left(int *cursor, char *input);
 void	alt_mv_right(int *cursor, char *input, int *bytes);
 void	cursor_beginning(int *cur);
@@ -63,11 +65,11 @@ void	insertion_shift(char *input, int *bytes, int cur);
 void	deletion_shift(char *input, int *bytes, int *cur, int mode);
 
 /*		   Input Functions			*/
-void	cursor_mv(int *bytes, int *cur, int c);
+void	cursor_mv(int *bytes, int *cur, int c, int *row);
 void	char_print(char *input, int *bytes, int *cur, int c);
 void	backspace(char *input, int *bytes, int *cur);
 void	delete(char *input, int *bytes, int *cur);
-void	esc_parse(char *input, int *bytes, int *cur, int *c);
+void	esc_parse(char *input, int *bytes, int *cur, int *c, int *row);
 void	quote_count(int *quote, int *c);
 void	init_var(int *c, int *bytes, int *cur, int *quote);
 
