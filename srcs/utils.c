@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:36:53 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/14 08:48:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,4 @@ void	quote_count(int *quote, int *c)
 		*quote = *c;
 	else if (*quote == *c)
 		*quote = 0;
-}
-
-void	init_var(int *c, int *bytes, int *cur, int *quote)
-{
-	*c = 0;
-	*cur = 0;
-	*bytes = 0;
-	*quote = 0;
 }

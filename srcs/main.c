@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:36:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/14 08:53:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,39 +42,52 @@ static int	init_raw(void)
 	return (1);
 }
 
-int	ft_termcaps(char *input)
+static void	input_cycle(char *input, int *bytes, int *cur, int *ch)
 {
-	int		c;
-	int		bytes;
-	int		cursor;
 	int		quote;
 
+	quote = 0;
+	while (*ch != -1)
+	{
+		*ch = get_input();
+		if (*ch == D_QUOTE || *ch == S_QUOTE)
+			quote_count(&quote, ch);
+		if (*ch == KILL)
+			kill_process(*ch);
+		else if (*ch == ENTER && !quote)
+			return ;
+		else if (*ch == CTRL_D && *cur < *bytes)
+			delete(input, bytes, cur);
+		else if (*ch == BACKSPACE && *cur > 0)
+			backspace(input, bytes, cur);
+		if (*ch == ESCAPE)
+			esc_parse(input, bytes, cur, ch);
+		if (isprint(*ch) || (*ch == ENTER && quote))
+		{
+			char_print(input, bytes, cur, *ch);
+			if (*ch == ENTER && quote)
+				write(1, "> ", 2);
+		}
+	}
+}
+
+int	ft_termcaps(char *input)
+{
+	int		ch;
+	int		bytes;
+	int		cursor;
+
+	ch = 0;
+	bytes = 0;
+	cursor = 0;
 	ft_memset(input, '\0', BUFFSIZE);
-	init_var(&c, &bytes, &cursor, &quote);
 	if (!init_raw())
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
 		exit(1);
 	}
-	while (c != -1)
-	{
-		c = get_input();
-		if (c == D_QUOTE || c == S_QUOTE)
-			quote_count(&quote, &c);
-		if (c == KILL)
-			kill_process(c);
-		else if (c == ENTER && !quote)
-			break ;
-		else if (c == CTRL_D && cursor < bytes)
-			delete(input, &bytes, &cursor);
-		else if (c == BACKSPACE && cursor > 0)
-			backspace(input, &bytes, &cursor);
-		if (c == ESCAPE)
-			esc_parse(input, &bytes, &cursor, &c);
-		if (isprint(c) || (c == ENTER && quote))
-			char_print(input, &bytes, &cursor, c);
-	}
-	if (c == -1)
+	input_cycle(input, &bytes, &cursor, &ch);
+	if (ch == -1)
 		ft_putstr_fd("error, read\n", STDERR_FILENO);
 	disable_raw_mode();
 	return (0);
