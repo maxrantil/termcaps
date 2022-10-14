@@ -12,12 +12,12 @@
 
 #include "termcaps.h"
 
-void	insertion_shift(char *input, int *bytes, int cur)
+void	insertion_shift(char *input, t_termcap *cap)
 {
 	int	bytes_cpy;
 
-	bytes_cpy = *bytes;
-	while (&input[bytes_cpy] >= &input[cur])
+	bytes_cpy = cap->bytes;
+	while (&input[bytes_cpy] >= &input[cap->cursor])
 	{
 		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
 		input[bytes_cpy + 1] = input[bytes_cpy] ^ input[bytes_cpy + 1];
@@ -26,23 +26,23 @@ void	insertion_shift(char *input, int *bytes, int cur)
 	}
 }
 
-void	deletion_shift(char *input, int *bytes, int *cur, int mode)
+void	deletion_shift(char *input, t_termcap *cap, int mode)
 {
 	int	cur_cpy;
 
-	cur_cpy = *cur;
+	cur_cpy = cap->cursor;
 	if (mode == BCK)
 	{
 		cur_cpy--;
-		*cur = cur_cpy;
+		cap->cursor = cur_cpy;
 	}
 	input[cur_cpy] = '\0';
-	while (&input[cur_cpy] < &input[*bytes])
+	while (&input[cur_cpy] < &input[cap->bytes])
 	{
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		cur_cpy++;
 	}
-	bytes[0]--;
+	cap->bytes--;
 }

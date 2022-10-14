@@ -43,13 +43,27 @@
 
 # define BUFFSIZE   4096
 
+typedef struct s_termcap
+{
+	int		ch;
+	int		bytes;
+	int		cursor;
+	int		row;
+	int		cur_row;
+}			t_termcap;
+
 static struct termios	g_orig_termios;
 
+/* init */
+int		init_raw(void);
+void	disable_raw_mode(void);
+void	kill_process(int sig);
+
 /*		    Cursor Movement			*/
-void	cursor_left(int *cursor);
-void	cursor_right(int *cursor);
-void	cursor_up(int *row);
-void	cursor_down(int *row);
+void	cursor_left(t_termcap *cap);
+void	cursor_right(t_termcap *cap);
+void	cursor_up(t_termcap *cap);
+void	cursor_down(t_termcap *cap);
 void	alt_mv_left(int *cursor, char *input);
 void	alt_mv_right(int *cursor, char *input, int *bytes);
 void	cursor_beginning(int *cur);
@@ -57,20 +71,19 @@ void	cursor_end(int *cur, int *bytes);
 
 /*				 Utils				*/
 int		get_input(void);
-void	print_trail(char *input, int cursor);
+void	print_trail(char *input, t_termcap *cap);
 void	clear_trail(void);
 
 /*		      BITS Shifting			*/
-void	insertion_shift(char *input, int *bytes, int cur);
-void	deletion_shift(char *input, int *bytes, int *cur, int mode);
+void	insertion_shift(char *input, t_termcap *cap);
+void	deletion_shift(char *input, t_termcap *cap, int mode);
 
 /*		   Input Functions			*/
-void	cursor_mv(int *bytes, int *cur, int c, int *row);
-void	char_print(char *input, int *bytes, int *cur, int c);
-void	backspace(char *input, int *bytes, int *cur);
-void	delete(char *input, int *bytes, int *cur);
-void	esc_parse(char *input, int *bytes, int *cur, int *c, int *row);
-void	quote_count(int *quote, int *c);
+void	cursor_mv(t_termcap *cap);
+void	backspace(char *input, t_termcap *cap);
+void	delete(char *input, t_termcap *cap);
+void	esc_parse(char *input, t_termcap *cap);
 void	init_var(int *c, int *bytes, int *cur, int *quote);
+void	char_print(char *input, t_termcap *cap);
 
 #endif

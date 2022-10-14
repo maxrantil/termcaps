@@ -61,12 +61,13 @@ H_FILES 	= 	termcaps
 TERMCAPS	=	-ltermcap
 
 
-FILES 		= 	main \
-				utils \
-				shifting_bits \
+FILES 		= 	cursor_movement_utils \
 				cursor_movement \
+				init \
+				utils \
 				input_functions \
-				cursor_movement_utils \
+				main \
+				shifting_bits \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

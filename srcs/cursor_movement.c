@@ -12,31 +12,30 @@
 
 #include "termcaps.h"
 
-void	cursor_right(int *cursor)
+void	cursor_right(t_termcap *cap)
 {
-	if (cursor)
-		cursor[0]++;
+	if (cap->cursor)
+		cap->cursor++;
 	write(1, "\033[1C", 4);
 }
 
-void	cursor_left(int *cursor)
+void	cursor_left(t_termcap *cap)
 {
-	if (cursor)
-		cursor[0]--;
+	if (cap->cursor)
+		cap->cursor--;
 	write(1, "\033[1D", 4);
 }
 
-void	cursor_up(int *row)
+void	cursor_up(t_termcap *cap)
 {
-	if (row)
-		row[0]--;
+	if (cap->cur_row)
+		cap->cur_row--;
 	write(1, "\033[1A", 4);
 }
 
-void	cursor_down(int *row)
+void	cursor_down(t_termcap *cap)
 {
-	if (row)
-		row[0]++;
+	cap->cur_row++;
 	write(1, "\033[1B", 4);
 }
 

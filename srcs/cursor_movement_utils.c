@@ -38,7 +38,7 @@ void	cursor_end(int *cur, int *bytes)
 	cur[0] = *bytes;
 }
 
-static void	shift(int *bytes, int *cur, int *c)
+static void	shift_arrow(int *bytes, int *cur, int *c)
 {
 	c[0] = get_input();
 	c[0] = get_input();
@@ -49,38 +49,31 @@ static void	shift(int *bytes, int *cur, int *c)
 		cursor_end(cur, bytes);
 }
 
-void	esc_parse(char *input, int *bytes, int *cur, int *c, int *row)
+void	esc_parse(char *input, t_termcap *cap)
 {
-	c[0] = get_input();
-	if (*c == '[')
+	cap->ch = get_input();
+	if (cap->ch == '[')
 	{
-		c[0] = get_input();
-		if (*c == 'D')
-			*c = LEFT;
-		if (*c == 'C')
-			*c = RIGHT;
-		if (*c == 'A')
-		{
-			*c = UP;
-			if (*row)
-				*row--;
-		}
-		if (*c == 'B')
-		{
-			*c = DOWN;
-			*row++;		//have a check for terminal border here?
-		}
-		if (*c == 'H' && *cur)
-			cursor_beginning(cur);
-		if (*c == 'F' && *cur < *bytes)
-			cursor_end(cur, bytes);
-		if (*c == '1')
-			shift(bytes, cur, c);
-		cursor_mv(bytes, cur, *c, row);
+		cap->ch = get_input();
+		if (cap->ch == 'D')
+			cap->ch = LEFT;
+		if (cap->ch == 'C')
+			cap->ch = RIGHT;
+		if (cap->ch == 'A')
+			cap->ch = UP;
+		if (cap->ch == 'B')
+			cap->ch = DOWN;
+		if (cap->ch == 'H' && cap->cursor)
+			cursor_beginning(&cap->cursor);
+		if (cap->ch == 'F' && cap->cursor < cap->bytes)
+			cursor_end(&cap->cursor, &cap->bytes);
+		if (cap->ch == '1')
+			shift_arrow(&cap->bytes, &cap->cursor, &cap->ch);
+		cursor_mv(cap);
 	}
-	if (*c == 'b')
-		alt_mv_left(cur, input);
-	if (*c == 'f')
-		alt_mv_right(cur, input, bytes);
-	c[0] = 0;
+	if (cap->ch == 'b')
+		alt_mv_left(&cap->cursor, input);
+	if (cap->ch == 'f')
+		alt_mv_right(&cap->cursor, input, &cap->bytes);
+	cap->ch = 0;
 }
