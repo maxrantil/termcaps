@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 15:12:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/14 08:36:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	get_input(void)
 
 	c = 0;
 	read(STDIN_FILENO, &c, 1);
-	// printf("c[%d] ", c);
 	return (c);
 }
 
@@ -33,4 +32,20 @@ void	print_trail(char *input, int cursor)
 void	clear_trail(void)
 {
 	ft_putstr("\033[K");
+}
+
+void	quote_count(int *quote, int *c)
+{
+	if (!*quote)
+		*quote = *c;
+	else if (*quote == *c)
+		*quote = 0;
+}
+
+void	init_var(int *c, int *bytes, int *cur, int *quote)
+{
+	*c = 0;
+	*cur = 0;
+	*bytes = 0;
+	*quote = 0;
 }

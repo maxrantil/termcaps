@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 15:20:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/14 08:36:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,8 @@ int	ft_termcaps(char *input)
 	int		cursor;
 	int		quote;
 
-	c = 0;
-	bytes = 0;
-	cursor = 0;
-	quote = 0;
 	ft_memset(input, '\0', BUFFSIZE);
+	init_var(&c, &bytes, &cursor, &quote);
 	if (!init_raw())
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
@@ -63,28 +60,18 @@ int	ft_termcaps(char *input)
 	{
 		c = get_input();
 		if (c == D_QUOTE || c == S_QUOTE)
-		{
-			if (!quote)
-				quote = c;
-			else if (quote == c)
-				quote = 0;
-		}
+			quote_count(&quote, &c);
 		if (c == KILL)
 			kill_process(c);
-		else if (c == ENTER)
-		{
-			if (!quote)
-				break ;
-			else
-				char_print(input, &bytes, &cursor, c); //can we get here cleaner? isprint stops it..
-		}
+		else if (c == ENTER && !quote)
+			break ;
 		else if (c == CTRL_D && cursor < bytes)
 			delete(input, &bytes, &cursor);
 		else if (c == BACKSPACE && cursor > 0)
 			backspace(input, &bytes, &cursor);
 		if (c == ESCAPE)
 			esc_parse(input, &bytes, &cursor, &c);
-		if (isprint(c))
+		if (isprint(c) || (c == ENTER && quote))
 			char_print(input, &bytes, &cursor, c);
 	}
 	if (c == -1)
@@ -93,9 +80,9 @@ int	ft_termcaps(char *input)
 	return (0);
 }
 
-int main(void)
+int	main(void)
 {
-	char input[BUFFSIZE];
+	char	input[BUFFSIZE];
 
 	ft_termcaps(input);
 	/*			Displaying Output					*/
