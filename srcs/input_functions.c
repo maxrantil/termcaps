@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_functions.c                                  :+:      :+:    :+:   */
+/*   input_functions.cap->ch                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,44 +12,48 @@
 
 #include "termcaps.h"
 
-void	delete(char *input, int *bytes, int *cur)
+void	delete(char *input, t_termcap *cap)
 {
-	deletion_shift(input, bytes, cur, DEL);
+	deletion_shift(input, cap, DEL);
 	clear_trail();
-	print_trail(input, *cur);
+	print_trail(input, cap);
 }
 
-void	backspace(char *input, int *bytes, int *cur)
+void	backspace(char *input, t_termcap *cap)
 {
-	cursor_left(NULL);
+	cursor_left(cap);
 	clear_trail();
-	if (*cur == *bytes)
+	if (cap->cursor == cap->bytes)
 	{
-		bytes[0]--;
-		cur[0]--;
-		input[*cur] = '\0';
+		cap->bytes--;
+		cap->cursor--;
+		input[cap->cursor] = '\0';
 	}
 	else
-		deletion_shift(input, bytes, cur, BCK);
-	if (input[*cur])
-		print_trail(input, *cur);
+		deletion_shift(input, cap, BCK);
+	if (input[cap->cursor])
+		print_trail(input, cap);
 }
 
-void	cursor_mv(int *bytes, int *cur, int c)
+void	cursor_mv(t_termcap *cap)
 {
-	if (c == LEFT && *cur)
-		cursor_left(cur);
-	if (c == RIGHT && (*cur < *bytes))
-		cursor_right(cur);
+	if (cap->ch== LEFT && cap->cursor)
+		cursor_left(cap);
+	if (cap->ch== RIGHT && (cap->cursor < cap->bytes))
+		cursor_right(cap);
+	if (cap->ch== DOWN && (cap->cur_row < cap->row))
+		cursor_down(cap);
+	if (cap->ch== UP && (cap->cur_row > 0))
+		cursor_up(cap);
 }
 
-void	char_print(char *input, int *bytes, int *cur, int c)
+void	char_print(char *input, t_termcap *cap)
 {
-	write(1, &c, 1);
-	if (input[*cur])
-		insertion_shift(input, bytes, *cur);
-	input[cur[0]++] = c;
-	if (input[*cur])
-		print_trail(input, *cur);
-	bytes[0]++;
+	write(1, &cap->ch, 1);
+	if (input[cap->cursor])
+		insertion_shift(input, cap);
+	input[cap->cursor++] = cap->ch;
+	if (input[cap->cursor])
+		print_trail(input, cap);
+	cap->bytes++;
 }

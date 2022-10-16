@@ -12,83 +12,66 @@
 
 #include "termcaps.h"
 
-static void	disable_raw_mode(void)
+static void	quote_count(int *quote, int c)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
+	if (!*quote)
+		*quote = c;
+	else if (*quote == c)
+		*quote = 0;
 }
 
-static void	kill_process(int sig)
-{
-	if (sig == 3)
-	{
-		disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-}
-
-static int	init_raw(void)
-{
-	struct termios	raw;
-
-	if (tcgetattr(STDIN_FILENO, &g_orig_termios) == -1)
-		return (0);
-	raw = g_orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
-	raw.c_iflag &= ~(IXON | BRKINT);
-	raw.c_cc[VMIN] = 1;
-	raw.c_cc[VTIME] = 0;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
-		return (0);
-	return (1);
-}
-
-static void	input_cycle(char *input, int *bytes, int *cur, int *ch)
+static void	input_cycle(char *input, t_termcap *cap)
 {
 	int		quote;
 
 	quote = 0;
-	while (*ch != -1)
+	while (cap->ch != -1)
 	{
-		*ch = get_input();
-		if (*ch == D_QUOTE || *ch == S_QUOTE)
-			quote_count(&quote, ch);
-		if (*ch == KILL)
-			kill_process(*ch);
-		else if (*ch == ENTER && !quote)
+		cap->ch = get_input();
+		if (cap->ch == D_QUOTE || cap->ch == S_QUOTE)
+			quote_count(&quote, cap->ch);
+		if (cap->ch == KILL)
+			kill_process(cap->ch);
+		else if (cap->ch == ENTER && !quote)
 			return ;
-		else if (*ch == CTRL_D && *cur < *bytes)
-			delete(input, bytes, cur);
-		else if (*ch == BACKSPACE && *cur > 0)
-			backspace(input, bytes, cur);
-		if (*ch == ESCAPE)
-			esc_parse(input, bytes, cur, ch);
-		if (isprint(*ch) || (*ch == ENTER && quote))
+		else if (cap->ch == CTRL_D && cap->cursor < cap->bytes)
+			delete(input, cap);
+		else if (cap->ch == BACKSPACE && cap->cursor > 0)
+			backspace(input, cap);
+		if (cap->ch == ESCAPE)
+			esc_parse(input, cap);
+		if (isprint(cap->ch) || (cap->ch == ENTER && quote))
 		{
-			char_print(input, bytes, cur, *ch);
-			if (*ch == ENTER && quote)
+			char_print(input, cap);
+			if (cap->ch == ENTER && quote)
+			{
 				write(1, "> ", 2);
+				cap->row++; 
+				cap->cur_row++;
+				//cap->bytes += 3; ???? lets talk about this
+			}
 		}
+		if (cap->ch == -1)
+			ft_putstr_fd("error, read\n", STDERR_FILENO);
 	}
 }
 
 int	ft_termcaps(char *input)
 {
-	int		ch;
-	int		bytes;
-	int		cursor;
+	t_termcap	cap;
 
-	ch = 0;
-	bytes = 0;
-	cursor = 0;
+	cap.ch = 0;			//make funciton
+	cap.bytes = 0;
+	cap.cursor = 0;
+	cap.row = 0;
+	cap.cur_row = 0;
 	ft_memset(input, '\0', BUFFSIZE);
 	if (!init_raw())
 	{
 		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
 		exit(1);
 	}
-	input_cycle(input, &bytes, &cursor, &ch);
-	if (ch == -1)
-		ft_putstr_fd("error, read\n", STDERR_FILENO);
+	input_cycle(input, &cap);
 	disable_raw_mode();
 	return (0);
 }

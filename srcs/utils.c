@@ -18,13 +18,14 @@ int	get_input(void)
 
 	c = 0;
 	read(STDIN_FILENO, &c, 1);
+	// printf("c[%d]\n", c);		//save this for testing
 	return (c);
 }
 
-void	print_trail(char *input, int cursor)
+void	print_trail(char *input, t_termcap *cap)
 {
 	ft_putstr("\033[s");
-	ft_putstr(&input[cursor]);
+	ft_putstr(&input[cap->cursor]);
 	ft_putstr("\033[H");
 	ft_putstr("\033[u");
 }
@@ -32,12 +33,4 @@ void	print_trail(char *input, int cursor)
 void	clear_trail(void)
 {
 	ft_putstr("\033[K");
-}
-
-void	quote_count(int *quote, int *c)
-{
-	if (!*quote)
-		*quote = *c;
-	else if (*quote == *c)
-		*quote = 0;
 }
