@@ -32,7 +32,7 @@ int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 		dst->memory = malloc(dst->alloc_size);
 		if (!dst->memory)
 		{
-			perror("vec_new, malloc error");
+			ft_putendl_fd("error, malloc in vec_new()", 2);
 			exit(1);
 		}
 	}
