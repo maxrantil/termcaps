@@ -76,7 +76,7 @@ void	history(t_msh *msh, int status)
 		}
 	}
 	else if (status == 1 && msh->cl[0] == '^')
-		ft_printf("%s\n", vec_get(&msh->v_history, msh->v_history.len - ft_strlen(msh->cl)));
+		ft_printf("%s\n", (char *)vec_get(&msh->v_history, msh->v_history.len - ft_strlen(msh->cl)));
 	else if (status == 2)
 		vec_push(&msh->v_history, msh->cl);
 }
