@@ -12,6 +12,14 @@
 
 #include "termcaps.h"
 
+/*
+**	O_CREAT If pathname does not exist, create it as a regular file.
+**	O_WRONLY access modes: read/write
+**	O_RDONLY access modes: read/write
+**	S_IRWXU  00700 user (file owner) has read, write, 
+**	and execute permissionS_IRUSR  00400 user has read permission	
+*/
+
 void	write_history_to_file(t_msh *msh)
 {
 	size_t	cpy;
@@ -32,14 +40,6 @@ void	write_history_to_file(t_msh *msh)
 	}
 	return ;
 }
-
-/*
-**	O_CREAT If pathname does not exist, create it as a regular file.
-**	O_WRONLY access modes: read/write
-**	O_RDONLY access modes: read/write
-**	S_IRWXU  00700 user (file owner) has read, write, 
-**	and execute permissionS_IRUSR  00400 user has read permission	
-*/
 
 void	get_history(t_msh *msh)
 {
