@@ -37,7 +37,6 @@ void	write_history_to_file(t_msh *msh)
 **	O_CREAT If pathname does not exist, create it as a regular file.
 **	O_WRONLY access modes: read/write
 **	O_RDONLY access modes: read/write
-**	O_APPEND The  file  is  opened  in append mode.
 **	S_IRWXU  00700 user (file owner) has read, write, 
 **	and execute permissionS_IRUSR  00400 user has read permission	
 */
