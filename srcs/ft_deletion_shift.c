@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_deletion_shift.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 14:33:42 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
+/*   Updated: 2022/10/20 14:37:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	init(t_term *term)
+void	ft_deletion_shift(char *input, t_term *term, int mode)
 {
-	term->ch = 0;
-	term->indx = 0;
-	term->c_col = 0;
-	term->c_row = 0;
-	term->total_col = 0;
-	term->total_row = 0;
-}
+	int	cur_cpy;
 
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
+	cur_cpy = term->indx;
+	if (mode == BCK)
 	{
-		disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
+		cur_cpy--;
+		term->indx = cur_cpy;
 	}
-} */
+	input[cur_cpy] = '\0';
+	while (&input[cur_cpy] < &input[term->c_col])
+	{
+		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
+		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
+		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
+		cur_cpy++;
+	}
+	term->c_col--;
+}

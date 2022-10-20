@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:33:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:23:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 void	ft_cursor_right(t_term *term)
 {
-	if (term->cursor)
-		term->cursor++;
-	write(1, "\033[1C", 4);
+	/* if (term->indx)
+		term->indx++; */
+	ft_setcursor(++term->c_col, term->c_row);
 }
 
 void	ft_cursor_left(t_term *term)
 {
-	if (term->cursor)
-		term->cursor--;
-	write(1, "\033[1D", 4);
+	/* if (term->indx)
+		term->indx--; */
+	/* write(1, "\033[1D", 4); */
+	ft_setcursor(--term->c_col, term->c_row);
 }
 
 void	ft_cursor_up(t_term *term)
 {
-	if (term->cur_row)
-		term->cur_row--;
+	if (term->total_row)
+		term->total_row--;
 	write(1, "\033[1A", 4);
 }
 
 void	ft_cursor_down(t_term *term)
 {
-	term->cur_row++;
+	term->total_row++;
 	write(1, "\033[1B", 4);
 }
 
@@ -67,12 +68,12 @@ void	ft_cursor_end(int *cur, int *col)
 
 void	ft_cursor_mv(t_term *term)
 {
-	if (term->ch== LEFT && term->cursor)
+	if (term->ch== LEFT && term->indx)
 		ft_cursor_left(term);
-	if (term->ch== RIGHT && (term->cursor < term->col))
+	if (term->ch== RIGHT && (term->c_col < term->indx))
 		ft_cursor_right(term);
-	if (term->ch== DOWN && (term->cur_row < term->row))
+	if (term->ch== DOWN && (term->total_row < term->c_row))
 		ft_cursor_down(term);
-	if (term->ch== UP && (term->cur_row > 0))
+	if (term->ch== UP && (term->total_row > 0))
 		ft_cursor_up(term);
 }

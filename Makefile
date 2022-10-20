@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 13:44:21 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/20 14:46:41 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,12 @@ FILES 		= 	main \
 				ft_cursor \
 				ft_clearscreen \
 				ft_setcursor \
+				ft_insertion_shift \
+				ft_deletion_shift \
+				ft_print_trail \
+				ft_clear_trail \
 				init \
-				utils \
-				shifting_bits \
+				get_input \
 				input_cycle \
 				ft_putc \
 				esc_parse \

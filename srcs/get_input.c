@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 14:33:42 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/10/20 14:40:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	init(t_term *term)
+int	get_input(void)
 {
-	term->ch = 0;
-	term->indx = 0;
-	term->c_col = 0;
-	term->c_row = 0;
-	term->total_col = 0;
-	term->total_row = 0;
-}
+	int	c;
 
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
-	{
-		disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */
+	c = 0;
+	read(STDIN_FILENO, &c, 1);
+	// printf("c[%d]\n", c);		//save this for testing
+	return (c);
+}

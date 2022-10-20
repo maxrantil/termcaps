@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 13:44:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:42:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@
 typedef struct s_termterm
 {
 	int		ch;
-	int		col;
-	int		cursor;
-	int		row;
-	int		cur_row;
+	int		indx;
+	int		c_col;
+	int		c_row;
+	int		total_col;
+	int		total_row;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -76,12 +77,12 @@ void	alt_mv_right(int *cursor, char *input, int *col);
 
 /*				 Utils				*/
 int		get_input(void);
-void	print_trail(t_term *term, char *input);
-void	clear_trail(void);
+void	ft_print_trail(t_term *term, char *input);
+void	ft_clear_trail(void);
 
 /*		      BITS Shifting			*/
-void	insertion_shift(t_term *term, char *input);
-void	deletion_shift(char *input, t_term *term, int mode);
+void	ft_insertion_shift(t_term *term, char *input);
+void	ft_deletion_shift(char *input, t_term *term, int mode);
 
 /*		   Input Functions			*/
 void	ft_cursor_mv(t_term *term);
