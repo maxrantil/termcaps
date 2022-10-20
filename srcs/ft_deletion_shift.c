@@ -1,48 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shifting_bits.c                                    :+:      :+:    :+:   */
+/*   ft_deletion_shift.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 14:51:42 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
+/*   Updated: 2022/10/20 16:25:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
-void	insertion_shift(char *input, t_termcap *cap)
-{
-	int	bytes_cpy;
-
-	bytes_cpy = cap->bytes;
-	while (&input[bytes_cpy] >= &input[cap->cursor])
-	{
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy + 1] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		bytes_cpy--;
-	}
-}
-
-void	deletion_shift(char *input, t_termcap *cap, int mode)
+void	ft_deletion_shift(char *input, t_term *term, int mode)
 {
 	int	cur_cpy;
 
-	cur_cpy = cap->cursor;
+	cur_cpy = term->bytes;
 	if (mode == BCK)
 	{
 		cur_cpy--;
-		cap->cursor = cur_cpy;
+		term->bytes = cur_cpy;
 	}
 	input[cur_cpy] = '\0';
-	while (&input[cur_cpy] < &input[cap->bytes])
+	while (&input[cur_cpy] < &input[term->c_col])
 	{
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		cur_cpy++;
 	}
-	cap->bytes--;
+	term->c_col--;
 }

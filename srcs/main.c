@@ -3,76 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:53:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:11:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
-static void	quote_count(int *quote, int c)
+static int	init_raw(void)
 {
-	if (!*quote)
-		*quote = c;
-	else if (*quote == c)
-		*quote = 0;
+	struct termios	raw;
+
+	if (tcgetattr(STDIN_FILENO, &g_orig_termios) == -1)
+		return (0);
+	raw = g_orig_termios;
+	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
+	raw.c_iflag &= ~(IXON | BRKINT);
+	raw.c_cc[VMIN] = 1;
+	raw.c_cc[VTIME] = 0;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
+		return (0);
+	ft_run_capability("ti");
+	ft_run_capability("cl");
+	return (1);
 }
 
-static void	input_cycle(char *input, t_termcap *cap)
+static void	disable_raw_mode(void)
 {
-	int		quote;
-
-	quote = 0;
-	while (cap->ch != -1)
-	{
-		cap->ch = get_input();
-		if (cap->ch == D_QUOTE || cap->ch == S_QUOTE)
-			quote_count(&quote, cap->ch);
-		if (cap->ch == KILL)
-			kill_process(cap->ch);
-		else if (cap->ch == ENTER && !quote)
-			return ;
-		else if (cap->ch == CTRL_D && cap->cursor < cap->bytes)
-			delete(input, cap);
-		else if (cap->ch == BACKSPACE && cap->cursor > 0)
-			backspace(input, cap);
-		if (cap->ch == ESCAPE)
-			esc_parse(input, cap);
-		if (isprint(cap->ch) || (cap->ch == ENTER && quote))
-		{
-			char_print(input, cap);
-			if (cap->ch == ENTER && quote)
-			{
-				write(1, "> ", 2);
-				cap->row++; 
-				cap->cur_row++;
-				//cap->bytes += 3; ???? lets talk about this
-			}
-		}
-		if (cap->ch == -1)
-			ft_putstr_fd("error, read\n", STDERR_FILENO);
-	}
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
+	tputs(tgetstr("te", NULL), 1, ft_putc);
 }
 
-int	ft_termcaps(char *input)
+static int	ft_keyboard(char *input)
 {
-	t_termcap	cap;
+	t_term		term;
+	char		term_buffer[2048];
+	char		*termtype;
+	int			status;
 
-	cap.ch = 0;			//make funciton
-	cap.bytes = 0;
-	cap.cursor = 0;
-	cap.row = 0;
-	cap.cur_row = 0;
+	ft_init(&term);
 	ft_memset(input, '\0', BUFFSIZE);
-	if (!init_raw())
+	status = tgetent(term_buffer, "ANSI");
+	termtype = getenv("TERM");
+	if (termtype == NULL)
 	{
-		ft_putstr_fd("error, raw mode\n", STDERR_FILENO);
+		printf("could not get the TERM env\n");
 		exit(1);
 	}
-	input_cycle(input, &cap);
-	disable_raw_mode();
+	status = tgetent(term_buffer, termtype);
+	if (status > 0)
+	{
+		if (!init_raw())
+		{
+			printf("error, raw mode\n", STDERR_FILENO);
+			exit(1);
+		}	
+		ft_input_cycle(&term, input);
+		disable_raw_mode();
+	}
+	else
+	{
+		printf("error, tgetent()\n");
+		exit(1);
+	}
 	return (0);
 }
 
@@ -80,11 +75,6 @@ int	main(void)
 {
 	char	input[BUFFSIZE];
 
-	ft_termcaps(input);
-	/*			Displaying Output					*/
-	ft_putchar('\n');
-	ft_putstr_fd(input, STDOUT_FILENO);
-	ft_putchar('\n');
-	/*			Displaying Output					*/
+	ft_keyboard(input);
 	return (0);
 }

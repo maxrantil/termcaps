@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:04:31 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:06:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 // Create a function which will take a pointer to a t_vec
-// and allocate len * elem_size bytes in the buffer as well as
+// and allocate len * elem_size col in the buffer as well as
 // initialize its length and element size.
 */
 

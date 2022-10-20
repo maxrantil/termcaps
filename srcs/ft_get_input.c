@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:48:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:46:45 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
-int	get_input(void)
+int	ft_get_input(void)
 {
 	int	c;
 
@@ -20,17 +20,4 @@ int	get_input(void)
 	read(STDIN_FILENO, &c, 1);
 	// printf("c[%d]\n", c);		//save this for testing
 	return (c);
-}
-
-void	print_trail(char *input, t_termcap *cap)
-{
-	ft_putstr("\033[s");
-	ft_putstr(&input[cap->cursor]);
-	ft_putstr("\033[H");
-	ft_putstr("\033[u");
-}
-
-void	clear_trail(void)
-{
-	ft_putstr("\033[K");
 }
