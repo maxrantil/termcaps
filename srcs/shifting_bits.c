@@ -6,23 +6,23 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 12:39:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	insertion_shift(char *input, t_term *term)
+void	insertion_shift(t_term *term, char *input)
 {
-	int	bytes_cpy;
+	int	col_cpy;
 
-	bytes_cpy = term->bytes;
-	while (&input[bytes_cpy] >= &input[term->cursor])
+	col_cpy = term->col;
+	while (&input[col_cpy] >= &input[term->cursor])
 	{
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy + 1] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		bytes_cpy--;
+		input[col_cpy] = input[col_cpy] ^ input[col_cpy + 1];
+		input[col_cpy + 1] = input[col_cpy] ^ input[col_cpy + 1];
+		input[col_cpy] = input[col_cpy] ^ input[col_cpy + 1];
+		col_cpy--;
 	}
 }
 
@@ -37,12 +37,12 @@ void	deletion_shift(char *input, t_term *term, int mode)
 		term->cursor = cur_cpy;
 	}
 	input[cur_cpy] = '\0';
-	while (&input[cur_cpy] < &input[term->bytes])
+	while (&input[cur_cpy] < &input[term->col])
 	{
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy + 1] = input[cur_cpy] ^ input[cur_cpy + 1];
 		input[cur_cpy] = input[cur_cpy] ^ input[cur_cpy + 1];
 		cur_cpy++;
 	}
-	term->bytes--;
+	term->col--;
 }

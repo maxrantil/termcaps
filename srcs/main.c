@@ -6,22 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 12:41:44 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:41:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-static void clearscreen(void)
-{
-	char *cl;
-	
-	cl = tgetstr("cl", NULL);
-	if (cl == NULL)
-		ft_putendl_fd("error, cannot clear the screen", 2);
-	else 
-		tputs(cl, 1, ft_putc);
-}
 
 static int	init_raw(void)
 {
@@ -37,7 +26,7 @@ static int	init_raw(void)
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
 		return (0);
 	tputs(tgetstr("ti", NULL), 1, ft_putc);
-	clearscreen();
+	ft_clearscreen();
 	return (1);
 }
 
@@ -71,7 +60,7 @@ static int	ft_keyboard(char *input)
 			printf("error, raw mode\n", STDERR_FILENO);
 			exit(1);
 		}	
-		input_cycle(input, &term);
+		input_cycle(&term, input);
 		disable_raw_mode();
 	}
 	else

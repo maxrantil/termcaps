@@ -39,19 +39,19 @@ void	alt_mv_left(int *cursor, char *input)
 	}
 }
 
-void	alt_mv_right(int *cursor, char *input, int *bytes)
+void	alt_mv_right(int *cursor, char *input, int *col)
 {
 	int		b;
 	char	*tofree;
 
 	b = 0;
 	tofree = NULL;
-	while (cursor[0] < *bytes && ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *col && ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;
 	}
-	while (cursor[0] < *bytes && !ft_isspace(&input[cursor[0]]))
+	while (cursor[0] < *col && !ft_isspace(&input[cursor[0]]))
 	{
 		b++;
 		cursor[0]++;

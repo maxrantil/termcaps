@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:33:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 12:40:44 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,24 @@ void	ft_cursor_beginning(int *cur)
 	cur[0] = 0;
 }
 
-void	ft_cursor_end(int *cur, int *bytes)
+void	ft_cursor_end(int *cur, int *col)
 {
 	char	*tofree;
 
 	tofree = NULL;
 	write(1, "\033[", 2);
-	tofree = ft_itoa(*bytes - *cur);
-	write(1, tofree, ft_intlen(*bytes - *cur));
+	tofree = ft_itoa(*col - *cur);
+	write(1, tofree, ft_intlen(*col - *cur));
 	ft_strdel(&tofree);
 	write(1, "C", 1);
-	cur[0] = *bytes;
+	cur[0] = *col;
 }
 
 void	ft_cursor_mv(t_term *term)
 {
 	if (term->ch== LEFT && term->cursor)
 		ft_cursor_left(term);
-	if (term->ch== RIGHT && (term->cursor < term->bytes))
+	if (term->ch== RIGHT && (term->cursor < term->col))
 		ft_cursor_right(term);
 	if (term->ch== DOWN && (term->cur_row < term->row))
 		ft_cursor_down(term);

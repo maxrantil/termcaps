@@ -108,7 +108,7 @@ static void	input_cycle(void)
 		}
 		/* else if (outchar == 27) //esc
 		{
-			esc_parse(input, term);
+			esc_parse(term, input);
 		} */
 		else //print and cm
 		{

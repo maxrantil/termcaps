@@ -6,44 +6,44 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 12:37:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:38:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	delete(char *input, t_term *term)
+static void	delete(t_term *term, char *input)
 {
 	deletion_shift(input, term, DEL);
 	clear_trail();
-	print_trail(input, term);
+	print_trail(term, input);
 }
 
-static void	backspace(char *input, t_term *term)
+static void	backspace(t_term *term, char *input)
 {
 	ft_cursor_left(term);
 	clear_trail();
-	if (term->cursor == term->bytes)
+	if (term->cursor == term->col)
 	{
-		term->bytes--;
+		term->col--;
 		term->cursor--;
 		input[term->cursor] = '\0';
 	}
 	else
 		deletion_shift(input, term, BCK);
 	if (input[term->cursor])
-		print_trail(input, term);
+		print_trail(term, input);
 }
 
-static void	char_print(char *input, t_term *term)
+static void	char_print(t_term *term, char *input)
 {
 	write(1, &term->ch, 1);
 	if (input[term->cursor])
-		insertion_shift(input, term);
+		insertion_shift(term, input);
 	input[term->cursor++] = term->ch;
 	if (input[term->cursor])
-		print_trail(input, term);
-	term->bytes++;
+		print_trail(term, input);
+	term->col++;
 }
 
 static void	quote_count(int *quote, int c)
@@ -54,7 +54,7 @@ static void	quote_count(int *quote, int c)
 		*quote = 0;
 }
 
-void	input_cycle(char *input, t_term *term)
+void	input_cycle(t_term *term, char *input)
 {
 	int		quote;
 
@@ -64,19 +64,19 @@ void	input_cycle(char *input, t_term *term)
 		term->ch = get_input();
 		if (term->ch == D_QUOTE || term->ch == S_QUOTE)
 			quote_count(&quote, term->ch);
-		/* if (term->ch == KILL)
-			kill_process(term->ch); */
+		if (term->ch == CTRL_C)
+			break ;
 		else if (term->ch == ENTER && !quote)
 			return ;
-		else if (term->ch == CTRL_D && term->cursor < term->bytes)
-			delete(input, term);
+		else if (term->ch == CTRL_D && term->cursor < term->col)
+			delete(term, input);
 		else if (term->ch == BACKSPACE && term->cursor > 0)
-			backspace(input, term);
+			backspace(term, input);
 		if (term->ch == ESCAPE)
-			esc_parse(input, term);
+			esc_parse(term, input);
 		if (isprint(term->ch) || (term->ch == ENTER && quote))
 		{
-			char_print(input, term);
+			char_print(term, input);
 			if (term->ch == ENTER && quote)
 			{
 				write(1, "> ", 2);

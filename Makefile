@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 12:37:31 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/20 13:44:21 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,8 @@ TERMCAP		=	-ltermcap
 FILES 		= 	main \
 				alt_mv \
 				ft_cursor \
+				ft_clearscreen \
+				ft_setcursor \
 				init \
 				utils \
 				shifting_bits \

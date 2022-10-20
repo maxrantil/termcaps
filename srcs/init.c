@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 12:21:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init(t_term *term)
 {
 	term->ch = 0;
-	term->bytes = 0;
+	term->col = 0;
 	term->cursor = 0;
 	term->row = 0;
 	term->cur_row = 0;
