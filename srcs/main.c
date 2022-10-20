@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 16:09:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:11:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	init_raw(void)
 	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
 		return (0);
-	run_capability("ti");
-	run_capability("cl");
+	ft_run_capability("ti");
+	ft_run_capability("cl");
 	return (1);
 }
 
@@ -43,7 +43,7 @@ static int	ft_keyboard(char *input)
 	char		*termtype;
 	int			status;
 
-	init(&term);
+	ft_init(&term);
 	ft_memset(input, '\0', BUFFSIZE);
 	status = tgetent(term_buffer, "ANSI");
 	termtype = getenv("TERM");
@@ -60,7 +60,7 @@ static int	ft_keyboard(char *input)
 			printf("error, raw mode\n", STDERR_FILENO);
 			exit(1);
 		}	
-		input_cycle(&term, input);
+		ft_input_cycle(&term, input);
 		disable_raw_mode();
 	}
 	else
@@ -76,10 +76,5 @@ int	main(void)
 	char	input[BUFFSIZE];
 
 	ft_keyboard(input);
-	/*			Displaying Output					*/
-	ft_putchar('\n');
-	ft_putstr_fd(input, STDOUT_FILENO);
-	ft_putchar('\n');
-	/*			Displaying Output					*/
 	return (0);
 }

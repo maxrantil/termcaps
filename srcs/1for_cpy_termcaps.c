@@ -69,7 +69,7 @@ void setcursor(int x, int y)
 	tputs(tgoto(cm, x, y), 1, ft_putc);
 }
 
-static int	get_input(void)
+static int	ft_get_input()(void)
 {
 	int	c;
 
@@ -90,7 +90,7 @@ static void	input_cycle(void)
 	y = 0;
 	while (42)
 	{
-		outchar = get_input();
+		outchar = ft_get_input()();
 		if (outchar == 3) //ctrl + c
 		{
 			signal(SIGINT, sig_handler); //need to know more about this
@@ -108,7 +108,7 @@ static void	input_cycle(void)
 		}
 		/* else if (outchar == 27) //esc
 		{
-			esc_parse(term, input);
+			ft_esc_parse(term, input);
 		} */
 		else //print and cm
 		{

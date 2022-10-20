@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 16:33:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:12:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define BACKSPACE	127
 # define TAB		9
 
-# define BUFFSIZE   4096
+# define BUFFSIZE   2048
 
 typedef struct s_termterm
 {
@@ -56,28 +56,27 @@ typedef struct s_termterm
 
 static struct termios	g_orig_termios;
 
-void	init(t_term *term);
-void	input_cycle(t_term *term, char *input);
+void	ft_init(t_term *term);
+void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
 void	ft_setcursor(int col, int row);
-void	run_capability(char *cap);
+void	ft_run_capability(char *cap);
 
 /* void	kill_process(int sig); */
 
 /*		    Cursor Movement			*/
-void	alt_mv_left(t_term *term, char *input);
-void	alt_mv_right(t_term *term, char *input);
+void	ft_alt_mv_left(t_term *term, char *input);
+void	ft_alt_mv_right(t_term *term, char *input);
 
-int		get_input(void);
+int		ft_get_input(void);
 void	ft_print_trail(t_term *term, char *input);
 void	ft_clear_trail(void);
 
 void	ft_insertion_shift(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
 
-/*		   Input Functions			*/
 void	ft_cursor_mv(t_term *term);
-void	esc_parse(t_term *term, char *input);
+void	ft_esc_parse(t_term *term, char *input);
 
 #endif

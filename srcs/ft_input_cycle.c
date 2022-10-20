@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_cycle.c                                      :+:      :+:    :+:   */
+/*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 16:25:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:52:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,33 @@ static void	quote_count(int *quote, int c)
 		*quote = 0;
 }
 
-void	input_cycle(t_term *term, char *input)
+void	ft_input_cycle(t_term *term, char *input)
 {
 	int		quote;
 
 	quote = 0;
 	while (term->ch != -1)
 	{
-		term->ch = get_input();
+		term->ch = ft_get_input();
 		if (term->ch == D_QUOTE || term->ch == S_QUOTE)
 			quote_count(&quote, term->ch);
 		if (term->ch == CTRL_C)
 			break ;
 		else if (term->ch == ENTER && !quote)
-			return ;
+		{
+			ft_putchar('\n');
+			ft_putendl_fd(input, STDOUT_FILENO);
+			term->c_col = 0;
+			term->c_row += 2;
+			term->total_row += 2;
+			ft_memset(input, '\0', BUFFSIZE);
+		}
 		else if (term->ch == CTRL_D && term->bytes < term->c_col)
 			delete(term, input);
 		else if (term->ch == BACKSPACE && term->bytes > 0)
 			backspace(term, input);
 		if (term->ch == ESCAPE)
-			esc_parse(term, input);
+			ft_esc_parse(term, input);
 		if (isprint(term->ch) || (term->ch == ENTER && quote))
 		{
 			ft_putc(term->ch);
@@ -82,6 +89,6 @@ void	input_cycle(t_term *term, char *input)
 			}
 		}
 		if (term->ch == -1)
-			ft_putstr_fd("error, get_input()\n", STDERR_FILENO);
+			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}
 }

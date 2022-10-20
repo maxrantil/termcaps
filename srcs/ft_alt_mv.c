@@ -12,7 +12,7 @@
 
 #include "keyboard.h"
 
-void	alt_mv_left(t_term *term, char *input)
+void	ft_alt_mv_left(t_term *term, char *input)
 {
 	while (term->c_col > 0 && ft_isspace(&input[term->c_col - 1]))
 		term->c_col--;
@@ -21,7 +21,7 @@ void	alt_mv_left(t_term *term, char *input)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
-void	alt_mv_right(t_term *term, char *input)
+void	ft_alt_mv_right(t_term *term, char *input)
 {
 	while (term->c_col < term->bytes && ft_isspace(&input[term->c_col]))
 		term->c_col++;

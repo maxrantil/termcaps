@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 16:31:45 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/20 17:12:20 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,19 +62,19 @@ TERMCAP		=	-ltermcap
 
 
 FILES 		= 	main \
-				alt_mv \
+				ft_alt_mv \
 				ft_cursor_mv \
-				run_capability \
+				ft_run_capability \
 				ft_setcursor \
 				ft_insertion_shift \
 				ft_deletion_shift \
 				ft_print_trail \
 				ft_clear_trail \
-				init \
-				get_input \
-				input_cycle \
+				ft_init \
+				ft_get_input \
+				ft_input_cycle \
 				ft_putc \
-				esc_parse \
+				ft_esc_parse \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
