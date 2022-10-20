@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 14:42:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:14:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
 void	ft_setcursor(int row, int col);
+void	run_capability(char *cap);
 
 /* init */
 /* void	kill_process(int sig); */
@@ -70,8 +71,8 @@ void	ft_cursor_left(t_term *term);
 void	ft_cursor_right(t_term *term);
 void	ft_cursor_up(t_term *term);
 void	ft_cursor_down(t_term *term);
-void	ft_cursor_beginning(int *cur);
-void	ft_cursor_end(int *cur, int *col);
+void	ft_cursor_beginning(t_term *term);
+void	ft_cursor_end(t_term *term);
 void	alt_mv_left(int *cursor, char *input);
 void	alt_mv_right(int *cursor, char *input, int *col);
 

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 13:41:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:09:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int	init_raw(void)
 	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
 		return (0);
-	tputs(tgetstr("ti", NULL), 1, ft_putc);
-	ft_clearscreen();
+	run_capability("ti");
+	run_capability("cl");
 	return (1);
 }
 

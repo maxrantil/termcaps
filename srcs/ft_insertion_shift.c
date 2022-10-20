@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 15:11:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 15:19:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	ft_insertion_shift(t_term *term, char *input)
 {
-	int	col_cpy;
+	int	indx_cpy;
 
-	col_cpy = term->indx;
-	while (&input[col_cpy] >= &input[term->c_col])
+	indx_cpy = term->indx;
+	while (&input[indx_cpy] >= &input[term->c_col])
 	{
-		input[col_cpy] = input[col_cpy] ^ input[col_cpy + 1];
-		input[col_cpy + 1] = input[col_cpy] ^ input[col_cpy + 1];
-		input[col_cpy] = input[col_cpy] ^ input[col_cpy + 1];
-		col_cpy--;
+		input[indx_cpy] = input[indx_cpy] ^ input[indx_cpy + 1];
+		input[indx_cpy + 1] = input[indx_cpy] ^ input[indx_cpy + 1];
+		input[indx_cpy] = input[indx_cpy] ^ input[indx_cpy + 1];
+		indx_cpy--;
 	}
 }

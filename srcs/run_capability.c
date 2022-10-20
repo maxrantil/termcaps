@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clearscreen.c                                   :+:      :+:    :+:   */
+/*   run_capability.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 13:42:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:07:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void ft_clearscreen(void)
+void	run_capability(char *cap)
 {
-	char *cl;
+	char	*p;
 	
-	cl = tgetstr("cl", NULL);
-	if (cl == NULL)
-		ft_putendl_fd("error, cannot clear the screen", 2);
-	else 
-		tputs(cl, 1, ft_putc);
+	p = tgetstr(cap, NULL);
+	if (p == NULL)
+		ft_putendl_fd("error, cannot run_capability", 2);
+	else
+		tputs(p, 1, ft_putc);
 }

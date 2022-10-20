@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:33:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 14:23:52 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:13:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,16 @@ void	ft_cursor_down(t_term *term)
 	write(1, "\033[1B", 4);
 }
 
-void	ft_cursor_beginning(int *cur)
+void	ft_cursor_beginning(t_term *term)
 {
-	char	*tofree;
-
-	tofree = NULL;
-	write(1, "\033[", 2);
-	tofree = ft_itoa(*cur);
-	write(1, tofree, ft_intlen(*cur));
-	ft_strdel(&tofree);
-	write(1, "D", 1);
-	cur[0] = 0;
+	term->c_col = 0;
+	ft_setcursor(term->c_col, term->c_row);
 }
 
-void	ft_cursor_end(int *cur, int *col)
+void	ft_cursor_end(t_term *term)
 {
-	char	*tofree;
-
-	tofree = NULL;
-	write(1, "\033[", 2);
-	tofree = ft_itoa(*col - *cur);
-	write(1, tofree, ft_intlen(*col - *cur));
-	ft_strdel(&tofree);
-	write(1, "C", 1);
-	cur[0] = *col;
+	term->c_col = term->indx;
+	ft_setcursor(term->c_col, term->c_row);
 }
 
 void	ft_cursor_mv(t_term *term)

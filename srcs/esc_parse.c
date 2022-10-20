@@ -6,21 +6,21 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 14:18:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:15:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	shift_arrow(int *col, int *cur, int *c)
+static void	shift_arrow(t_term *term)
 {
-	c[0] = get_input();
-	c[0] = get_input();
-	c[0] = get_input();
-	if (*c == 'D' && *cur)
-		ft_cursor_beginning(cur);
-	if (*c == 'C' && *cur < *col)
-		ft_cursor_end(cur, col);
+	term->ch = get_input();
+	term->ch = get_input();
+	term->ch = get_input();
+	if (term->ch == 'D' && term->indx)
+		ft_cursor_beginning(term);
+	if (term->ch == 'C' && term->c_col < term->indx)
+		ft_cursor_end(term);
 }
 
 void	esc_parse(t_term *term, char *input)
@@ -38,11 +38,11 @@ void	esc_parse(t_term *term, char *input)
 		if (term->ch == 'B')
 			term->ch = DOWN;
 		if (term->ch == 'H' && term->indx)
-			ft_cursor_beginning(&term->indx);
-		if (term->ch == 'F' && term->indx < term->c_col)
-			ft_cursor_end(&term->indx, &term->c_col);
+			ft_cursor_beginning(term);
+		if (term->ch == 'F' && term->c_col < term->indx)
+			ft_cursor_end(term);
 		if (term->ch == '1')
-			shift_arrow(&term->c_col, &term->indx, &term->ch);
+			shift_arrow(term);
 		ft_cursor_mv(term);
 	}
 	if (term->ch == 'b')
