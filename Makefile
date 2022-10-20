@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 17:12:20 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/20 18:53:36 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
-#LEAK_CHECK	+=	-fsanitize=address
+EAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs
@@ -71,10 +71,13 @@ FILES 		= 	main \
 				ft_print_trail \
 				ft_clear_trail \
 				ft_init \
+				ft_init_signals \
 				ft_get_input \
 				ft_input_cycle \
 				ft_putc \
 				ft_esc_parse \
+				ft_disable_raw_mode \
+				ft_window_size \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
