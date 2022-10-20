@@ -106,10 +106,10 @@ static void	input_cycle(void)
 			x = 0;
 			setcursor(x, ++y);
 		}
-		else if (outchar == 27) //esc
+		/* else if (outchar == 27) //esc
 		{
 			esc_parse(input, term);
-		}
+		} */
 		else //print and cm
 		{
 			ft_putc(outchar);

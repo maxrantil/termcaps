@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 12:07:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:39:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	get_input(void)
 	return (c);
 }
 
-void	print_trail(char *input, t_term *cap)
+void	print_trail(char *input, t_term *term)
 {
 	ft_putstr("\033[s");
-	ft_putstr(&input[cap->cursor]);
+	ft_putstr(&input[term->cursor]);
 	ft_putstr("\033[H");
 	ft_putstr("\033[u");
 }

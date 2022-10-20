@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 12:24:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:41:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	ft_keyboard(char *input)
 
 int	main(void)
 {
-	char	input[BUFFSIZE];  //this should be output instead
+	char	input[BUFFSIZE];
 
 	ft_keyboard(input);
 	/*			Displaying Output					*/

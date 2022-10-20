@@ -6,11 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:38:04 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/17 15:16:05 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:41:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
 /*
 **	O_CREAT If pathname does not exist, create it as a regular file.

@@ -6,36 +6,36 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:33:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 12:36:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:40:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_cursor_right(t_term *cap)
+void	ft_cursor_right(t_term *term)
 {
-	if (cap->cursor)
-		cap->cursor++;
+	if (term->cursor)
+		term->cursor++;
 	write(1, "\033[1C", 4);
 }
 
-void	ft_cursor_left(t_term *cap)
+void	ft_cursor_left(t_term *term)
 {
-	if (cap->cursor)
-		cap->cursor--;
+	if (term->cursor)
+		term->cursor--;
 	write(1, "\033[1D", 4);
 }
 
-void	ft_cursor_up(t_term *cap)
+void	ft_cursor_up(t_term *term)
 {
-	if (cap->cur_row)
-		cap->cur_row--;
+	if (term->cur_row)
+		term->cur_row--;
 	write(1, "\033[1A", 4);
 }
 
-void	ft_cursor_down(t_term *cap)
+void	ft_cursor_down(t_term *term)
 {
-	cap->cur_row++;
+	term->cur_row++;
 	write(1, "\033[1B", 4);
 }
 
