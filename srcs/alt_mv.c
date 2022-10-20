@@ -1,43 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor_movement.c                                  :+:      :+:    :+:   */
+/*   ft_cursor_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:30:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:07:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
-
-void	cursor_right(t_termcap *cap)
-{
-	if (cap->cursor)
-		cap->cursor++;
-	write(1, "\033[1C", 4);
-}
-
-void	cursor_left(t_termcap *cap)
-{
-	if (cap->cursor)
-		cap->cursor--;
-	write(1, "\033[1D", 4);
-}
-
-void	cursor_up(t_termcap *cap)
-{
-	if (cap->cur_row)
-		cap->cur_row--;
-	write(1, "\033[1A", 4);
-}
-
-void	cursor_down(t_termcap *cap)
-{
-	cap->cur_row++;
-	write(1, "\033[1B", 4);
-}
+#include "keyboard.h"
 
 void	alt_mv_left(int *cursor, char *input)
 {

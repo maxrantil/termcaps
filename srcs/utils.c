@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:48:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:07:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
 int	get_input(void)
 {
@@ -22,7 +22,7 @@ int	get_input(void)
 	return (c);
 }
 
-void	print_trail(char *input, t_termcap *cap)
+void	print_trail(char *input, t_term *cap)
 {
 	ft_putstr("\033[s");
 	ft_putstr(&input[cap->cursor]);

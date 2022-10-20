@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_putc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 12:21:54 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 12:19:49 by mrantil           #+#    #+#             */
+/*   Updated: 2022/10/20 12:22:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	init(t_term *term)
+int	ft_putc(int c)
 {
-	term->ch = 0;
-	term->bytes = 0;
-	term->cursor = 0;
-	term->row = 0;
-	term->cur_row = 0;
+	return (write(1, &c, 1));
 }
-
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
-	{
-		disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/14 08:34:46 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/10/20 12:37:31 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(shell stty -echo)
 
 MAKEFLAGS	+= --no-print-directory
 
-NAME		=	termcaps
+NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
 #CFLAGS		+= 	-Werror
@@ -57,17 +57,19 @@ LIBRARIES 	= 	libft
 
 SOURCE_COUNT = $(words $(FILES))
 
-H_FILES 	= 	termcaps
-TERMCAPS	=	-ltermcap
+H_FILES 	= 	keyboard
+TERMCAP		=	-ltermcap
 
 
-FILES 		= 	cursor_movement_utils \
-				cursor_movement \
+FILES 		= 	main \
+				alt_mv \
+				ft_cursor \
 				init \
 				utils \
-				input_functions \
-				main \
 				shifting_bits \
+				input_cycle \
+				ft_putc \
+				esc_parse \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
@@ -82,7 +84,7 @@ ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✔$(RES
 all: libft $(NAME)
 
 $(NAME): $(OBJECTS) $(O_PATHS)
-	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(LEAK_CHECK)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(TERMCAP) $(LIBS) $(LEAK_CHECK)
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
 
 $(OBJECTS):

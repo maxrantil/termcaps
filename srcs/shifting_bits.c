@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/13 14:51:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:07:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "termcaps.h"
+#include "keyboard.h"
 
-void	insertion_shift(char *input, t_termcap *cap)
+void	insertion_shift(char *input, t_term *cap)
 {
 	int	bytes_cpy;
 
@@ -26,7 +26,7 @@ void	insertion_shift(char *input, t_termcap *cap)
 	}
 }
 
-void	deletion_shift(char *input, t_termcap *cap, int mode)
+void	deletion_shift(char *input, t_term *cap, int mode)
 {
 	int	cur_cpy;
 

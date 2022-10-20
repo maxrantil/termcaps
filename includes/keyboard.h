@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   termcaps.h                                         :+:      :+:    :+:   */
+/*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/14 08:37:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:38:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERMCAPS_H
-# define TERMCAPS_H
+#ifndef KEYBOARD_H
+# define KEYBOARD_H
 
 # include "libft.h"
 # include <termcap.h>
+# include <term.h>
+# include <curses.h>
+# include <termios.h>
 # include <stdio.h>
 # include <string.h>
 # include <signal.h>
-# include <termios.h>
 # include <unistd.h>
 # include <limits.h>
 # include <ctype.h>
@@ -43,47 +45,47 @@
 
 # define BUFFSIZE   4096
 
-typedef struct s_termcap
+typedef struct s_termterm
 {
 	int		ch;
 	int		bytes;
 	int		cursor;
 	int		row;
 	int		cur_row;
-}			t_termcap;
+}			t_term;
 
 static struct termios	g_orig_termios;
 
+void	init(t_term *term);
+void	input_cycle(char *input, t_term *term);
+int		ft_putc(int c);
+
 /* init */
-int		init_raw(void);
-void	disable_raw_mode(void);
-void	kill_process(int sig);
+/* void	kill_process(int sig); */
 
 /*		    Cursor Movement			*/
-void	cursor_left(t_termcap *cap);
-void	cursor_right(t_termcap *cap);
-void	cursor_up(t_termcap *cap);
-void	cursor_down(t_termcap *cap);
+void	ft_cursor_left(t_term *term);
+void	ft_cursor_right(t_term *term);
+void	ft_cursor_up(t_term *term);
+void	ft_cursor_down(t_term *term);
+void	ft_cursor_beginning(int *cur);
+void	ft_cursor_end(int *cur, int *bytes);
 void	alt_mv_left(int *cursor, char *input);
 void	alt_mv_right(int *cursor, char *input, int *bytes);
-void	cursor_beginning(int *cur);
-void	cursor_end(int *cur, int *bytes);
 
 /*				 Utils				*/
 int		get_input(void);
-void	print_trail(char *input, t_termcap *cap);
+void	print_trail(char *input, t_term *term);
 void	clear_trail(void);
 
 /*		      BITS Shifting			*/
-void	insertion_shift(char *input, t_termcap *cap);
-void	deletion_shift(char *input, t_termcap *cap, int mode);
+void	insertion_shift(char *input, t_term *term);
+void	deletion_shift(char *input, t_term *term, int mode);
 
 /*		   Input Functions			*/
-void	cursor_mv(t_termcap *cap);
-void	backspace(char *input, t_termcap *cap);
-void	delete(char *input, t_termcap *cap);
-void	esc_parse(char *input, t_termcap *cap);
+void	ft_cursor_mv(t_term *term);
+void	esc_parse(char *input, t_term *term);
 void	init_var(int *c, int *bytes, int *cur, int *quote);
-void	char_print(char *input, t_termcap *cap);
+
 
 #endif

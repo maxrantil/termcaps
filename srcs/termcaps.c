@@ -1,4 +1,4 @@
-#include <termcap.h>
+#include <termterm.h>
 #include <curses.h>
 #include <term.h>
 #include <stdio.h>
@@ -80,13 +80,15 @@ static int	get_input(void)
 
 static void	input_cycle(void)
 {
+	char	input[2048];
 	int		outchar;
 	int		x;
 	int		y;
 
+	memset(input, '\0', 2048);
 	x = 0;
 	y = 0;
-	while (1)
+	while (42)
 	{
 		outchar = get_input();
 		if (outchar == 3) //ctrl + c
@@ -106,12 +108,13 @@ static void	input_cycle(void)
 		}
 		else if (outchar == 27) //esc
 		{
-
+			esc_parse(input, term);
 		}
 		else //print and cm
 		{
-			setcursor(x++, y);
 			ft_putc(outchar);
+			input[x] = outchar;
+			setcursor(x++, y);
 		}
 	}
 }
@@ -130,18 +133,20 @@ int main()
 		exit(1);
 	}
 	status = tgetent(term_buffer, termtype);
-	if (status)
+	if (status > 0)
 	{
 		if (!init_raw())
 		{
 			printf("error, raw mode\n", STDERR_FILENO);
 			exit(1);
 		}	
-		// memset(capbuff, '\0', 2048);
 		input_cycle();
 		disable_raw_mode();
 	}
-	
-	// ce = tgetstr("ce", &amp;tempPtr);
+	else
+	{
+		printf("error, tgetent()\n");
+		exit(1);
+	}
 	return 0;
 }
