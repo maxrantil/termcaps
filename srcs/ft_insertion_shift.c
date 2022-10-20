@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shifting_bits.c                                    :+:      :+:    :+:   */
+/*   ft_insertion_shift.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 14:38:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 15:09:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_insertion_shift(t_term *term, char *input)
 {
 	int	col_cpy;
 
-	col_cpy = term->c_col;
+	col_cpy = term->indx;
 	while (&input[col_cpy] >= &input[term->indx])
 	{
 		input[col_cpy] = input[col_cpy] ^ input[col_cpy + 1];
