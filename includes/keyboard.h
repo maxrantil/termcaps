@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 16:14:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:33:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 typedef struct s_termterm
 {
 	int		ch;
-	int		indx;
+	int		bytes;
 	int		c_col;
 	int		c_row;
 	int		total_col;
@@ -60,35 +60,24 @@ void	init(t_term *term);
 void	input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
-void	ft_setcursor(int row, int col);
+void	ft_setcursor(int col, int row);
 void	run_capability(char *cap);
 
-/* init */
 /* void	kill_process(int sig); */
 
 /*		    Cursor Movement			*/
-void	ft_cursor_left(t_term *term);
-void	ft_cursor_right(t_term *term);
-void	ft_cursor_up(t_term *term);
-void	ft_cursor_down(t_term *term);
-void	ft_cursor_beginning(t_term *term);
-void	ft_cursor_end(t_term *term);
-void	alt_mv_left(int *cursor, char *input);
-void	alt_mv_right(int *cursor, char *input, int *col);
+void	alt_mv_left(t_term *term, char *input);
+void	alt_mv_right(t_term *term, char *input);
 
-/*				 Utils				*/
 int		get_input(void);
 void	ft_print_trail(t_term *term, char *input);
 void	ft_clear_trail(void);
 
-/*		      BITS Shifting			*/
 void	ft_insertion_shift(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
 
 /*		   Input Functions			*/
 void	ft_cursor_mv(t_term *term);
 void	esc_parse(t_term *term, char *input);
-void	init_var(int *c, int *col, int *cur, int *quote);
-
 
 #endif

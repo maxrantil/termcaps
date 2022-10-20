@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 16:06:16 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/20 16:31:45 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ TERMCAP		=	-ltermcap
 
 FILES 		= 	main \
 				alt_mv \
-				ft_cursor \
+				ft_cursor_mv \
 				run_capability \
 				ft_setcursor \
 				ft_insertion_shift \

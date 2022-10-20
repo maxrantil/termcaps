@@ -12,56 +12,20 @@
 
 #include "keyboard.h"
 
-void	alt_mv_left(int *cursor, char *input)
+void	alt_mv_left(t_term *term, char *input)
 {
-	int		b;
-	char	*tofree;
-
-	b = 0;
-	tofree = NULL;
-	while (cursor[0] > 0 && ft_isspace(&input[cursor[0] - 1]))
-	{
-		b++;
-		cursor[0]--;
-	}
-	while (cursor[0] > 0 && !ft_isspace(&input[cursor[0] - 1]))
-	{
-		b++;
-		cursor[0]--;
-	}
-	if (b)
-	{
-		write(1, "\033[", 2);
-		tofree = ft_itoa(b);
-		write(1, tofree, ft_intlen(b));
-		ft_strdel(&tofree);
-		write(1, "D", 1);
-	}
+	while (term->c_col > 0 && ft_isspace(&input[term->c_col - 1]))
+		term->c_col--;
+	while (term->c_col > 0 && !ft_isspace(&input[term->c_col - 1]))
+		term->c_col--;
+	ft_setcursor(term->c_col, term->c_row);
 }
 
-void	alt_mv_right(int *cursor, char *input, int *col)
+void	alt_mv_right(t_term *term, char *input)
 {
-	int		b;
-	char	*tofree;
-
-	b = 0;
-	tofree = NULL;
-	while (cursor[0] < *col && ft_isspace(&input[cursor[0]]))
-	{
-		b++;
-		cursor[0]++;
-	}
-	while (cursor[0] < *col && !ft_isspace(&input[cursor[0]]))
-	{
-		b++;
-		cursor[0]++;
-	}
-	if (b)
-	{
-		write(1, "\033[", 2);
-		tofree = ft_itoa(b);
-		write(1, tofree, ft_intlen(b));
-		ft_strdel(&tofree);
-		write(1, "C", 1);
-	}
+	while (term->c_col < term->bytes && ft_isspace(&input[term->c_col]))
+		term->c_col++;
+	while (term->c_col < term->bytes && !ft_isspace(&input[term->c_col]))
+		term->c_col++;
+	ft_setcursor(term->c_col, term->c_row);
 }

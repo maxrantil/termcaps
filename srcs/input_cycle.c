@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 15:54:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:25:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ static void	backspace(t_term *term, char *input)
 {
 	write(1, "\033[1D", 4);
 	ft_clear_trail();
-	if (term->indx == term->c_col)
+	if (term->bytes == term->c_col)
 	{
 		term->c_col--;
-		term->indx--;
-		input[term->indx] = '\0';
+		term->bytes--;
+		input[term->bytes] = '\0';
 	}
 	else
 		ft_deletion_shift(input, term, BCK);
-	if (input[term->indx])
+	if (input[term->bytes])
 		ft_print_trail(term, input);
 }
 
@@ -57,9 +57,9 @@ void	input_cycle(t_term *term, char *input)
 			break ;
 		else if (term->ch == ENTER && !quote)
 			return ;
-		else if (term->ch == CTRL_D && term->indx < term->c_col)
+		else if (term->ch == CTRL_D && term->bytes < term->c_col)
 			delete(term, input);
-		else if (term->ch == BACKSPACE && term->indx > 0)
+		else if (term->ch == BACKSPACE && term->bytes > 0)
 			backspace(term, input);
 		if (term->ch == ESCAPE)
 			esc_parse(term, input);
@@ -73,7 +73,7 @@ void	input_cycle(t_term *term, char *input)
 			ft_setcursor(term->c_col, term->c_row);
 			if (input[term->c_col])
 				ft_print_trail(term, input);
-			term->indx++;
+			term->bytes++;
 			if (term->ch == ENTER && quote)
 			{
 				write(1, "> ", 2);
