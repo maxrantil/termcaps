@@ -63,7 +63,7 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				flags_proc_zero_space.c width_and_precision.c tools_write_flags.c tools_itoa_b_getit_nullprint.c \
 				colors.c
 				
-_SRC_VEC	=	vec_new.c vec_free.c vec_from.c vec_resize.c vec_get.c vec_push.c vec_sort.c vec_iter.c
+_SRC_VEC	=	vec_new.c vec_free.c vec_resize.c vec_get.c vec_push.c
 
 DIR_LIBFT	=	libft/
 DIR_PRINTF	=	ft_printf/
