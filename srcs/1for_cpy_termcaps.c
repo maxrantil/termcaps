@@ -47,7 +47,7 @@ static int	init_raw(void)
 	return (1);
 }
 
-static void	disable_raw_mode(void)
+static void	ft_disable_raw_mode(void)
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
 	tputs(tgetstr("te", NULL), 1, ft_putc);
@@ -141,7 +141,7 @@ int main()
 			exit(1);
 		}	
 		input_cycle();
-		disable_raw_mode();
+		ft_disable_raw_mode();
 	}
 	else
 	{

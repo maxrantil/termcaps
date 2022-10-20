@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 17:11:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:44:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ static int	init_raw(void)
 	return (1);
 }
 
-static void	disable_raw_mode(void)
-{
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
-	tputs(tgetstr("te", NULL), 1, ft_putc);
-}
-
 static int	ft_keyboard(char *input)
 {
 	t_term		term;
@@ -43,7 +37,9 @@ static int	ft_keyboard(char *input)
 	char		*termtype;
 	int			status;
 
+	
 	ft_init(&term);
+	/* ft_init_signals(); */
 	ft_memset(input, '\0', BUFFSIZE);
 	status = tgetent(term_buffer, "ANSI");
 	termtype = getenv("TERM");
@@ -61,7 +57,7 @@ static int	ft_keyboard(char *input)
 			exit(1);
 		}	
 		ft_input_cycle(&term, input);
-		disable_raw_mode();
+		ft_disable_raw_mode();
 	}
 	else
 	{

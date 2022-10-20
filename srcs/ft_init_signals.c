@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_init_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 18:53:07 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 18:17:16 by mrantil           #+#    #+#             */
+/*   Updated: 2022/10/20 18:55:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-t_term		*g_term;
+extern t_term	*g_term;
 
-void	ft_init(t_term *term)
+static void	sig_handler(int num)
 {
-	ft_init_signals();
-	term->ch = 0;
-	term->bytes = 0;
-	term->c_col = 0;
-	term->c_row = 0;
-	term->total_col = 0;
-	term->total_row = 0;
-	term->ws_col = 0;
-	term->ws_row = 0;
-	g_term = term;
-	ft_window_size(term);
-}
-
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
+	if (num == SIGWINCH)
+		ft_window_size(g_term);
+	/* if (num == SIGINT)
 	{
 		ft_disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */
+		exit(130);
+	} */
+}
+
+void	ft_init_signals(void)
+{
+	/* signal(SIGINT, sig_handler); */
+	signal(SIGWINCH, sig_handler);
+}

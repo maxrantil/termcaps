@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 17:12:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:18:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define KEYBOARD_H
 
 # include "libft.h"
+// # include "ft_printf.h"
 # include <termcap.h>
 # include <term.h>
 # include <curses.h>
 # include <termios.h>
-# include <stdio.h>
 # include <string.h>
 # include <signal.h>
 # include <unistd.h>
@@ -26,6 +26,7 @@
 # include <ctype.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <sys/ioctl.h>
 
 # define DEL		0
 # define BCK		1
@@ -52,16 +53,21 @@ typedef struct s_termterm
 	int		c_row;
 	int		total_col;
 	int		total_row;
+	size_t	ws_col;
+	size_t	ws_row;
 }			t_term;
 
 static struct termios	g_orig_termios;
 
 void	ft_init(t_term *term);
+void	ft_disable_raw_mode(void);
 void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
 void	ft_setcursor(int col, int row);
 void	ft_run_capability(char *cap);
+void	ft_window_size(t_term *term);
+void	ft_init_signals(void);
 
 /* void	kill_process(int sig); */
 

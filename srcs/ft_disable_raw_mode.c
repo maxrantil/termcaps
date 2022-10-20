@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_disable_raw_mode.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 18:53:07 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/20 17:42:37 by mrantil           #+#    #+#             */
+/*   Updated: 2022/10/20 17:44:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-t_term		*g_term;
-
-void	ft_init(t_term *term)
+void	ft_disable_raw_mode(void)
 {
-	ft_init_signals();
-	term->ch = 0;
-	term->bytes = 0;
-	term->c_col = 0;
-	term->c_row = 0;
-	term->total_col = 0;
-	term->total_row = 0;
-	term->ws_col = 0;
-	term->ws_row = 0;
-	g_term = term;
-	ft_window_size(term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
+	ft_run_capability("te");
 }
-
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
-	{
-		ft_disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */
