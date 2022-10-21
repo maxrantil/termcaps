@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 16:52:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:36:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void	ft_input_cycle(t_term *term, char *input)
 	int		quote;
 
 	quote = 0;
+	write(1, "$> ", 3);
 	while (term->ch != -1)
-	{
+	{		
 		term->ch = ft_get_input();
 		if (term->ch == D_QUOTE || term->ch == S_QUOTE)
 			quote_count(&quote, term->ch);
@@ -59,9 +60,11 @@ void	ft_input_cycle(t_term *term, char *input)
 		{
 			ft_putchar('\n');
 			ft_putendl_fd(input, STDOUT_FILENO);
-			term->c_col = 0;
-			term->c_row += 2;
-			term->total_row += 2;
+			write(1, "$> ", 3);
+			term->c_col = 3;
+			term->total_row += term->q_prompt + 2;
+			term->c_row += term->q_prompt + 2;
+			term->indx = 0;
 			ft_memset(input, '\0', BUFFSIZE);
 		}
 		else if (term->ch == CTRL_D && term->bytes < term->c_col)
@@ -73,19 +76,21 @@ void	ft_input_cycle(t_term *term, char *input)
 		if (isprint(term->ch) || (term->ch == ENTER && quote))
 		{
 			ft_putc(term->ch);
-			if (input[term->c_col])
+			if (input[term->indx])
 				ft_insertion_shift(term, input);
-			input[term->c_col++] = term->ch;
+			input[term->indx++] = term->ch;
 			term->total_col++;
-			ft_setcursor(term->c_col, term->c_row);
-			if (input[term->c_col])
+			ft_setcursor(++term->c_col, term->c_row);
+			if (input[term->indx])
 				ft_print_trail(term, input);
 			term->bytes++;
 			if (term->ch == ENTER && quote)
 			{
-				write(1, "> ", 2);
+				write(1, "\n> ", 3);
 				term->c_row++; 
+				term->c_col = 2;
 				term->total_row++;
+				term->q_prompt++;
 			}
 		}
 		if (term->ch == -1)

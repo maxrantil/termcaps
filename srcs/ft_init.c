@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 18:53:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:32:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ void	ft_init(t_term *term)
 	ft_init_signals();
 	term->ch = 0;
 	term->bytes = 0;
-	term->c_col = 0;
+	term->c_col = 3;
 	term->c_row = 0;
 	term->total_col = 0;
 	term->total_row = 0;
 	term->ws_col = 0;
 	term->ws_row = 0;
+	term->indx = 0;
+	term->q_prompt = 0;
 	g_term = term;
 	ft_window_size(term);
 }

@@ -6,12 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 18:44:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:51:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+
+/*
+**	If optional_actions is TCSAFLUSH, the change shall occur after all output 
+**	written to fildes is transmitted, and all input so far received but not
+**	read shall be discarded before the change is made.
+*/
 static int	init_raw(void)
 {
 	struct termios	raw;
@@ -19,15 +25,21 @@ static int	init_raw(void)
 	if (tcgetattr(STDIN_FILENO, &g_orig_termios) == -1)
 		return (0);
 	raw = g_orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
+	raw.c_lflag &= ~(ICANON |ECHO | IEXTEN | ISIG);
 	raw.c_iflag &= ~(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == -1)
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
 		return (0);
 	ft_run_capability("ti");
 	ft_run_capability("cl");
 	return (1);
+}
+
+static void	ft_disable_raw_mode(void) //why doesnt this work without being a static in same file???
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
+	ft_run_capability("te");
 }
 
 static int	ft_keyboard(char *input)
@@ -39,7 +51,6 @@ static int	ft_keyboard(char *input)
 
 	
 	ft_init(&term);
-	/* ft_init_signals(); */
 	ft_memset(input, '\0', BUFFSIZE);
 	status = tgetent(term_buffer, "ANSI");
 	termtype = getenv("TERM");

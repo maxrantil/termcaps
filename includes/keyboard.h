@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 18:18:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:32:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ typedef struct s_termterm
 	int		total_row;
 	size_t	ws_col;
 	size_t	ws_row;
+	size_t	indx;
+	size_t	q_prompt;
 }			t_term;
 
 static struct termios	g_orig_termios;
 
 void	ft_init(t_term *term);
-void	ft_disable_raw_mode(void);
+/* void	ft_disable_raw_mode(void); */
 void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
