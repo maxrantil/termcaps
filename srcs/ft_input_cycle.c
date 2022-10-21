@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/21 12:36:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 15:14:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	ft_input_cycle(t_term *term, char *input)
 			term->total_row += term->q_prompt + 2;
 			term->c_row += term->q_prompt + 2;
 			term->indx = 0;
+			vec_push(&term->v_history, input);
+			if (!ft_strcmp(input, "history"))
+				ft_history(term);
 			ft_memset(input, '\0', BUFFSIZE);
 		}
 		else if (term->ch == CTRL_D && term->bytes < term->c_col)

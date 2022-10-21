@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/21 12:32:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 15:15:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define KEYBOARD_H
 
 # include "libft.h"
+# include "get_next_line.h"
+# include "vec.h"
 // # include "ft_printf.h"
 # include <termcap.h>
 # include <term.h>
@@ -47,16 +49,17 @@
 
 typedef struct s_termterm
 {
+	t_vec	v_history;
+	size_t	ws_col;
+	size_t	ws_row;
+	size_t	indx;
+	size_t	q_prompt;
 	int		ch;
 	int		bytes;
 	int		c_col;
 	int		c_row;
 	int		total_col;
 	int		total_row;
-	size_t	ws_col;
-	size_t	ws_row;
-	size_t	indx;
-	size_t	q_prompt;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -73,9 +76,14 @@ void	ft_init_signals(void);
 
 /* void	kill_process(int sig); */
 
+/*	History	*/
+void	ft_history(t_term *term);
+void	ft_get_history(t_term *term);
+void	ft_history_write_to_file(t_term *term);
+
+
 /*		    Cursor Movement			*/
-void	ft_alt_mv_left(t_term *term, char *input);
-void	ft_alt_mv_right(t_term *term, char *input);
+void	ft_alt_cursor_mv(t_term *term, char *input);
 
 int		ft_get_input(void);
 void	ft_print_trail(t_term *term, char *input);

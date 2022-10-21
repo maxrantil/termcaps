@@ -41,25 +41,18 @@ void	ft_esc_parse(t_term *term, char *input)
 	if (term->ch == '[')
 	{
 		term->ch = ft_get_input();
-		if (term->ch == 'D')
-			term->ch = LEFT;
-		if (term->ch == 'C')
-			term->ch = RIGHT;
-		if (term->ch == 'A')
-			term->ch = UP;
-		if (term->ch == 'B')
-			term->ch = DOWN;
+		if (term->ch == 'D' || term->ch == 'C' || term->ch == 'A' || term->ch == 'B')
+			ft_cursor_mv(term);
+		if (term->ch == 49)
+			ft_alt_cursor_mv(term, input);
 		if (term->ch == 'H' && term->bytes)
 			ft_cursor_beginning(term);
 		if (term->ch == 'F' && term->c_col < term->bytes)
 			ft_cursor_end(term);
 		if (term->ch == '1')
 			shift_arrow(term);
-		ft_cursor_mv(term);
 	}
-	if (term->ch == 'b')
-		ft_alt_mv_left(term, input);
-	if (term->ch == 'f')
-		ft_alt_mv_right(term, input);
+	if (term->ch == 98 || term->ch == 102)
+		ft_alt_cursor_mv(term, input);
 	term->ch = 0;
 }

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/20 18:53:36 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/21 15:13:58 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,9 @@ FILES 		= 	main \
 				ft_deletion_shift \
 				ft_print_trail \
 				ft_clear_trail \
+				ft_history \
+				ft_history_get \
+				ft_history_write_to_file \
 				ft_init \
 				ft_init_signals \
 				ft_get_input \
