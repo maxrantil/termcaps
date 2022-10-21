@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/21 15:15:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:40:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 
 # define BUFFSIZE   2048
 
-typedef struct s_termterm
+typedef struct s_term
 {
 	t_vec	v_history;
 	size_t	ws_col;
