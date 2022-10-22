@@ -64,7 +64,7 @@ static int	ft_keyboard(char *input)
 	{
 		if (!init_raw())
 		{
-			printf("error, raw mode\n", STDERR_FILENO);
+			ft_putendl_fd("error, raw mode", STDERR_FILENO);
 			exit(1);
 		}	
 		ft_input_cycle(&term, input);
