@@ -18,7 +18,7 @@
 
 # define SPECIF "cspdiouxXfb%"
 # define FLAGS "+-#0 "
-# define COLORS "nrgybmcw"
+// # define COLORS "nrgybmcw"
 # define LENGTH "hhllL"
 # define NOR  "\x1B[0;0m"
 # define RED  "\x1B[0;31m"

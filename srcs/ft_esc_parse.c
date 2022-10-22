@@ -41,7 +41,7 @@ void	ft_esc_parse(t_term *term, char *input)
 	if (term->ch == '[')
 	{
 		term->ch = ft_get_input();
-		if (term->ch == 'D' || term->ch == 'C' || term->ch == 'A' || term->ch == 'B')
+		if (term->ch >= 'A' && term->ch <= 'D')
 			ft_cursor_mv(term);
 		if (term->ch == 49)
 			ft_alt_cursor_mv(term, input);

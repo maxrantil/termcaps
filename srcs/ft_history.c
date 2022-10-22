@@ -18,10 +18,11 @@ void	ft_history(t_term *term)
 
 	write(1, "\n", 1);
 	num_incr = 0;
-	while (++num_incr <= term->v_history.len)
+	while (++num_incr < term->v_history.len)
 	{
-		ft_putnbr(num_incr);
-		write(1, "  ", 2);
-		ft_putendl((char *)vec_get(&term->v_history, num_incr - 1));
+		// ft_putnbr(num_incr);
+		// write(1, "  ", 2);
+		// ft_putendl((char *)vec_get(&term->v_history, num_incr - 1));
+		ft_printf("%4d  %s\n", num_incr, (char *)vec_get(&term->v_history, num_incr - 1));
 	}
 }
