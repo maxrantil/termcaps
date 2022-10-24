@@ -14,19 +14,37 @@
 
 static void	ft_alt_mv_left(t_term *term, char *input)
 {
-	while (term->c_col > 0 && ft_isspace(&input[term->c_col - 1]))
-		term->c_col--;
-	while (term->c_col > 0 && !ft_isspace(&input[term->c_col - 1]))
-		term->c_col--;
+	while (term->indx && ft_isspace(&input[term->indx - 1]))
+		term->indx--;
+	while (term->indx && !ft_isspace(&input[term->indx - 1]))
+		term->indx--;
+	term->c_col = &input[term->indx] - term->new_line_addr[term->c_row];
+	if (!term->c_row)
+		term->c_col += 3; // ft_strlen prompt
+	else
+		term->c_col += 2;
 	ft_setcursor(term->c_col, term->c_row);
 }
+// static void	ft_alt_mv_left(t_term *term, char *input)
+// {
+// 	while (term->c_col > 0 && ft_isspace(&input[term->c_col - 1]))
+// 		term->c_col--;
+// 	while (term->c_col > 0 && !ft_isspace(&input[term->c_col - 1]))
+// 		term->c_col--;
+// 	ft_setcursor(term->c_col, term->c_row);
+// }
 
 static void	ft_alt_mv_right(t_term *term, char *input)
 {
-	while (term->c_col < term->bytes && ft_isspace(&input[term->c_col]))
-		term->c_col++;
-	while (term->c_col < term->bytes && !ft_isspace(&input[term->c_col]))
-		term->c_col++;
+	while ((int)term->indx < term->bytes && ft_isspace(&input[term->indx]))
+		term->indx++;
+	while ((int)term->indx < term->bytes && !ft_isspace(&input[term->indx]))
+		term->indx++;
+	term->c_col = &input[term->indx] - term->new_line_addr[term->c_row];
+	if (!term->c_row)
+		term->c_col += 3; // ft_strlen prompt
+	else
+		term->c_col += 2;
 	ft_setcursor(term->c_col, term->c_row);
 }
 
