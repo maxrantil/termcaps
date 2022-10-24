@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 10:31:54 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:31:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,18 @@ void	ft_input_cycle(t_term *term, char *input)
 			ft_putchar('\n');
 			ft_putstr(input);
 			ft_putchar('\n');
-			// ft_putendl_fd(input, STDOUT_FILENO);
-			// write(1, "$> ", 3);
-			// term->c_col = 3;
-			// term->total_row += term->q_prompt + 2;
-			// // term->c_row += term->q_prompt + 2;
-			// term->indx = 0;
-			// vec_push(&term->v_history, input);
-			// if (!ft_strcmp(input, "history"))
-			// 	ft_history(term);
-			// ft_memset(input, '\0', BUFFSIZE);
-			// ft_memdel((void **)&term->new_line_addr);
-			break ;
+			ft_putendl_fd(input, STDOUT_FILENO);
+			write(1, "$> ", 3);
+			term->c_col = 3;
+			term->total_row += term->q_prompt + 2;
+			// term->c_row += term->q_prompt + 2;
+			term->indx = 0;
+			vec_push(&term->v_history, input);
+			if (!ft_strcmp(input, "history"))
+				ft_history(term);
+			ft_memset(input, '\0', BUFFSIZE);
+			ft_memdel((void **)&term->new_line_addr);
+			// break ;
 		}
 		else if (term->ch == CTRL_D && term->bytes < term->c_col)
 			delete(term, input);

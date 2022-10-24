@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/22 10:47:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:21:25 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_init_signals(void);
 
 /*	History	*/
 void	ft_history(t_term *term);
-void	ft_get_history(t_term *term);
+void	ft_history_get(t_term *term);
 void	ft_history_write_to_file(t_term *term);
 
 
@@ -94,7 +94,7 @@ void	ft_clear_trail(void);
 void	ft_insertion_shift(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
 
-void	ft_cursor_mv(char *input, t_term *term);
+void	ft_cursor_mv(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
 
 #endif

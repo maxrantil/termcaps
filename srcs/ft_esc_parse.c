@@ -137,7 +137,7 @@ void	ft_esc_parse(t_term *term, char *input)
 	{
 		term->ch = ft_get_input();
 		if (term->ch >= 'A' && term->ch <= 'D')
-			ft_cursor_mv(term);
+			ft_cursor_mv(term, input);
 		if (term->ch == 49)
 			ft_alt_cursor_mv(term, input);
 		if (term->ch == 'H' && term->bytes)

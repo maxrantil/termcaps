@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cursor_mv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 11:22:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:20:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_cursor_down(t_term *term, int his)
 	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - his));
 }
 
-void	ft_cursor_mv(char *input, t_term *term)
+void	ft_cursor_mv(t_term *term, char *input)
 {
 	static size_t his;
 
