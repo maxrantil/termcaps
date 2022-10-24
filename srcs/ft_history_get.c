@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/21 15:16:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/24 13:39:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_history_get(t_term *term)
 
 	vec_new(&term->v_history, 0, sizeof(char) * 256);
 	file = ft_strjoin(getenv("HOME"), "/.42sh_history");
-	fd = open(file, O_CREAT | O_RDONLY | O_APPEND, S_IRWXU);
+	fd = open(file, O_CREAT, O_RDONLY);
 	while (get_next_line(fd, &buf) > 0)
 	{
 		vec_push(&term->v_history, buf);
