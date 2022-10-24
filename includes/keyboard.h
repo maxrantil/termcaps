@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/21 16:40:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/22 10:47:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_term
 	int		c_row;
 	int		total_col;
 	int		total_row;
+
+	char	**new_line_addr;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -92,7 +94,7 @@ void	ft_clear_trail(void);
 void	ft_insertion_shift(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
 
-void	ft_cursor_mv(t_term *term);
+void	ft_cursor_mv(char *input, t_term *term);
 void	ft_esc_parse(t_term *term, char *input);
 
 #endif
