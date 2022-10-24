@@ -58,7 +58,7 @@ LIBRARIES 	= 	libft
 SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	keyboard
-TERMCAP		=	-ltermcap
+TERMCAP		=	-lncurses
 
 
 FILES 		= 	main \

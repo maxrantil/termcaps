@@ -18,21 +18,20 @@
 **	S_IRWXU  00700 user (file owner) has read, write, and execute permission	
 */
 
-void	ft_get_history(t_term *term)
+void	ft_history_get(t_term *term)
 {
 	char	*buf;
+	char	*file;
 	int		fd;
 
 	vec_new(&term->v_history, 0, sizeof(char) * 256);
-	fd = open(".42sh_history", O_CREAT | O_RDONLY | S_IRWXU);
-	if (fd)
+	file = ft_strjoin(getenv("HOME"), "/.42sh_history");
+	fd = open(file, O_CREAT | O_RDONLY | O_APPEND, S_IRWXU);
+	while (get_next_line(fd, &buf) > 0)
 	{
-		while (get_next_line(fd, &buf) > 0)
-		{
-			vec_push(&term->v_history, buf);
-			ft_strdel(&buf);
-		}
-		close(fd);
+		vec_push(&term->v_history, buf);
+		ft_strdel(&buf);
 	}
-	return ;
+	close(fd);
+	ft_strdel(&file);
 }

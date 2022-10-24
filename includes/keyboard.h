@@ -15,8 +15,8 @@
 
 # include "libft.h"
 # include "get_next_line.h"
+# include "ft_printf.h"
 # include "vec.h"
-// # include "ft_printf.h"
 # include <termcap.h>
 # include <term.h>
 # include <curses.h>

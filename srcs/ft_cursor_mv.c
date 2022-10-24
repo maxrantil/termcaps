@@ -38,24 +38,30 @@ static void	ft_cursor_left(char *input, t_term *term)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
-static void	ft_cursor_up(t_term *term)
+static void	ft_cursor_up(t_term *term, int his)
 {
-	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - 1));
+	ft_run_capability("cb");
+	ft_run_capability("cl");
+	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - his));
 }
 
-static void	ft_cursor_down(t_term *term)
+static void	ft_cursor_down(t_term *term, int his)
 {
-	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len));
+	ft_run_capability("cb");
+	ft_run_capability("cl");
+	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - his));
 }
 
 void	ft_cursor_mv(char *input, t_term *term)
 {
+	static size_t his;
+
 	if (term->ch == 'D' && term->indx)
 		ft_cursor_left(input, term);
 	else if (term->ch == 'C') // THis might need to change so, if term->indx == '\n', move to the next line
 		ft_cursor_right(input, term);
-	else if (term->ch == 'A')
-		ft_cursor_up(term);
-	else if (term->ch == 'B')
-		ft_cursor_down(term);
+	else if (term->ch == 'A' && his < term->v_history.len)
+		ft_cursor_up(term, ++his);
+	else if (term->ch == 'B' && his > 0)
+		ft_cursor_down(term, --his);
 }

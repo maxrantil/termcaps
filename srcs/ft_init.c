@@ -27,7 +27,7 @@ void	ft_init(t_term *term)
 	term->ws_row = 0;
 	term->indx = 0;
 	term->q_prompt = 0;
-	ft_get_history(term);
+	ft_history_get(term);
 	g_term = term;
 	ft_window_size(term);
 	term->new_line_addr = NULL;

@@ -18,21 +18,20 @@
 
 void	ft_history_write_to_file(t_term *term)
 {
+	char	*file;
 	size_t	cpy;
 	int		fd;
 
-	fd = open(".42sh_history", O_WRONLY);
-	if (fd)
+	file = ft_strjoin(getenv("HOME"), "/.42sh_history");
+	fd = open(file, O_WRONLY);
+	cpy = 0;
+	if (term->v_history.len > 1024)
+		cpy = term->v_history.len % 1024;
+	while (cpy < term->v_history.len)
 	{
-		cpy = 0;
-		if (term->v_history.len > 1024)
-			cpy = term->v_history.len % 1024;
-		while (cpy < term->v_history.len)
-		{
-			ft_putendl_fd((char *)vec_get(&term->v_history, cpy), fd);
-			cpy++;
-		}
-		close(fd);
+		ft_putendl_fd((char *)vec_get(&term->v_history, cpy), fd);
+		cpy++;
 	}
-	return ;
+	close(fd);
+	ft_strdel(&file);
 }
