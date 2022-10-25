@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 13:31:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/25 14:47:21 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,31 @@
 static void	delete(t_term *term, char *input)
 {
 	ft_deletion_shift(input, term, DEL);
-	ft_clear_trail();
+	ft_run_capability("ce");
 	ft_print_trail(term, input);
 }
 
 static void	backspace(t_term *term, char *input)
 {
-	write(1, "\033[1D", 4);
-	ft_clear_trail();
-	if (term->bytes == term->c_col)
+	if (&input[term->indx] == term->new_line_addr[term->c_row])
 	{
-		term->c_col--;
-		term->bytes--;
-		input[term->bytes] = '\0';
+		term->c_col = term->new_line_addr[term->c_row] - term->new_line_addr[term->c_row - 1];
+		term->c_row--;
+		if (!term->c_row)
+			term->c_col += 3;
+		else
+			term->c_col += 2;
+	}
+	ft_setcursor(--term->c_col, term->c_row);
+	ft_run_capability("ce");
+	if ((int)term->indx == term->bytes)
+	{
+		input[--term->bytes] = '\0';
+		term->indx--;
 	}
 	else
 		ft_deletion_shift(input, term, BCK);
-	if (input[term->bytes])
+	if (input[term->indx])
 		ft_print_trail(term, input);
 }
 
@@ -68,16 +76,21 @@ static void	get_new_line_addr(char *input, t_term *term)
 	}
 }
 
-static void update_nl_addr(t_term *term)
+static void update_nl_addr(char *input, t_term *term, int num)
 {
 	int		i;
 
-	i = term->c_row + 1;
-	while (i <= term->total_row)
-	{
-		term->new_line_addr[i] = &term->new_line_addr[i][1];
-		i++;	
+	if (term->new_line_addr[term->c_row + 1])
+	{	
+		i = term->c_row + 1;
+		while (i <= term->total_row)
+		{
+			term->new_line_addr[i] = &term->new_line_addr[i][num];
+			i++;	
+		}
 	}
+	if (!term->indx)
+		term->new_line_addr[0] = &input[0];
 }
 
 void	ft_input_cycle(t_term *term, char *input)
@@ -113,17 +126,22 @@ void	ft_input_cycle(t_term *term, char *input)
 			ft_memdel((void **)&term->new_line_addr);
 			// break ;
 		}
-		else if (term->ch == CTRL_D && term->bytes < term->c_col)
+		else if (term->ch == CTRL_D && (int)term->indx < term->bytes)
+		{
 			delete(term, input);
-		else if (term->ch == BACKSPACE && term->bytes > 0)
+			update_nl_addr(input, term, -1);
+		}
+		else if (term->ch == BACKSPACE && term->indx)
+		{
 			backspace(term, input);
+			update_nl_addr(input, term, -1);
+		}
 		if (term->ch == ESCAPE)
 			ft_esc_parse(term, input);
 		if (isprint(term->ch) || (term->ch == ENTER && quote))
 		{
 			ft_putc(term->ch);
-			if (term->total_row)
-				update_nl_addr(term);
+			update_nl_addr(input, term, 1);
 			if (input[term->indx])
 				ft_insertion_shift(term, input);
 			input[term->indx++] = term->ch;
@@ -140,6 +158,13 @@ void	ft_input_cycle(t_term *term, char *input)
 				term->total_row++;
 				get_new_line_addr(input, term);
 				term->q_prompt++;
+			}
+			if (term->c_col == (int)term->ws_col - 1) // not sure if it should be - 1;
+			{
+				get_new_line_addr(input, term);
+				term->c_row++; 
+				term->c_col = -1;
+				term->total_row++;
 			}
 		}
 		if (term->ch == -1)

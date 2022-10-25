@@ -36,19 +36,25 @@ static char	*get_str_end(char *str)
 
 static void	ft_cursor_end(t_term *term)
 {
-	if (term->new_line_addr[term->c_row + 1])
-		term->c_col = term->new_line_addr[term->c_row + 1] - term->new_line_addr[term->c_row];
+	if (!term->total_row)
+	{
+		term->c_col = (get_str_end(term->new_line_addr[term->c_row]) -  term->new_line_addr[term->c_row]) + 2;
+		term->indx = term->c_col - 3;
+	}
 	else
 	{
-		if (!term->c_row)
-		{
-			term->c_col = (get_str_end(term->new_line_addr[term->c_row]) -  term->new_line_addr[term->c_row]) + 2;
-			term->indx = term->c_col - 3;
-		}
-		else
+		if (term->c_row == term->total_row)
 		{
 			term->c_col = (get_str_end(term->new_line_addr[term->c_row]) -  term->new_line_addr[term->c_row]) + 1;
 			term->indx = (get_str_end(term->new_line_addr[term->c_row]) - term->new_line_addr[0]) - 1;
+		}
+		else
+		{
+			if (!term->c_row)
+				term->c_col = (term->new_line_addr[term->c_row + 1] -  term->new_line_addr[term->c_row]) + 2;
+			else
+				term->c_col = (term->new_line_addr[term->c_row + 1] -  term->new_line_addr[term->c_row]) + 1;
+			term->indx = (term->new_line_addr[term->c_row + 1] - term->new_line_addr[0]) - 1;
 		}
 	}
 	ft_setcursor(term->c_col, term->c_row);

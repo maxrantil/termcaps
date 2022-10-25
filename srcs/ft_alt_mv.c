@@ -63,7 +63,7 @@ static void	ft_alt_mv_down(t_term *term)
 
 void	ft_alt_cursor_mv(t_term *term, char *input)
 {
-	if (term->ch == 98)
+	if (term->ch == 98 && &input[term->indx] > term->new_line_addr[term->c_row])
 		ft_alt_mv_left(term, input);
 	else if (term->ch == 102)
 		ft_alt_mv_right(term, input);
