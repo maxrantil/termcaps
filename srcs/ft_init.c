@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/22 10:48:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	ft_init(t_term *term)
 	ft_init_signals();
 	term->ch = 0;
 	term->bytes = 0;
-	term->c_col = 3;
 	term->c_row = 0;
-	term->total_col = 0;
+	// term->total_col = 0;
 	term->total_row = 0;
 	term->ws_col = 0;
 	term->ws_row = 0;
@@ -30,7 +29,10 @@ void	ft_init(t_term *term)
 	ft_history_get(term);
 	g_term = term;
 	ft_window_size(term);
-	term->new_line_addr = NULL;
+	term->nl_addr = NULL;
+	term->prompt_len = ft_strlen(PROMPT);
+	term->m_prompt_len = ft_strlen(MINI_PROMPT);
+	term->c_col = term->prompt_len;
 }
 
 /* void	kill_process(int sig)

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 14:43:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void print_line_trail(t_term *term, char *input)
 	int i;
 
 	i = term->indx;
-	if (term->new_line_addr[term->c_row + 1])
+	if (term->nl_addr[term->c_row + 1])
 	{
-		write(1, &input[i], (term->new_line_addr[term->c_row + 1] - &input[i]) - 1);
+		write(1, &input[i], (term->nl_addr[term->c_row + 1] - &input[i]) - 1);
 	}
 	else
 		write(1, &input[i], ft_strlen(&input[i]));

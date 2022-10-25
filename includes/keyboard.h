@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/24 13:21:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:32:00 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,27 @@
 # define BACKSPACE	127
 # define TAB		9
 
+# define PROMPT "$> "
+# define MINI_PROMPT "> " // This cannot be longer that PROMPT and both these string can not be changed
+
 # define BUFFSIZE   2048
 
 typedef struct s_term
 {
+	int		ch;
 	t_vec	v_history;
 	size_t	ws_col;
 	size_t	ws_row;
 	size_t	indx;
 	size_t	q_prompt;
-	int		ch;
-	int		bytes;
-	int		c_col;
-	int		c_row;
-	int		total_col;
-	int		total_row;
-
-	char	**new_line_addr;
+	size_t	bytes;
+	size_t	c_col;
+	size_t	c_row;
+	size_t	total_row;
+	size_t	prompt_len;
+	size_t	m_prompt_len;
+	char	**nl_addr;
+	// int	total_col;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -96,5 +100,9 @@ void	ft_deletion_shift(char *input, t_term *term, int mode);
 
 void	ft_cursor_mv(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
+
+
+
+char	*get_str_end(char *str);
 
 #endif
