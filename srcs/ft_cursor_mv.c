@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cursor_mv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 13:20:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 static void	ft_cursor_right(char *input, t_term *term)
 {
-	if ((int)term->indx < term->bytes && input[term->indx] != '\n')
+	if (term->indx < term->bytes)
 	{
-		term->indx++;
-		// if (input[term->indx] == '\n' && term->c_row)
-		// 	term->c_col++;
-		ft_setcursor(++term->c_col, term->c_row);
+		if (term->nl_addr[term->c_row + 1])
+		{
+			if (&input[term->indx] < (term->nl_addr[term->c_row + 1] - 1))
+			{
+				term->indx++;
+				ft_setcursor(++term->c_col, term->c_row);
+			}
+		}
+		else
+		{
+			term->indx++;
+			ft_setcursor(++term->c_col, term->c_row);
+		}
 	}
 }
 
@@ -27,12 +36,12 @@ static void	ft_cursor_left(char *input, t_term *term)
 {
 	term->indx--;
 	term->c_col--;
-	if (&input[term->indx + 1] == term->new_line_addr[term->c_row])
+	if (&input[term->indx + 1] == term->nl_addr[term->c_row])
 	{
 		if (term->c_row == 1)
-			term->c_col = (term->new_line_addr[term->c_row] - term->new_line_addr[term->c_row - 1]) + 2;
+			term->c_col = (term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1]) + (term->prompt_len - 1);
 		else
-			term->c_col = (term->new_line_addr[term->c_row] - term->new_line_addr[term->c_row - 1]) + 1;
+			term->c_col = (term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1]) + (term->m_prompt_len - 1);
 		term->c_row--;
 	}
 	ft_setcursor(term->c_col, term->c_row);
@@ -58,7 +67,7 @@ void	ft_cursor_mv(t_term *term, char *input)
 
 	if (term->ch == 'D' && term->indx)
 		ft_cursor_left(input, term);
-	else if (term->ch == 'C') // THis might need to change so, if term->indx == '\n', move to the next line
+	else if (term->ch == 'C')
 		ft_cursor_right(input, term);
 	else if (term->ch == 'A' && his < term->v_history.len)
 		ft_cursor_up(term, ++his);
