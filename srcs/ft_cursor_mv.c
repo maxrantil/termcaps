@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:18:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,21 @@ static void	ft_cursor_left(char *input, t_term *term)
 
 static void	ft_cursor_up(t_term *term, int his)
 {
-	ft_run_capability("cb");
-	ft_run_capability("cl");
+	term->c_col = term->prompt_len;
+	ft_setcursor(term->c_col, term->c_row);
+	// ft_run_capability("cb");
+	// ft_run_capability("cl");
+	ft_run_capability("ce");
 	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - his));
 }
 
 static void	ft_cursor_down(t_term *term, int his)
 {
-	ft_run_capability("cb");
-	ft_run_capability("cl");
+	term->c_col = term->prompt_len;
+	ft_setcursor(term->c_col, term->c_row);
+	// ft_run_capability("cb");
+	// ft_run_capability("cl");
+	ft_run_capability("ce");
 	ft_putstr((char *)vec_get(&term->v_history, term->v_history.len - his));
 }
 
