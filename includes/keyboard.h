@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/25 16:32:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/26 07:58:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define BACKSPACE	127
 # define TAB		9
 
-# define PROMPT "$> "
+# define PROMPT "$SuperPinoyBoy> "
 # define MINI_PROMPT "> " // This cannot be longer that PROMPT and both these string can not be changed
 
 # define BUFFSIZE   2048
@@ -53,7 +53,9 @@
 typedef struct s_term
 {
 	int		ch;
+	char	quote;
 	t_vec	v_history;
+	size_t	q_qty;
 	size_t	ws_col;
 	size_t	ws_row;
 	size_t	indx;

@@ -6,11 +6,38 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/26 09:11:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
+
+// static void quote_decrement(char *input, t_term *term)
+// {
+// 	if ((term->q_qty % 2) && (!term->quote || term->quote == input[term->indx - 1]))
+// 	{	
+// 		term->quote = 0;
+// 		term->q_qty--;
+// 	}
+// 	else if ()
+// 	{
+// 		term->quote = input[term->indx - 1];
+// 		term->q_qty--;
+// 	}
+// }
+static void quote_decrement(char *input, t_term *term)
+{
+	if (!(term->q_qty % 2))
+	{	
+		term->quote = input[term->indx - 1];
+		term->q_qty--;
+	}
+	else if ((term->q_qty % 2) && term->quote == input[term->indx - 1])
+	{
+		term->quote = 0;
+		term->q_qty--;
+	}
+}
 
 static void	delete(t_term *term, char *input)
 {
@@ -19,16 +46,18 @@ static void	delete(t_term *term, char *input)
 	ft_print_trail(term, input);
 }
 
-static void	backspace(t_term *term, char *input)
+static void	backspace(t_term *term, char *input) // Tiny problem with erasing from middle of text in a line grater than one. Problem is display related
 {
-	if (&input[term->indx] == term->nl_addr[term->c_row])
+	if (input[term->indx - 1] == D_QUOTE || input[term->indx - 1] == S_QUOTE)
+		quote_decrement(input, term);
+	if (&input[term->indx] == term->nl_addr[term->c_row]) // WHat happens to new line addr when that is deleted?
 	{
 		term->c_col = term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1];
 		term->c_row--;
 		if (!term->c_row)
-			term->c_col += 3;
+			term->c_col += term->prompt_len;
 		else
-			term->c_col += 2;
+			term->c_col += term->m_prompt_len;
 	}
 	ft_setcursor(--term->c_col, term->c_row);
 	ft_run_capability("ce");
@@ -43,12 +72,23 @@ static void	backspace(t_term *term, char *input)
 		ft_print_trail(term, input);
 }
 
-static void	quote_count(int *quote, int c)
+static void	quote_increment(t_term *term)
 {
-	if (!*quote)
-		*quote = c;
-	else if (*quote == c)
-		*quote = 0;
+	if (!term->q_qty || (term->q_qty % 2 && !term->quote))
+	{
+		term->quote = term->ch;
+		term->q_qty++;
+	}
+	else if (!(term->q_qty % 2) && !term->quote)
+	{
+		term->quote = term->ch;
+		term->q_qty++;
+	}
+	else if (term->ch == term->quote)
+	{
+		term->quote = 0;
+		term->q_qty++;
+	}
 }
 
 static void	get_nl_addr(char *input, t_term *term)
@@ -95,19 +135,16 @@ static void update_nl_addr(char *input, t_term *term, int num)
 
 void	ft_input_cycle(t_term *term, char *input)
 {
-	int		quote;
-
-	quote = 0;
 	get_nl_addr(input, term);
 	write(1, PROMPT, term->prompt_len);
 	while (term->ch != -1)
 	{	
 		term->ch = ft_get_input();
 		if (term->ch == D_QUOTE || term->ch == S_QUOTE)
-			quote_count(&quote, term->ch);
+			quote_increment(term);
 		if (term->ch == CTRL_C)
 			break ;
-		else if (term->ch == ENTER && !quote)
+		else if (term->ch == ENTER && !(term->q_qty % 2))
 		{
 			ft_putchar('\n');
 			ft_putendl_fd(input, STDOUT_FILENO);
@@ -134,7 +171,7 @@ void	ft_input_cycle(t_term *term, char *input)
 		}
 		if (term->ch == ESCAPE)
 			ft_esc_parse(term, input);
-		if (isprint(term->ch) || (term->ch == ENTER && quote))
+		if (isprint(term->ch) || (term->ch == ENTER && (term->q_qty % 2)))
 		{
 			ft_putc(term->ch);
 			update_nl_addr(input, term, 1);
@@ -146,7 +183,7 @@ void	ft_input_cycle(t_term *term, char *input)
 			if (input[term->indx])
 				ft_print_trail(term, input);
 			term->bytes++;
-			if (term->ch == ENTER && quote)
+			if ((term->ch == ENTER && (term->q_qty % 2)))
 			{
 				write(1, "\n", 1);
 				write(1, MINI_PROMPT, term->m_prompt_len);

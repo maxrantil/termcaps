@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 16:31:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/26 08:01:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_init(t_term *term)
 {
 	ft_init_signals();
 	term->ch = 0;
+	term->quote = 0;
+	term->q_qty = 0;
 	term->bytes = 0;
 	term->c_row = 0;
 	// term->total_col = 0;
