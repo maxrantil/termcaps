@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/26 07:50:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:10:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ static void	ft_alt_mv_up(t_term *term)
 	}
 	else
 	{
-		term->c_col = (len + prompt_len) - 1;
-		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]) - 1;
+		term->c_col = len + prompt_len;
+		if (term->c_row != 1)
+			term->c_col--;
+		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]);
 	}
 	term->c_row--;
 	ft_setcursor(term->c_col, term->c_row);
@@ -73,14 +75,14 @@ static void	ft_alt_mv_down(char *input, t_term *term)
 	size_t	len;
 
 	if (term->c_row < (term->total_row - 1))
-		len = (term->nl_addr[term->c_row + 2] - term->nl_addr[term->c_row + 1]) - 1;
+		len = (term->nl_addr[term->c_row + 2] - term->nl_addr[term->c_row + 1]);
 	else
 		len = &input[term->bytes] - term->nl_addr[term->c_row + 1];
 	if (term->c_col < (len + term->m_prompt_len))
 		term->indx = &term->nl_addr[term->c_row + 1][term->c_col - term->m_prompt_len] - term->nl_addr[0];
 	else
 	{
-		term->c_col = len + term->m_prompt_len;
+		term->c_col = (len + term->m_prompt_len) - 1;
 		if (term->c_row < (term->total_row - 1))
 			term->indx = &term->nl_addr[term->c_row + 2][-1] - term->nl_addr[0];
 		else
