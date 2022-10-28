@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/27 10:10:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:32:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 static void	ft_alt_mv_left(t_term *term, char *input)
 {
 	while (term->indx && ft_isspace(&input[term->indx - 1]))
+	{
+		if (&input[term->indx] == term->nl_addr[term->c_row])
+			break ;
 		term->indx--;
+	}
 	while (term->indx && !ft_isspace(&input[term->indx - 1]))
+	{
+		if (&input[term->indx] == term->nl_addr[term->c_row])
+			break ;
 		term->indx--;
+	}
 	term->c_col = &input[term->indx] - term->nl_addr[term->c_row];
 	if (!term->c_row)
 		term->c_col += term->prompt_len;
@@ -26,13 +34,36 @@ static void	ft_alt_mv_left(t_term *term, char *input)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
+// static void	row_increment(t_term *term, char *input)
+// {
+// 	size_t row;
+
+// 	row = 0;
+// 	while (&input[term->indx] > term->nl_addr[row])
+// 	{
+// 		if (!term->nl_addr[row + 1])
+// 			break ;
+// 		row++;
+// 	}
+// 	term->c_row = row;
+// }
+
 static void	ft_alt_mv_right(t_term *term, char *input)
 {
 	while (term->indx < term->bytes && ft_isspace(&input[term->indx]))
+	{
+		if (term->nl_addr[term->c_row + 1] && &input[term->indx + 1] == term->nl_addr[term->c_row + 1])
+			break ;
 		term->indx++;
+	}
 	while (term->indx < term->bytes && !ft_isspace(&input[term->indx]))
+	{
+		if (term->nl_addr[term->c_row + 1] && &input[term->indx + 1] == term->nl_addr[term->c_row + 1])
+			break ;
 		term->indx++;
+	}
 	term->c_col = &input[term->indx] - term->nl_addr[term->c_row];
+	// row_increment(term, input);
 	if (!term->c_row)
 		term->c_col += term->prompt_len;
 	else
@@ -61,10 +92,10 @@ static void	ft_alt_mv_up(t_term *term)
 	}
 	else
 	{
-		term->c_col = len + prompt_len;
-		if (term->c_row != 1)
-			term->c_col--;
-		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]);
+		term->c_col = (len + prompt_len) - 1;
+		// if (term->c_row != 1)
+		// 	term->c_col--;
+		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]) - 1;
 	}
 	term->c_row--;
 	ft_setcursor(term->c_col, term->c_row);
@@ -82,9 +113,12 @@ static void	ft_alt_mv_down(char *input, t_term *term)
 		term->indx = &term->nl_addr[term->c_row + 1][term->c_col - term->m_prompt_len] - term->nl_addr[0];
 	else
 	{
-		term->c_col = (len + term->m_prompt_len) - 1;
+		term->c_col = (len + term->m_prompt_len);
 		if (term->c_row < (term->total_row - 1))
+		{
+			term->c_col--;
 			term->indx = &term->nl_addr[term->c_row + 2][-1] - term->nl_addr[0];
+		}
 		else
 			term->indx = (get_str_end(term->nl_addr[term->c_row + 1]) - term->nl_addr[0]) - 1;
 	}
