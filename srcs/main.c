@@ -6,12 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/25 16:53:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:32:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
 
 /*
 **	If optional_actions is TCSAFLUSH, the change shall occur after all output 
@@ -25,7 +24,7 @@ static int	init_raw(void)
 	if (tcgetattr(STDIN_FILENO, &g_orig_termios) == -1)
 		return (0);
 	raw = g_orig_termios;
-	raw.c_lflag &= ~(ICANON |ECHO | IEXTEN | ISIG);
+	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
 	raw.c_iflag &= ~(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
@@ -45,11 +44,10 @@ static void	ft_disable_raw_mode(void) //why doesnt this work without being a sta
 static int	ft_keyboard(char *input)
 {
 	t_term		term;
-	char		term_buffer[2048];
-	char		*termtype;
 	int			status;
+	char		*termtype;
+	char		term_buffer[2048];
 
-	
 	ft_init(&term);
 	ft_memset(input, '\0', BUFFSIZE);
 	status = tgetent(term_buffer, "ANSI");

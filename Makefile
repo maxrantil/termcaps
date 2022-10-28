@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/21 15:13:58 by mrantil          ###   ########.fr        #
+#    Updated: 2022/10/27 14:52:33 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,10 +66,9 @@ FILES 		= 	main \
 				ft_cursor_mv \
 				ft_run_capability \
 				ft_setcursor \
-				ft_insertion_shift \
-				ft_deletion_shift \
-				ft_print_trail \
-				ft_clear_trail \
+				ft_insertion \
+				ft_deletion \
+				ft_print_display \
 				ft_history \
 				ft_history_get \
 				ft_history_write_to_file \
@@ -81,6 +80,9 @@ FILES 		= 	main \
 				ft_esc_parse \
 				ft_disable_raw_mode \
 				ft_window_size \
+				ft_new_lines \
+				ft_new_lines_utils \
+				ft_quote_handling \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

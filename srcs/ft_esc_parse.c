@@ -22,7 +22,7 @@ static void	ft_cursor_beginning(t_term *term)
 	else
 	{
 		term->c_col = term->m_prompt_len;
-		term->indx = term->nl_addr[term->c_row] - term->nl_addr[0] + 1;
+		term->indx = term->nl_addr[term->c_row] - term->nl_addr[0]; // maybe + nl here?
 	}
 	ft_setcursor(term->c_col, term->c_row);
 }
@@ -38,22 +38,22 @@ static void	ft_cursor_end(char *input, t_term *term)
 {
 	if (!term->total_row)
 	{
-		term->c_col = ((&input[term->bytes] -  term->nl_addr[term->c_row]) + term->prompt_len) + 1;
+		term->c_col = ((&input[term->bytes] - term->nl_addr[term->c_row]) + term->prompt_len) + 1;
 		term->indx = term->bytes;
 	}
 	else
 	{
 		if (term->c_row == term->total_row)
 		{
-			term->c_col = (get_str_end(term->nl_addr[term->c_row]) -  term->nl_addr[term->c_row]) + term->m_prompt_len - 1;
+			term->c_col = ((&input[term->bytes] -  term->nl_addr[term->c_row]) + term->m_prompt_len) + 1;
 			term->indx = (get_str_end(term->nl_addr[term->c_row]) - term->nl_addr[0]) - 1;
 		}
 		else
 		{
 			if (!term->c_row)
-				term->c_col = (term->nl_addr[term->c_row + 1] -  term->nl_addr[term->c_row]) + term->prompt_len;
+				term->c_col = (term->nl_addr[term->c_row + 1] - term->nl_addr[term->c_row]) + term->prompt_len;
 			else
-				term->c_col = (term->nl_addr[term->c_row + 1] -  term->nl_addr[term->c_row]) + term->m_prompt_len;
+				term->c_col = (term->nl_addr[term->c_row + 1] - term->nl_addr[term->c_row]) + term->m_prompt_len;
 			term->indx = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
 		}
 	}
