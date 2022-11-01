@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/31 18:13:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:33:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,3 @@ void insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos)
 	ft_memdel((void **)&term->nl_addr);
 	term->nl_addr = new_arr;
 }
-
-// void	nl_terminal_size(t_term *term, char *input)
-// {
-// 	term->c_col = 0;
-
-// 	term->c_row++;
-// 	if (term->nl_addr[term->c_row])
-// 	{
-// 		if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
-// 		{
-// 			term->total_row++;
-// 			insert_middle_nl_addr(term, input, term->c_row, term->indx);
-// 			ft_print_trail(term, input);
-// 		}
-// 	}
-// 	if (term->indx == term->bytes)
-// 	{
-// 		get_nl_addr(term, input);
-// 		term->total_row++;
-// 	}
-// 	ft_setcursor(term->c_col, term->c_row);
-// }
