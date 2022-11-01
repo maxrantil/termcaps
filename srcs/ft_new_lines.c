@@ -6,12 +6,18 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/01 19:33:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:40:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/**
+ * It handles the newline character
+ * 
+ * @param term the term structure
+ * @param input the input string
+ */
 void	nl_backslash(t_term *term, char *input)
 {
 	term->c_row++;
@@ -22,6 +28,12 @@ void	nl_backslash(t_term *term, char *input)
 	term->total_row++;
 }
 
+/**
+ * It's a function that handles the opening of a quote
+ * 
+ * @param term the term struct
+ * @param input the input string
+ */
 void	nl_open_qoute(t_term *term, char *input)
 {
 	term->c_row++;
@@ -32,6 +44,15 @@ void	nl_open_qoute(t_term *term, char *input)
 	term->total_row++;
 }
 
+/**
+ * It takes a term struct, a string, a row, and a position, and inserts the string into the term
+ * struct's nl_addr array at the given row and position
+ * 
+ * @param term the terminal structure
+ * @param input the input string
+ * @param row the row number where the new line is to be inserted
+ * @param pos the position of the cursor in the current row
+ */
 void insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos)
 {
 	size_t	i;
