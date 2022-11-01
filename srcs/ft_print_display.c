@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/01 15:45:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:31:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,6 @@ void ft_print_line_trail(t_term *term, char *input)
 	
 }
 
-// static void print_line_trail(t_term *term, char *input)
-// {
-// 	// if (term->nl_addr[term->c_row + 1] && is_prompt_line(term, term->c_row + 1))
-// 	if (term->nl_addr[term->c_row + 1])
-// 	{
-// 		write(1, &input[term->indx], ((term->nl_addr[term->c_row + 1] - &input[term->indx])));
-// 	}
-// 	else
-// 	{
-// 		ft_run_capability("cd");
-// 		write(1, &input[term->indx], (&input[term->bytes] - &input[term->indx]));
-// 	}
-// }
 static void print_line_trail(t_term *term, char *input) // something wrong here
 {
 	size_t row;
@@ -75,27 +62,6 @@ static void print_line_trail(t_term *term, char *input) // something wrong here
 		ft_setcursor(0, ++row);
 	}
 }
-// static void print_line_trail(t_term *term, char *input)
-// {
-// 	size_t row;
-	
-// 	row = term->c_row;
-// 	ft_run_capability("cd");
-// 	ft_setcursor(0, row);
-// 	while (term->nl_addr[row + 1])
-// 	{
-// 		if (is_prompt_line(term, row))
-// 		{
-// 			if (!term->c_row)
-// 				ft_putstr(PROMPT);
-// 			else
-// 				ft_putstr(MINI_PROMPT);
-// 		}
-// 		write(1, term->nl_addr[row], term->nl_addr[row + 1] - term->nl_addr[row]);
-// 		ft_setcursor(0, ++row);
-// 	}
-// 	write(1, term->nl_addr[row], &input[term->bytes] - term->nl_addr[row]);
-// }
 
 void	ft_print_trail(t_term *term, char *input)
 {
