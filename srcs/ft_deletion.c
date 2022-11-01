@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/27 15:31:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:34:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	backspace(t_term *term, char *input) // THis removes input[term->indx - 1]
 		if (input[term->indx])
 			ft_print_trail(term, input);
 	}
-	update_nl_addr(input, term, -1);
+	update_nl_addr(input, term, -1); // I dont think this is necessary
 }

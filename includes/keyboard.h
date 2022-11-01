@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/26 10:27:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:20:11 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@
 # define BACKSPACE	127
 # define TAB		9
 
-# define PROMPT "$SuperPinoyBoy> "
+# define PROMPT "$> "
 # define MINI_PROMPT "> " // This cannot be longer that PROMPT and both these string can not be changed
 
 # define BUFFSIZE   2048
 
 typedef struct s_term
 {
+	int		nl;
 	int		ch;
 	char	quote;
 	t_vec	v_history;
@@ -67,7 +68,6 @@ typedef struct s_term
 	size_t	prompt_len;
 	size_t	m_prompt_len;
 	char	**nl_addr;
-	// int	total_col;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -94,17 +94,37 @@ void	ft_history_write_to_file(t_term *term);
 void	ft_alt_cursor_mv(t_term *term, char *input);
 
 int		ft_get_input(void);
-void	ft_print_trail(t_term *term, char *input);
-void	ft_clear_trail(void);
 
-void	ft_insertion_shift(t_term *term, char *input);
-void	ft_deletion_shift(char *input, t_term *term, int mode);
+/*		  Printing to Display		*/
+void	ft_print_trail(t_term *term, char *input);
+void 	ft_print_line_trail(t_term *term, char *input);
+
+/*		   New Line Mangement		*/
+char	*is_prompt_line(t_term *term, size_t row);
+void	get_nl_addr(t_term *term, char *input, size_t pos);
+void 	nl_backslash(t_term* term, char *input);
+void 	nl_open_qoute(t_term* term, char *input);
+void	nl_addr_reset(t_term *term, char *input);
+void 	nl_terminal_size(t_term *term, char *input);
+void 	insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos);
+void	update_nl_addr(char *input, t_term *term, int num);
+
+/*		     Quote Handling 		*/
+void	quote_increment(t_term *term);
+void	quote_decrement(char *input, t_term *term);
+
+/*		        Deletion	 		*/
+void	delete(t_term *term, char *input);
+void	backspace(t_term *term, char *input);
+
+/*		       Insertion	 		*/
+void	insertion(t_term *term, char *input);
 
 void	ft_cursor_mv(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
 
-
-
 char	*get_str_end(char *str);
+
+
 
 #endif

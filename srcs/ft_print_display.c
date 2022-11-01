@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/27 20:16:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/01 12:05:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,63 @@ void ft_print_line_trail(t_term *term, char *input)
 	
 }
 
-static void print_line_trail(t_term *term, char *input)
+// static void print_line_trail(t_term *term, char *input)
+// {
+// 	// if (term->nl_addr[term->c_row + 1] && is_prompt_line(term, term->c_row + 1))
+// 	if (term->nl_addr[term->c_row + 1])
+// 	{
+// 		write(1, &input[term->indx], ((term->nl_addr[term->c_row + 1] - &input[term->indx])));
+// 	}
+// 	else
+// 	{
+// 		ft_run_capability("cd");
+// 		write(1, &input[term->indx], (&input[term->bytes] - &input[term->indx]));
+// 	}
+// }
+static void print_line_trail(t_term *term, char *input) // something wrong here
 {
-	// int index_cpy;
-
-	// index_cpy = term->indx;
-	if (term->nl_addr[term->c_row + 1])
+	size_t row;
+	
+	row = term->c_row;
+	ft_setcursor(0, row);
+	ft_run_capability("cd");
+	while (row <= term->total_row)
 	{
-		// if (((term->nl_addr[term->c_row + 1] - &input[term->indx]) + term->c_col) < term->ws_col)
-		// {
-		update_nl_addr(input, term, -1);
-		ft_run_capability("cd");
-		write(1, &input[term->indx], (&input[term->bytes] - &input[term->indx]));
-			// if ((&input[term->bytes] - &input[term->indx]) + term->c_col > term->ws_col)
-			// {
-			// 	term->total_row++;
-			// 	term->indx += (term->ws_col - term->c_col) + 1;
-			// 	get_nl_addr(term, input);
-			// 	term->indx = index_cpy;
-			// }
+		if (is_prompt_line(term, row))
+		{
+			if (!row)
+				ft_putstr(PROMPT);
+			else
+				ft_putstr(MINI_PROMPT);
+		}
+		if (term->nl_addr[row + 1])
+			write(1, term->nl_addr[row], term->nl_addr[row + 1] - term->nl_addr[row]);
+		else
+			write(1, term->nl_addr[row], &input[term->bytes] - term->nl_addr[row]);
+		ft_setcursor(0, ++row);
 	}
-	else
-		write(1, &input[term->indx], &input[term->bytes] - &input[term->indx]);
 }
+// static void print_line_trail(t_term *term, char *input)
+// {
+// 	size_t row;
+	
+// 	row = term->c_row;
+// 	ft_run_capability("cd");
+// 	ft_setcursor(0, row);
+// 	while (term->nl_addr[row + 1])
+// 	{
+// 		if (is_prompt_line(term, row))
+// 		{
+// 			if (!term->c_row)
+// 				ft_putstr(PROMPT);
+// 			else
+// 				ft_putstr(MINI_PROMPT);
+// 		}
+// 		write(1, term->nl_addr[row], term->nl_addr[row + 1] - term->nl_addr[row]);
+// 		ft_setcursor(0, ++row);
+// 	}
+// 	write(1, term->nl_addr[row], &input[term->bytes] - term->nl_addr[row]);
+// }
 
 void	ft_print_trail(t_term *term, char *input)
 {

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/27 15:34:18 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/28 10:47:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	ft_cursor_mv(t_term *term, char *input)
 {
 	static size_t	his;
 
+	// if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
+	// 	term->m_prompt_len = ft_strlen(MINI_PROMPT);
 	if (term->ch == 'D' && term->indx)
 		ft_cursor_left(input, term);
 	else if (term->ch == 'C')

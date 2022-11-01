@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/27 15:32:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:12:46 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	init_raw(void)
 static void	ft_disable_raw_mode(void) //why doesnt this work without being a static in same file???
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
-	ft_run_capability("te");
+	// ft_run_capability("te");
 }
 
 static int	ft_keyboard(char *input)
@@ -68,6 +68,8 @@ static int	ft_keyboard(char *input)
 		ft_input_cycle(&term, input);
 		ft_history_write_to_file(&term);
 		ft_disable_raw_mode();
+		ft_putendl_fd(input, STDOUT_FILENO);
+		ft_memset(input, '\0', BUFFSIZE);
 	}
 	else
 	{

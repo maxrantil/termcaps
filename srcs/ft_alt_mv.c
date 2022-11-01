@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/27 13:32:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/30 09:58:24 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,15 @@ static void	ft_alt_mv_left(t_term *term, char *input)
 		term->indx--;
 	}
 	term->c_col = &input[term->indx] - term->nl_addr[term->c_row];
-	if (!term->c_row)
-		term->c_col += term->prompt_len;
-	else
-		term->c_col += term->m_prompt_len;
+	if (term->nl_addr[term->c_row] == &input[0] || (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\'))
+	{
+		if (!term->c_row)
+			term->c_col += term->prompt_len;
+		else
+			term->c_col += term->m_prompt_len;	
+	}
 	ft_setcursor(term->c_col, term->c_row);
 }
-
-// static void	row_increment(t_term *term, char *input)
-// {
-// 	size_t row;
-
-// 	row = 0;
-// 	while (&input[term->indx] > term->nl_addr[row])
-// 	{
-// 		if (!term->nl_addr[row + 1])
-// 			break ;
-// 		row++;
-// 	}
-// 	term->c_row = row;
-// }
 
 static void	ft_alt_mv_right(t_term *term, char *input)
 {
@@ -63,11 +52,13 @@ static void	ft_alt_mv_right(t_term *term, char *input)
 		term->indx++;
 	}
 	term->c_col = &input[term->indx] - term->nl_addr[term->c_row];
-	// row_increment(term, input);
-	if (!term->c_row)
-		term->c_col += term->prompt_len;
-	else
-		term->c_col += term->m_prompt_len;
+	if (term->nl_addr[term->c_row] == &input[0] || (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\'))
+	{
+		if (!term->c_row)
+			term->c_col += term->prompt_len;
+		else
+			term->c_col += term->m_prompt_len;	
+	}
 	ft_setcursor(term->c_col, term->c_row);
 }
 
@@ -76,16 +67,33 @@ static void	ft_alt_mv_up(t_term *term)
 	size_t	len;
 	size_t	prompt_len;
 
+	prompt_len = 0;
 	len = term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1];
-	prompt_len = term->m_prompt_len;
+	// // prompt_len = 0; 
+	// if (term->c_row > 1)
+	// {
+	// 	if (term->nl_addr[term->c_row - 1][-1] == '\n' || term->nl_addr[term->c_row - 1][-1] == '\\')
+	// 	{
+	// 		prompt_len = term->m_prompt_len;
+	// 		if (term->c_row == 1)
+	// 			prompt_len = term->prompt_len;
+	// 	}		
+	// }
 	if (term->c_row == 1)
 		prompt_len = term->prompt_len;
-	if (term->c_col < (len + prompt_len))
+	else if ((term->nl_addr[term->c_row - 1][-1] == '\n' || term->nl_addr[term->c_row - 1][-1] == '\\'))
+		prompt_len = term->m_prompt_len;
+	if (term->c_col < (len + prompt_len)) // problem here
 	{
 		if (term->c_row == 1 && term->c_col < term->prompt_len)
 		{
 			term->c_col = term->prompt_len;
 			term->indx = 0;
+		}
+		else if (((term->nl_addr[term->c_row - 1][-1] == '\n' || term->nl_addr[term->c_row - 1][-1] == '\\')) && term->c_col < term->prompt_len)
+		{
+			term->c_col = prompt_len;
+			term->indx = term->nl_addr[term->c_row - 1] - term->nl_addr[0];
 		}
 		else
 			term->indx = (&term->nl_addr[term->c_row - 1][term->c_col - prompt_len] - term->nl_addr[0]);
@@ -93,27 +101,65 @@ static void	ft_alt_mv_up(t_term *term)
 	else
 	{
 		term->c_col = (len + prompt_len) - 1;
-		// if (term->c_row != 1)
-		// 	term->c_col--;
 		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]) - 1;
 	}
 	term->c_row--;
 	ft_setcursor(term->c_col, term->c_row);
 }
+// static void	ft_alt_mv_up(t_term *term)
+// {
+// 	size_t	len;
+// 	size_t	prompt_len;
+
+// 	len = term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1];
+// 	prompt_len = 0; 
+// 	if (term->c_row > 1)
+// 	{
+// 		if (term->nl_addr[term->c_row - 1][-1] == '\n' || term->nl_addr[term->c_row - 1][-1] == '\\')
+// 		{
+// 			prompt_len = term->m_prompt_len;
+// 			if (term->c_row == 1)
+// 				prompt_len = term->prompt_len;
+// 		}		
+// 	}
+// 	if (term->c_col < (len + prompt_len))
+// 	{
+// 		if (term->c_row == 1 && term->c_col < term->prompt_len)
+// 		{
+// 			term->c_col = term->prompt_len;
+// 			term->indx = 0;
+// 		}
+// 		else
+// 			term->indx = (&term->nl_addr[term->c_row - 1][term->c_col - prompt_len] - term->nl_addr[0]);
+// 	}
+// 	else
+// 	{
+// 		term->c_col = (len + prompt_len) - 1;
+// 		term->indx = (term->nl_addr[term->c_row] - term->nl_addr[0]) - 1;
+// 	}
+// 	term->c_row--;
+// 	ft_setcursor(term->c_col, term->c_row);
+// }
 
 static void	ft_alt_mv_down(char *input, t_term *term)
 {
 	size_t	len;
 
 	if (term->c_row < (term->total_row - 1))
+	{
 		len = (term->nl_addr[term->c_row + 2] - term->nl_addr[term->c_row + 1]);
+	}
 	else
 		len = &input[term->bytes] - term->nl_addr[term->c_row + 1];
 	if (term->c_col < (len + term->m_prompt_len))
 		term->indx = &term->nl_addr[term->c_row + 1][term->c_col - term->m_prompt_len] - term->nl_addr[0];
 	else
 	{
-		term->c_col = (len + term->m_prompt_len);
+		if (term->nl_addr[term->c_row + 1] && (term->nl_addr[term->c_row + 1][-1] == '\n' || term->nl_addr[term->c_row + 1][-1] == '\\'))
+			term->c_col = len + term->m_prompt_len;
+		else
+			term->c_col = len;
+		// term->c_col = term->m_prompt_len;
 		if (term->c_row < (term->total_row - 1))
 		{
 			term->c_col--;
