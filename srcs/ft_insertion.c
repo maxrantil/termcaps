@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/01 15:09:10 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:45:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,19 +237,19 @@ static void nl_create_check(t_term *term, char *input)
 	// ft_setcursor(term->c_col, term->c_row);
 	if (len == term->ws_col)
 	{
-		// ft_setcursor(0, term->ws_row - 2);
-		// ft_putstr("CAR");
-		// ft_setcursor(term->c_col, term->c_row);
+		ft_setcursor(0, term->ws_row - 2);
+		ft_putstr("CAR");
+		ft_setcursor(term->c_col, term->c_row);
 		term->total_row++;
+		// if (term->nl_addr[row + 1])
+		// 	insert_middle_nl_addr(term, input, row + 1, (size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
+		// else
+		get_nl_addr(term, input, term->bytes);
+	}
+	if (len == term->ws_col + 1)
+	{
 		if (term->nl_addr[row + 1])
 			insert_middle_nl_addr(term, input, row + 1, (size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
-		else
-		{
-			ft_setcursor(0, term->ws_row - 2);
-			ft_putstr("CAR");
-			ft_setcursor(term->c_col, term->c_row);
-			get_nl_addr(term, input, term->bytes);
-		}
 	}
 	if (term->c_col == term->ws_col)
 	{
@@ -263,26 +263,23 @@ static void ft_nl_addr_update(t_term *term)
 	size_t row;
 
 	row = term->c_row + 1;
-	while (term->nl_addr[row])
-	{
-		if (is_prompt_line(term, row))
-			term->nl_addr[row] = &term->nl_addr[row][1];
+	while (term->nl_addr[row] && !is_prompt_line(term, row))
 		row++;
-	}
+	while (term->nl_addr[row++])
+		term->nl_addr[row - 1] = &term->nl_addr[row - 1][1];
 }
 
 void	insertion(t_term *term, char *input)
 {
 	size_t indx_cpy;
-	
-	if (term->c_col != term->ws_col)
-		ft_putc(term->ch);
-	ft_setcursor(++term->c_col, term->c_row);
+
+	ft_putc(term->ch);
+	ft_setcursor(++term->c_col, term->c_row);	
 	ft_nl_addr_update(term);
 	if (input[term->indx])
 		ft_insertion_shift(term, input);
-	term->bytes++;
 	input[term->indx++] = term->ch;
+	term->bytes++;
 	nl_create_check(term, input);
 	// ft_run_capability("cd");
 	if (input[term->indx])
