@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/27 14:50:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:12:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,51 @@
 
 void	ft_input_cycle(t_term *term, char *input)
 {
-	get_nl_addr(term, input);
+	get_nl_addr(term, input, 0);
 	write(1, PROMPT, term->prompt_len);
 	while (term->ch != -1)
-	{	
+	{
 		term->ch = ft_get_input();
 		if (term->ch == D_QUOTE || term->ch == S_QUOTE)
 			quote_increment(term);
 		/*#########################################################*/
 		if (term->ch == CTRL_C)
-			break ;
+		{
+			char **str;
+
+			ft_setcursor(0, term->ws_row - 1);
+			ft_putchar('[');
+			ft_putnbr(term->c_row);
+			ft_putchar(']');
+			if (is_prompt_line(term, term->c_row))
+				ft_putstr("{1}");
+			else
+				ft_putstr("{0}");
+			str = term->nl_addr;
+			while (*str)
+			{
+				ft_putchar('[');
+				ft_putchar(**str);
+				ft_putchar(']');
+				str++;
+			}
+			ft_setcursor(term->c_col, term->c_row);
+		}
 		else if (term->ch == ENTER && (!(term->q_qty % 2) && input[term->indx - 1] != '\\'))
 		{
-			ft_putchar('\n');
-			ft_putendl_fd(input, STDOUT_FILENO);
-			write(1, PROMPT, term->prompt_len);
-			term->c_col = ft_strlen(PROMPT);
-			term->total_row += term->q_prompt + 2;
+			ft_setcursor(0, term->total_row + 1);
+			// ft_putendl_fd(input, STDOUT_FILENO);
+			// write(1, PROMPT, term->prompt_len);
+			// term->c_col = ft_strlen(PROMPT);
+			// term->total_row += term->q_prompt + 2;
 			// term->c_row += term->q_prompt + 2;
-			term->indx = 0;
+			// term->indx = 0;
 			vec_push(&term->v_history, input);
 			if (!ft_strcmp(input, "history"))
 				ft_history(term);
-			ft_memset(input, '\0', BUFFSIZE);
+			// ft_memset(input, '\0', BUFFSIZE);
 			ft_memdel((void **)&term->nl_addr);
+			break ;
 		}
 		/*#########################################################*/
 		else if (term->ch == CTRL_D && term->indx < term->bytes)
