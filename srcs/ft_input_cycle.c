@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/31 18:12:34 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:42:13 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_input_cycle(t_term *term, char *input)
 			char **str;
 
 			ft_setcursor(0, term->ws_row - 1);
+			ft_run_capability("ce");
 			ft_putchar('[');
 			ft_putnbr(term->c_row);
 			ft_putchar(']');
