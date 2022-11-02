@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/01 19:33:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/02 11:03:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void nl_create_check(t_term *term, char *input)
 	}
 	if (len == term->ws_col)
 	{
-		ft_setcursor(0, term->ws_row - 2);
-		ft_putstr("CAR");
-		ft_setcursor(term->c_col, term->c_row);
+		// ft_setcursor(0, term->ws_row - 2);
+		// ft_putstr("CAR");
+		// ft_setcursor(term->c_col, term->c_row);
 		term->total_row++;
 		get_nl_addr(term, input, term->bytes);
 	}
