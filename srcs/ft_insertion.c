@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 15:50:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:28:29 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,21 @@ void	insertion(t_term *term, char *input)
 	term->bytes++;
 	trigger_nl(term, input);
 	if (term->ch == ENTER && (term->q_qty % 2))
+	{
+		if (term->nl_addr[term->c_row + 1])
+		{
+			if (&input[term->index] >= term->nl_addr[term->c_row] && &input[term->index] < &term->nl_addr[term->c_row + 1][-1])
+			{
+				ft_setcursor(term->c_col - 1, term->c_row);
+				ft_run_capability("ce");
+			}
+		}
+		else
+			if (&input[term->index] >= term->nl_addr[term->c_row] && &input[term->index] < &input[term->bytes])
+			{		
+				ft_setcursor(term->c_col - 1, term->c_row);
+				ft_run_capability("ce");
+			}
 		create_prompt_line(term, input);
+	}
 }

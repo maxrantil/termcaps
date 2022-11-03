@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 15:40:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:59:13 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_term
 	size_t	prompt_len;
 	size_t	m_prompt_len;
 	char	**nl_addr;
+	char	*input_cpy;
 }			t_term;
 
 static struct termios	g_orig_termios;
@@ -124,7 +125,7 @@ void	ft_deletion_shift(char *input, t_term *term, int mode);
 /*		       Insertion	 		*/
 int		ft_get_input(void);
 void	insertion(t_term *term, char *input);
-void	ft_cursor_mv(t_term *term, char *input);
+void	ft_arrow_input(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
 
 #endif

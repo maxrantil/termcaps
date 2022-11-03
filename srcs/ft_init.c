@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 10:31:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:59:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_init(t_term *term)
 	term->prompt_len = ft_strlen(PROMPT);
 	term->m_prompt_len = ft_strlen(MINI_PROMPT);
 	term->c_col = term->prompt_len;
+	term->input_cpy = NULL;
 }
 
 /* void	kill_process(int sig)
