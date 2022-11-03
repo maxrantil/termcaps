@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/02 12:45:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:15:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ static void	ft_deletion_shift(char *input, t_term *term, int mode)
 		indx_cpy++;
 	}
 	term->bytes--;
-}
-
-void	delete(t_term *term, char *input) // Have not properly tested this
-{
-	ft_deletion_shift(input, term, DEL);
-	ft_run_capability("ce");
-	ft_print_trail(term, input);
-	update_nl_addr(input, term, -1);
 }
 
 static void remove_nl_addr(t_term *term, size_t row)
@@ -98,7 +90,7 @@ static void remove_nl_addr(t_term *term, size_t row)
 // 		ft_print_trail(term, input);
 // }
 
-static void ft_nl_addr_update_delete(t_term *term)
+static void ft_nl_addr_update_bck(t_term *term)
 {
 	size_t row;
 
@@ -107,6 +99,19 @@ static void ft_nl_addr_update_delete(t_term *term)
 		row++;
 	while (term->nl_addr[row++])
 		term->nl_addr[row - 1] = &term->nl_addr[row - 1][-1];	
+}
+
+static void ft_nl_addr_update_del(t_term *term)
+{
+	size_t row;
+
+	row = term->c_row + 1;
+	while (term->nl_addr[row])
+	{
+		if (is_prompt_line(term, row))
+			term->nl_addr[row] = &term->nl_addr[row][-1];
+		row++;	
+	}
 }
 
 static size_t get_last_non_prompt_line(t_term *term)
@@ -119,12 +124,54 @@ static size_t get_last_non_prompt_line(t_term *term)
 	return (row);
 }
 
+static void quote_decremented(char *input, t_term *term)
+{
+	if (!(term->q_qty % 2))
+	{	
+		term->quote = input[term->indx];
+		term->q_qty--;
+	}
+	else if ((term->q_qty % 2) && term->quote == input[term->indx])
+	{
+		term->quote = 0;
+		term->q_qty--;
+	}
+}
+
+void	delete(t_term *term, char *input) // Have not properly tested this
+{
+	size_t  len;
+	size_t 	row;
+	
+
+	if (term->indx && (input[term->indx] == D_QUOTE || input[term->indx] == S_QUOTE))
+		quote_decremented(input, term);
+	row = get_last_non_prompt_line(term);
+	if (term->nl_addr[row + 1])
+	{
+		if (&input[term->indx + 1] == term->nl_addr[term->c_row + 1] && is_prompt_line(term, term->c_row + 1))
+			return ;
+		len = (term->nl_addr[row + 1] - term->nl_addr[row]) - 1;
+	}
+	else
+		len = &input[term->bytes] - term->nl_addr[row];
+	ft_nl_addr_update_del(term);
+	ft_deletion_shift(input, term, DEL);
+	ft_run_capability("ce");
+	if (!len)
+	{
+		remove_nl_addr(term, row);
+		term->total_row--;
+	}
+	ft_print_trail(term, input);
+}
+
 void	backspace(t_term *term, char *input) // THis removes input[term->indx - 1] work on here
 {
 	size_t 	row;
 	size_t	len;
 
-	if (&input[term->indx] == term->nl_addr[term->c_row] && is_prompt_line(term, term->c_row))
+	if (&input[term->indx] == term->nl_addr[term->c_row] && is_prompt_line(term, term->c_row)) // Hitting start of a prompt line
 		return ;
 	row = get_last_non_prompt_line(term);
 	if (term->nl_addr[row + 1])
@@ -153,7 +200,7 @@ void	backspace(t_term *term, char *input) // THis removes input[term->indx - 1] 
 		term->total_row--;
 	}
 	ft_run_capability("ce");
-	ft_nl_addr_update_delete(term);
+	ft_nl_addr_update_bck(term);
 	ft_deletion_shift(input, term, BCK);
 	if (input[term->indx])
 		ft_print_trail(term, input);
