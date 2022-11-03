@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/10/27 14:52:33 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/03 15:22:13 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,12 +62,14 @@ TERMCAP		=	-lncurses
 
 
 FILES 		= 	main \
-				ft_alt_mv \
+				ft_opt_mv \
+				ft_opt_mv_utils \
 				ft_cursor_mv \
 				ft_run_capability \
 				ft_setcursor \
 				ft_insertion \
 				ft_deletion \
+				ft_deletion_utils \
 				ft_print_display \
 				ft_history \
 				ft_history_get \

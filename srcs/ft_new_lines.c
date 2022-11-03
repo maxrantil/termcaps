@@ -6,19 +6,13 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 10:26:07 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 12:46:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It handles the newline character
- * 
- * @param term the term structure
- * @param input the input string
- */
-void	nl_backslash(t_term *term, char *input)
+void	create_prompt_line(t_term *term, char *input)
 {
 	term->c_row++;
 	term->total_row++;
@@ -26,51 +20,52 @@ void	nl_backslash(t_term *term, char *input)
 	ft_setcursor(0, term->c_row);
 	write(1, MINI_PROMPT, term->m_prompt_len);
 	if (term->nl_addr[term->c_row])
-		insert_middle_nl_addr(term, input, term->c_row, term->indx);
+		add_nl_mid_row(term, input, term->c_row, term->index);
 	else
-		get_nl_addr(term, input, term->indx);
-	if (input[term->indx])
-		ft_print_trail(term, input);
+		add_nl_last_row(term, input, term->index);
 }
 
-void	nl_open_qoute(t_term *term, char *input)
+void	add_nl_last_row(t_term *term, char *input, size_t pos)
 {
-	term->c_row++;
-	term->total_row++;
-	term->c_col = term->m_prompt_len;
-	ft_setcursor(0, term->c_row);
-	write(1, MINI_PROMPT, term->m_prompt_len);
-	if (term->nl_addr[term->c_row])
-		insert_middle_nl_addr(term, input, term->c_row, term->indx);
+	int		index;
+	char	**fresh_array;
+
+	index = -1;
+	fresh_array = NULL;
+	if (!term->nl_addr)
+	{
+		term->nl_addr = (char **)ft_memalloc(sizeof(char *) * 2);
+		term->nl_addr[++index] = &input[pos];
+		term->nl_addr[++index] = NULL;
+	}
 	else
-		get_nl_addr(term, input, term->indx);
+	{
+		fresh_array = (char **)ft_memalloc(sizeof(char *)
+				* (term->total_row + 2));
+		while (term->nl_addr[++index])
+			fresh_array[index] = term->nl_addr[index];
+		fresh_array[index++] = &input[pos];
+		fresh_array[index] = NULL;
+		ft_memdel((void **)&term->nl_addr);
+		term->nl_addr = fresh_array;
+	}
 }
 
-/**
- * It takes a term struct, a string, a row, and a position, and inserts the string into the term
- * struct's nl_addr array at the given row and position
- * 
- * @param term the terminal structure
- * @param input the input string
- * @param row the row number where the new line is to be inserted
- * @param pos the position of the cursor in the current row
- */
-void  insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos)
+void	add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos)
 {
 	size_t	i;
 	size_t	j;
-	char 	**new_arr;
-	
-	i = 0;
+	char	**new_arr;
+
 	j = 0;
+	i = -1;
 	new_arr = (char **)ft_memalloc(sizeof(char *) * (term->total_row + 2));
-	while (i <= term->total_row)
+	while (++i <= term->total_row)
 	{
 		if (i == row)
 			new_arr[i] = &input[pos];
 		else
 			new_arr[i] = term->nl_addr[j++];
-		i++;
 	}
 	new_arr[i] = NULL;
 	ft_memdel((void **)&term->nl_addr);

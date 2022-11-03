@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_input.c                                        :+:      :+:    :+:   */
+/*   ft_get_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/10/20 16:46:45 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/03 15:51:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,5 @@ int	ft_get_input(void)
 
 	c = 0;
 	read(STDIN_FILENO, &c, 1);
-	// printf("c[%d]\n", c);		//save this for testing
 	return (c);
 }
