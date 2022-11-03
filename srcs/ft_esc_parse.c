@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 15:55:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:30:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_esc_parse(t_term *term, char *input)
 	{
 		term->ch = ft_get_input();
 		if (term->ch >= 'A' && term->ch <= 'D')
-			ft_cursor_mv(term, input);
+			ft_arrow_input(term, input);
 		if (term->ch == 49)
 			ft_opt_mv(term, input);
 		if (term->ch == 'H' && term->bytes)
