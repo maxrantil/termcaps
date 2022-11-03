@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_esc_parse.c                                      :+:      :+:    :+:   */
+/*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 16:52:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/03 15:55:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,26 @@ static void	ft_cursor_beginning(t_term *term)
 	if (!term->c_row)
 	{
 		term->c_col = term->prompt_len;
-		term->indx = 0;
+		term->index = 0;
 	}
 	else
 	{
-		if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
+		if (is_prompt_line(term, term->c_row))
 			term->c_col = term->m_prompt_len;
 		else
 			term->c_col = 0;
-		term->indx = term->nl_addr[term->c_row] - term->nl_addr[0]; // maybe + nl here?
+		term->index = term->nl_addr[term->c_row] - term->nl_addr[0];
 	}
 	ft_setcursor(term->c_col, term->c_row);
 }
 
-char	*get_str_end(char *str)
-{
-	while (*str)
-		str++;
-	return (str + 1);
-}
-
 static void	ft_cursor_end(t_term *term, char *input)
 {
-	size_t len;
+	size_t	len;
 
-	len = term->indx;
+	len = term->index;
 	term->c_col = 0;
-	if (!term->c_row || (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\'))
+	if (!term->c_row || is_prompt_line(term, term->c_row))
 	{
 		if (!term->c_row)
 			term->c_col = term->prompt_len;
@@ -51,62 +44,24 @@ static void	ft_cursor_end(t_term *term, char *input)
 			term->c_col = term->m_prompt_len;
 	}
 	if (term->nl_addr[term->c_row + 1])
-		term->indx = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
+		term->index = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
 	else
-		term->indx = term->bytes;
-	len = term->indx - len;
-	term->c_col += &input[term->indx] - term->nl_addr[term->c_row];
+		term->index = term->bytes;
+	len = term->index - len;
+	term->c_col += &input[term->index] - term->nl_addr[term->c_row];
 	ft_setcursor(term->c_col, term->c_row);
 }
-// static void	ft_cursor_end(char *input, t_term *term)
-// {
-// 	if (!term->total_row)
-// 	{
-// 		term->c_col = ((&input[term->bytes] - term->nl_addr[term->c_row]) + term->prompt_len) + 1;
-// 		term->indx = term->bytes;
-// 	}
-// 	else
-// 	{
-// 		if (term->c_row == term->total_row)
-// 		{
-// 			if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
-// 					term->c_col = term->m_prompt_len;
-// 				else
-// 					term->c_col = 0;
-// 			term->c_col += (&input[term->bytes] -  term->nl_addr[term->c_row]) + 1;
-// 			term->indx = (get_str_end(term->nl_addr[term->c_row]) - term->nl_addr[0]) - 1;
-// 		}
-// 		else
-// 		{
-// 			if (!term->c_row)
-// 				term->c_col = (term->nl_addr[term->c_row + 1] - term->nl_addr[term->c_row]) + term->prompt_len;
-// 			else
-// 			{
-// 				if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
-// 					term->c_col = term->m_prompt_len;
-// 				else
-// 					term->c_col = 0;
-// 			}
-// 			term->indx = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
-// 		}
-// 	}
-// 	f
-// }
 
-// static void	shift_arrow(t_term *term)
 static void	shift_arrow(char *input, t_term *term)
 {
 	if (term->ch == 'D' && term->bytes)
 		ft_cursor_beginning(term);
 	if (term->ch == 'C')
 		ft_cursor_end(term, input);
-		// ft_cursor_end(term);
 }
 
 void	ft_esc_parse(t_term *term, char *input)
 {
-	if (term->nl_addr[term->c_row][-1] == '\n' || term->nl_addr[term->c_row][-1] == '\\')
-		term->m_prompt_len = ft_strlen(MINI_PROMPT);
 	term->ch = ft_get_input();
 	if (term->ch == '[')
 	{
@@ -114,20 +69,18 @@ void	ft_esc_parse(t_term *term, char *input)
 		if (term->ch >= 'A' && term->ch <= 'D')
 			ft_cursor_mv(term, input);
 		if (term->ch == 49)
-			ft_alt_cursor_mv(term, input);
+			ft_opt_mv(term, input);
 		if (term->ch == 'H' && term->bytes)
 			ft_cursor_beginning(term);
 		if (term->ch == 'F')
 			ft_cursor_end(term, input);
-			// ft_cursor_end(term);
 		if (term->ch == '2')
 		{
 			term->ch = ft_get_input();
-			// shift_arrow(term);
 			shift_arrow(input, term);
 		}
 	}
 	if (term->ch == 98 || term->ch == 102)
-		ft_alt_cursor_mv(term, input);
+		ft_opt_mv(term, input);
 	term->ch = 0;
 }
