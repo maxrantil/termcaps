@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/02 11:03:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:22:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	insertion(t_term *term, char *input)
 	input[term->indx++] = term->ch;
 	term->bytes++;
 	nl_create_check(term, input);
+	if (term->ch == ENTER && (term->q_qty % 2))
+		nl_open_qoute(term, input);
 	if (input[term->indx])
 		ft_print_trail(term, input);
-	if (term->ch == ENTER && (term->q_qty % 2) && input[term->indx - 2] != '\\')
-		nl_open_qoute(term, input);
 }

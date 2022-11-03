@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/01 19:40:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:26:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,29 @@
 void	nl_backslash(t_term *term, char *input)
 {
 	term->c_row++;
+	term->total_row++;
 	term->c_col = term->m_prompt_len;
 	ft_setcursor(0, term->c_row);
 	write(1, MINI_PROMPT, term->m_prompt_len);
-	get_nl_addr(term, input, term->indx);
-	term->total_row++;
+	if (term->nl_addr[term->c_row])
+		insert_middle_nl_addr(term, input, term->c_row, term->indx);
+	else
+		get_nl_addr(term, input, term->indx);
+	if (input[term->indx])
+		ft_print_trail(term, input);
 }
 
-/**
- * It's a function that handles the opening of a quote
- * 
- * @param term the term struct
- * @param input the input string
- */
 void	nl_open_qoute(t_term *term, char *input)
 {
 	term->c_row++;
+	term->total_row++;
 	term->c_col = term->m_prompt_len;
 	ft_setcursor(0, term->c_row);
 	write(1, MINI_PROMPT, term->m_prompt_len);
-	get_nl_addr(term, input, term->indx);
-	term->total_row++;
+	if (term->nl_addr[term->c_row])
+		insert_middle_nl_addr(term, input, term->c_row, term->indx);
+	else
+		get_nl_addr(term, input, term->indx);
 }
 
 /**
@@ -53,7 +55,7 @@ void	nl_open_qoute(t_term *term, char *input)
  * @param row the row number where the new line is to be inserted
  * @param pos the position of the cursor in the current row
  */
-void insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos)
+void  insert_middle_nl_addr(t_term *term, char *input, size_t row, size_t pos)
 {
 	size_t	i;
 	size_t	j;

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/02 12:42:13 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:21:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@ void	ft_input_cycle(t_term *term, char *input)
 			while (*str)
 			{
 				ft_putchar('[');
-				ft_putchar(**str);
+				if (**str == '\n')
+				{
+					ft_putchar('\\');
+					ft_putchar('n');
+				}
+				else
+					ft_putchar(**str);
 				ft_putchar(']');
 				str++;
 			}
@@ -68,7 +74,7 @@ void	ft_input_cycle(t_term *term, char *input)
 			backspace(term, input);
 		if (term->ch == ESCAPE)
 			ft_esc_parse(term, input);
-		if (term->ch == ENTER && input[term->indx - 1] == '\\')
+		if (term->ch == ENTER && input[term->indx - 1] == '\\' && !(term->q_qty % 2))
 			nl_backslash(term, input);
 		if (isprint(term->ch) || (term->ch == ENTER && (term->q_qty % 2)))
 			insertion(term, input);
