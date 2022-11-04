@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 16:59:13 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:13:01 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	ft_init_signals(void);
 void	ft_history(t_term *term);
 void	ft_history_get(t_term *term);
 void	ft_history_write_to_file(t_term *term);
+void	ft_history_trigger(t_term *term, char *input, int his);
 
 /*		    Cursor Movement			*/
 void	ft_opt_mv(t_term *term, char *input);
@@ -113,7 +114,7 @@ void	add_nl_last_row(t_term *term, char *input, size_t pos);
 void	add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos);
 
 /*		     Quote Handling 		*/
-void	quote_open(t_term *term);
+void	quote_handling(t_term *term, char ch);
 void	quote_decrement(char *input, t_term *term);
 
 /*		        Deletion	 		*/

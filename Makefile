@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/03 16:30:07 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/04 11:00:18 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ FILES 		= 	main \
 				ft_history \
 				ft_history_get \
 				ft_history_write_to_file \
+				ft_history_trigger \
 				ft_init \
 				ft_init_signals \
 				ft_get_input \

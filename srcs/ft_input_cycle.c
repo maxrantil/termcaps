@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 15:40:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:13:16 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_input_cycle(t_term *term, char *input)
 	{
 		term->ch = ft_get_input();
 		if (term->ch == D_QUO || term->ch == S_QUO)
-			quote_open(term);
+			quote_handling(term, term->ch);
 		/*#########################################################*/
 		if (term->ch == CTRL_C)
 		{
@@ -29,12 +29,15 @@ void	ft_input_cycle(t_term *term, char *input)
 			ft_setcursor(0, term->ws_row - 1);
 			ft_run_capability("ce");
 			ft_putchar('[');
-			ft_putnbr(term->c_row);
+			ft_putnbr(term->q_qty);
 			ft_putchar(']');
-			if (is_prompt_line(term, term->c_row))
-				ft_putstr("{1}");
-			else
-				ft_putstr("{0}");
+			ft_putchar('[');
+			ft_putchar(term->quote);
+			ft_putchar(']');
+			// if (is_prompt_line(term, term->c_row))
+			// 	ft_putstr("{1}");
+			// else
+			// 	ft_putstr("{0}");
 			str = term->nl_addr;
 			while (*str)
 			{

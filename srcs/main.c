@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 10:29:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:36:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	ft_keyboard(char *input)
 		{
 			ft_putendl_fd("error, raw mode", STDERR_FILENO);
 			exit(1);
-		}	
+		}
 		ft_input_cycle(&term, input);
 		ft_history_write_to_file(&term);
 		ft_disable_raw_mode();
