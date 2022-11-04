@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/04 11:13:01 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:57:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_term
 	size_t	m_prompt_len;
 	char	**nl_addr;
 	char	*input_cpy;
+	char	**nl_addr_cpy;
+	size_t	total_row_cpy;
 }			t_term;
 
 static struct termios	g_orig_termios;
