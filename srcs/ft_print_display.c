@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 16:18:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:02:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	print_line_trail(t_term *term, char *input)
 	char	*new_line;
 
 	new_line = NULL;
-	row = term->c_row;
+	row = 0;
 	ft_setcursor(0, row);
 	ft_run_capability("cd");
 	while (row <= term->total_row)

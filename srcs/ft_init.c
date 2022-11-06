@@ -6,18 +6,19 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/04 13:58:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:31:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-t_term		*g_term;
+// t_term		*g_term;
 
-void	ft_init(t_term *term)
+void	ft_init(t_term *term, char *input)
 {
 	ft_init_signals();
 	term->ch = 0;
+	term->inp = input;
 	term->quote = 0;
 	term->q_qty = 0;
 	term->bytes = 0;
@@ -28,8 +29,8 @@ void	ft_init(t_term *term)
 	term->index = 0;
 	ft_history_get(term);
 	g_term = term;
-	ft_window_size(term);
 	term->nl_addr = NULL;
+	ft_window_size(term);
 	term->prompt_len = ft_strlen(PROMPT);
 	term->m_prompt_len = ft_strlen(MINI_PROMPT);
 	term->c_col = term->prompt_len;
