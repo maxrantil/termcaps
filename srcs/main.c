@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/04 11:36:38 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:26:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	ft_keyboard(char *input)
 	char		*termtype;
 	char		term_buffer[2048];
 
-	ft_init(&term);
+	ft_init(&term, input);
 	ft_memset(input, '\0', BUFFSIZE);
 	status = tgetent(term_buffer, "ANSI");
 	termtype = getenv("TERM");

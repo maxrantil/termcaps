@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/04 11:13:16 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:23:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	ft_input_cycle(t_term *term, char *input)
 			if (!ft_strcmp(input, "history"))
 				ft_history(term);
 			ft_memdel((void **)&term->nl_addr);
+			if (term->input_cpy)
+				ft_strdel(&term->input_cpy);
 			break ;
 		}
 		/*#########################################################*/

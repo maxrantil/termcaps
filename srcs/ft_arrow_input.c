@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/04 11:23:17 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:50:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	ft_arrow_input(t_term *term, char *input)
 		ft_left(input, term);
 	else if (term->ch == 'C')
 		ft_right(input, term);
-	else if (term->ch == 'A' && his < term->v_history.len)
+	else if (term->ch == 'A' && his < term->v_history.len) //  up
 		ft_history_trigger(term, input, ++his);
-	else if (term->ch == 'B' && his > 0)
+	else if (term->ch == 'B' && his > 0) // UP assumption
 		ft_history_trigger(term, input, --his);
 }

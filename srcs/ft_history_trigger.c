@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/04 13:58:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 18:06:49 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	get_prompt_len(t_term *term, size_t row)
 	return (prompt_len);
 }
 
-static void	setup_nl_addr(t_term *term, char *input)
+void	setup_nl_addr(t_term *term, char *input)
 {
 	size_t	i;
 	size_t	len;
@@ -32,7 +32,8 @@ static void	setup_nl_addr(t_term *term, char *input)
 	i = 0;
 	len = 0;
 	term->total_row = 0;
-	ft_memdel((void **)&term->nl_addr);
+	if (term->nl_addr)
+		ft_memdel((void **)&term->nl_addr);
 	add_nl_last_row(term, input, i);
 	while (input[++i])
 	{
@@ -46,6 +47,19 @@ static void	setup_nl_addr(t_term *term, char *input)
 		if (input[i] == D_QUO || input[i] == S_QUO)
 			quote_handling(term, input[i]);
 	}
+	term->c_row = 0;
+	while (term->nl_addr[term->c_row] && &input[term->index] > term->nl_addr[term->c_row])
+		term->c_row++;
+	term->c_row--;
+	term->c_col = 0;
+	if (is_prompt_line(term, term->c_row))
+	{
+		if (!term->c_row)
+			term->c_col = term->prompt_len;
+		else
+			term->c_col = term->m_prompt_len;
+	}
+	term->c_col += &input[term->index] - term->nl_addr[term->c_row];
 }
 
 static void	ft_history_trigger_start(t_term *term)
@@ -98,7 +112,8 @@ void	ft_history_trigger(t_term *term, char *input, int his)
 	{
 		nl_addr_cpy(term);
 		term->bytes = ft_strlen(history);
-		term->input_cpy = ft_strdup(input);
+		if (!term->input_cpy)
+			term->input_cpy = ft_strdup(input);
 		ft_memset((void *)input, '\0', BUFF_SIZE);
 		ft_memcpy((void *)input, (void *)history, term->bytes);
 		setup_nl_addr(term, input);

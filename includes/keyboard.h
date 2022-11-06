@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/04 13:57:53 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:27:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 typedef struct s_term
 {
 	int		ch;
+	char	*inp;
 	char	quote;
 	t_vec	v_history;
 	size_t	q_qty;
@@ -71,9 +72,10 @@ typedef struct s_term
 	size_t	total_row_cpy;
 }			t_term;
 
+t_term		*g_term;
 static struct termios	g_orig_termios;
 
-void	ft_init(t_term *term);
+void	ft_init(t_term *term, char *input);
 /* void	ft_disable_raw_mode(void); */
 void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
@@ -108,6 +110,7 @@ void	shift_nl_addr(t_term *term, int num);
 size_t	get_last_non_prompt_line(t_term *term);
 void	nl_addr_reset(t_term *term, char *input);
 void	remove_nl_addr(t_term *term, size_t row);
+void	setup_nl_addr(t_term *term, char *input);
 char	*is_prompt_line(t_term *term, size_t row);
 void	nl_terminal_size(t_term *term, char *input);
 void	create_prompt_line(t_term *term, char *input);
