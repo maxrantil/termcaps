@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/06 17:27:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:38:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,13 @@ typedef struct s_term
 	size_t	m_prompt_len;
 	char	**nl_addr;
 	char	*input_cpy;
-	char	**nl_addr_cpy;
 	size_t	total_row_cpy;
 }			t_term;
 
-t_term		*g_term;
+t_term					*g_term;
 static struct termios	g_orig_termios;
 
 void	ft_init(t_term *term, char *input);
-/* void	ft_disable_raw_mode(void); */
 void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
@@ -108,9 +106,10 @@ void	ft_print_line_trail(t_term *term, char *input);
 void	update_nl_addr_del(t_term *term);
 void	shift_nl_addr(t_term *term, int num);
 size_t	get_last_non_prompt_line(t_term *term);
+size_t	get_prompt_len(t_term *term, size_t row);
 void	nl_addr_reset(t_term *term, char *input);
 void	remove_nl_addr(t_term *term, size_t row);
-void	setup_nl_addr(t_term *term, char *input);
+void	reset_nl_addr(t_term *term, char *input);
 char	*is_prompt_line(t_term *term, size_t row);
 void	nl_terminal_size(t_term *term, char *input);
 void	create_prompt_line(t_term *term, char *input);
@@ -127,6 +126,9 @@ size_t	row_lowest_line(t_term *term);
 void	delete(t_term *term, char *input);
 void	backspace(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
+
+/*		     Bits Shifting	 		*/
+void	shift_insert(t_term *term, char *input);
 
 /*		       Insertion	 		*/
 int		ft_get_input(void);
