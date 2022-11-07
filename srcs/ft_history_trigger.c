@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/06 18:06:49 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:52:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	setup_nl_addr(t_term *term, char *input)
 			quote_handling(term, input[i]);
 	}
 	term->c_row = 0;
-	while (term->nl_addr[term->c_row] && &input[term->index] > term->nl_addr[term->c_row])
+	while (term->nl_addr[term->c_row] && &input[term->index] >= term->nl_addr[term->c_row])
 		term->c_row++;
 	term->c_row--;
 	term->c_col = 0;
