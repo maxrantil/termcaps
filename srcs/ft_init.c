@@ -12,9 +12,10 @@
 
 #include "keyboard.h"
 
+t_term	*g_term;
 /**
  * It initializes the terminal
- * 
+ *
  * @param term the structure that holds all the information about the terminal.
  * @param input the string that will be edited
  */

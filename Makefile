@@ -41,7 +41,7 @@ MAKEFLAGS	+= --no-print-directory
 NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
-CFLAGS		+=	-Wunreachable-code -Wtype-limits 
+CFLAGS		+=	-Wunreachable-code -Wtype-limits
 CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
 
@@ -63,7 +63,7 @@ TERMCAP		=	-ltermcap
 CFLAGS		+= 	-Werror
 endif
 ifeq ($(UNAME), Linux)
-LIBS		=	-lncurses
+TERMCAP		=	-lncurses
 endif
 
 FILES 		= 	ft_add_nl_last_row \
@@ -72,7 +72,6 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_backspace \
 				ft_delete \
 				ft_deletion_shift \
-				ft_disable_raw_mode \
 				ft_esc_parse \
 				ft_get_input \
 				ft_get_prompt_len \
@@ -113,7 +112,7 @@ ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✓$(RES
 all: libft $(NAME)
 
 $(NAME): $(OBJECTS) $(O_PATHS)
-	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(TERMCAP) $(LIBS) $(LEAK_CHECK)
+	@$(CC) $(CFLAGS) $(HEADERS) $(O_PATHS) $(LEAK_CHECK) $(LIBS) $(TERMCAP) -o $@
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
 	@printf "$(C_VISIBLE)"
 

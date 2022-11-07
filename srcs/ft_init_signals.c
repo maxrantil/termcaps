@@ -12,9 +12,10 @@
 
 #include "keyboard.h"
 
+extern t_term	*g_term;
 /**
  * It sets the signal handler for the SIGWINCH signal to the sig_handler function
- * 
+ *
  * @param num The signal number.
  */
 static void	sig_handler(int num)

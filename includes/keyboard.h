@@ -71,8 +71,7 @@ typedef struct s_term
 	size_t	total_row_cpy;
 }			t_term;
 
-t_term					*g_term;
-static struct termios	g_orig_termios;
+
 
 void	ft_init(t_term *term, char *input);
 void	ft_input_cycle(t_term *term, char *input);
