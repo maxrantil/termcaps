@@ -3,22 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_window_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 12:44:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:19:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/**
+ * It sets the cursor position to the position of the character at 
+ * the index of the input string
+ * 
+ * @param term the terminal structure
+ */
 static void	set_new_cur_pos(t_term *term)
 {
-	while (term->nl_addr[term->c_row] && &term->inp[term->index] >= term->nl_addr[term->c_row])
+	while (term->nl_addr[term->c_row] \
+	&& &term->inp[term->index] >= term->nl_addr[term->c_row])
 		term->c_row++;
 	term->c_row--;
 	term->c_col = 0;
-	if (is_prompt_line(term, term->c_row))
+	if (ft_is_prompt_line(term, term->c_row))
 	{
 		if (!term->c_row)
 			term->c_col = term->prompt_len;
@@ -29,6 +36,11 @@ static void	set_new_cur_pos(t_term *term)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
+/**
+ * It resets the cursor position and prints the input string
+ * 
+ * @param term the structure that holds all the information about the terminal.
+ */
 void	ft_window_size(t_term *term)
 {
 	struct winsize	size;
@@ -41,7 +53,7 @@ void	ft_window_size(t_term *term)
 	{
 		term->quote = 0;
 		term->q_qty = 0;
-		reset_nl_addr(term, term->inp);
+		ft_reset_nl_addr(term, term->inp);
 		term->c_row = 0;
 		set_new_cur_pos(term);
 		ft_print_trail(term, term->inp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 12:38:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:07:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,46 +93,37 @@ void	ft_history_trigger(t_term *term, char *input, int his);
 
 /*		    Cursor Movement			*/
 void	ft_opt_mv(t_term *term, char *input);
-void	line_up(t_term *term);
-void	line_down(char *input, t_term *term);
-void	word_left(t_term *term, char *input);
-void	word_right(t_term *term, char *input);
+void	ft_line_mv(t_term *term, char *input);
+void	ft_word_mv(t_term *term, char *input);
 
 /*		  Printing to Display		*/
 void	ft_print_trail(t_term *term, char *input);
-void	ft_print_line_trail(t_term *term, char *input);
 
 /*		   New Line Mangement		*/
-void	update_nl_addr_del(t_term *term);
-void	shift_nl_addr(t_term *term, int num);
+void	ft_shift_nl_addr(t_term *term, int num);
 size_t	get_last_non_prompt_line(t_term *term);
-size_t	get_prompt_len(t_term *term, size_t row);
+size_t	ft_get_prompt_len(t_term *term, size_t row);
 void	nl_addr_reset(t_term *term, char *input);
-void	remove_nl_addr(t_term *term, size_t row);
-void	reset_nl_addr(t_term *term, char *input);
-char	*is_prompt_line(t_term *term, size_t row);
+void	ft_remove_nl_addr(t_term *term, size_t row);
+void	ft_reset_nl_addr(t_term *term, char *input);
+char	*ft_is_prompt_line(t_term *term, size_t row);
 void	nl_terminal_size(t_term *term, char *input);
-void	create_prompt_line(t_term *term, char *input);
-void	update_nl_addr(char *input, t_term *term, int num);
-void	add_nl_last_row(t_term *term, char *input, size_t pos);
-void	add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos);
+void	ft_add_nl_last_row(t_term *term, char *input, size_t pos);
+void	ft_add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos);
 
 /*		     Quote Handling 		*/
 void	quote_handling(t_term *term, char ch);
-void	quote_decrement(char *input, t_term *term);
+void	ft_quote_decrement(char *input, t_term *term);
 
 /*		        Deletion	 		*/
-size_t	row_lowest_line(t_term *term);
-void	delete(t_term *term, char *input);
-void	backspace(t_term *term, char *input);
+size_t	ft_row_lowest_line(t_term *term);
+void	ft_delete(t_term *term, char *input);
+void	ft_backspace(t_term *term, char *input);
 void	ft_deletion_shift(char *input, t_term *term, int mode);
-
-/*		     Bits Shifting	 		*/
-void	shift_insert(t_term *term, char *input);
 
 /*		       Insertion	 		*/
 int		ft_get_input(void);
-void	insertion(t_term *term, char *input);
+void	ft_insertion(t_term *term, char *input);
 void	ft_arrow_input(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
 

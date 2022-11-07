@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_quote_handling.c                                :+:      :+:    :+:   */
+/*   ft_remove_nl_addr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 14:23:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:17 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/07 15:13:40 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/07 16:08:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * If the quote character is not set, set it. If it is set, unset it
+ * It removes a row from the
+ * `nl_addr` array
  * 
  * @param term the term structure
- * @param ch the character that was just typed
+ * @param row the row number of the line to be removed
  */
-void	quote_handling(t_term *term, char ch)
+void	ft_remove_nl_addr(t_term *term, size_t row)
 {
-	if (!term->q_qty || (term->q_qty % 2 && !term->quote))
+	size_t	i;
+	size_t	j;
+	char	**new_array;
+
+	i = -1;
+	j = -1;
+	new_array = (char **)ft_memalloc(sizeof(char *) * term->total_row + 1);
+	while (term->nl_addr[++i])
 	{
-		term->quote = ch;
-		term->q_qty++;
+		if (i != row)
+			new_array[++j] = term->nl_addr[i];
 	}
-	else if (!(term->q_qty % 2) && !term->quote)
-	{
-		term->quote = ch;
-		term->q_qty++;
-	}
-	else if (ch == term->quote)
-	{
-		term->quote = 0;
-		term->q_qty++;
-	}
+	new_array[++j] = NULL;
+	ft_memdel((void **)&term->nl_addr);
+	term->nl_addr = new_array;
 }

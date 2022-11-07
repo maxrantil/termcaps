@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/04 11:00:18 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/07 16:24:16 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,16 +33,14 @@ DOWN = B
 RIGHT = C
 LEFT = D
 MOVE = \033[
-
-#FORBID KEYBOARD INTERACT
-$(shell stty -echo)
+C_INVISIBLE = \033[?25l
+C_VISIBLE = \033[?25h
 
 MAKEFLAGS	+= --no-print-directory
 
 NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
-#CFLAGS		+= 	-Werror
 CFLAGS		+=	-Wunreachable-code -Wtype-limits 
 CFLAGS		+=	-Wpedantic
 CFLAGS		+=	-O3
@@ -58,50 +56,66 @@ LIBRARIES 	= 	libft
 SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	keyboard
-TERMCAP		=	-lncurses
 
+UNAME		= $(shell uname)
+ifeq ($(UNAME), Darwin)
+TERMCAP		=	-ltermcap
+CFLAGS		+= 	-Werror
+endif
+ifeq ($(UNAME), Linux)
+LIBS		=	-lncurses
+endif
 
-FILES 		= 	main \
-				ft_opt_mv \
-				ft_opt_mv_utils \
+FILES 		= 	ft_add_nl_last_row \
+				ft_add_nl_mid_row \
 				ft_arrow_input \
+				ft_backspace \
+				ft_delete \
+				ft_deletion_shift \
+				ft_disable_raw_mode \
+				ft_esc_parse \
+				ft_get_input \
+				ft_get_prompt_len \
+				ft_history_get \
+				ft_history_trigger \
+				ft_history_write_to_file \
+				ft_history \
+				ft_init_signals \
+				ft_init \
+				ft_input_cycle \
+				ft_insertion \
+				ft_is_prompt_line \
+				ft_line_mv \
+				ft_opt_mv \
+				ft_print_trail \
+				ft_putc \
+				ft_quote_decrement \
+				ft_quote_handling \
+				ft_remove_nl_addr \
+				ft_reset_nl_addr \
+				ft_row_lowest_line \
 				ft_run_capability \
 				ft_setcursor \
-				ft_insertion \
-				ft_deletion \
-				ft_deletion_utils \
-				ft_print_display \
-				ft_history \
-				ft_history_get \
-				ft_history_write_to_file \
-				ft_history_trigger \
-				ft_init \
-				ft_init_signals \
-				ft_get_input \
-				ft_input_cycle \
-				ft_putc \
-				ft_esc_parse \
-				ft_disable_raw_mode \
+				ft_shift_nl_addr \
 				ft_window_size \
-				ft_new_lines \
-				ft_new_lines_utils \
-				ft_quote_handling \
+				ft_word_mv \
+				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
-C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
 O_PATHS 	= 	$(addsuffix .o, $(addprefix $(OBJECTS)/, $(FILES)))
 
 LIBS		= 	libft.a
 
 HEADERS		=	-I$(INCLUDES)/ -Ilibft/includes/
 
-ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
+ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✓$(RESET)" || (printf "$@ $(RED)$(BOLD)✘$(RESET)\n\n" | printf "$(C_VISIBLE)" && exit 1)
 
 all: libft $(NAME)
 
 $(NAME): $(OBJECTS) $(O_PATHS)
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(TERMCAP) $(LIBS) $(LEAK_CHECK)
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
+	@printf "$(C_VISIBLE)"
 
 $(OBJECTS):
 	@make -C $(LIBRARIES)
@@ -110,6 +124,7 @@ $(OBJECTS):
 	@printf "$(NAME): $(GREEN)$(OBJECTS) directory was created.$(RESET)\n\n\n"
 
 $(O_PATHS): $(OBJECTS)/%.o:$(SOURCES)/%.c $(H_PATHS) Makefile
+	@printf "$(C_INVISIBLE)"
 	@printf "$(MOVE)2$(UP)"
 	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ $(LEAK_CHECK) $(ASSERT_OBJECT)
 	@make pbar
@@ -127,7 +142,7 @@ fclean: clean
 	@make -C $(LIBRARIES) fclean
 	@rm -f $(LIBS)
 	@rm -f $(NAME)
-	@printf "$(NAME):	$(RED)binary was deleted$(RESET)\n"
+	@printf "keyboard:	$(RED)executeable was deleted$(RESET)\n"
 
 re: fclean all
 
@@ -144,6 +159,3 @@ pbar:
 
 
 .PHONY: all libft clean fclean re
-
-#ALLOW KEYBOARD INTERACT
-$(shell stty echo)

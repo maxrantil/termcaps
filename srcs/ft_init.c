@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 10:28:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:15:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-// t_term		*g_term;
-
+/**
+ * It initializes the terminal
+ * 
+ * @param term the structure that holds all the information about the terminal.
+ * @param input the string that will be edited
+ */
 void	ft_init(t_term *term, char *input)
 {
 	ft_init_signals();
@@ -35,15 +39,5 @@ void	ft_init(t_term *term, char *input)
 	term->m_prompt_len = ft_strlen(MINI_PROMPT);
 	term->c_col = term->prompt_len;
 	term->input_cpy = NULL;
-	// term->nl_addr_cpy = NULL;
 	term->total_row_cpy = 0;
 }
-
-/* void	kill_process(int sig)
-{
-	if (sig == 3)
-	{
-		ft_disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */
