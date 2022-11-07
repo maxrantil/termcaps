@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/06 17:26:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:21:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ static int	init_raw(void)
 	return (1);
 }
 
-static void	ft_disable_raw_mode(void) //why doesnt this work without being a static in same file???
+//why doesnt this work without being a static in same file???
+static void	ft_disable_raw_mode(void)
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_orig_termios);
 	ft_run_capability("te");
 }
 
-static int	ft_keyboard(char *input)
+static int	ft_keyboard(char *input) //more then 25 lines!
 {
 	t_term		term;
 	int			status;

@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_display.c                                 :+:      :+:    :+:   */
+/*   ft_print_trail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/06 18:02:42 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:05:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	print_prompt(size_t row)
+/**
+ * It prints the prompt
+ * 
+ * @param row the row of the cursor
+ */
+static void	ft_print_prompt(size_t row)
 {
 	if (!row)
 		ft_putstr(PROMPT);
@@ -20,7 +25,13 @@ static void	print_prompt(size_t row)
 		ft_putstr(MINI_PROMPT);
 }
 
-static void	print_line_trail(t_term *term, char *input)
+/**
+ * It prints the line trail
+ * 
+ * @param term the t_term struct
+ * @param input the input string
+ */
+static void	ft_print_line_trail(t_term *term, char *input)
 {
 	size_t	row;
 	char	*new_line;
@@ -31,8 +42,8 @@ static void	print_line_trail(t_term *term, char *input)
 	ft_run_capability("cd");
 	while (row <= term->total_row)
 	{
-		if (is_prompt_line(term, row))
-			print_prompt(row);
+		if (ft_is_prompt_line(term, row))
+			ft_print_prompt(row);
 		new_line = term->nl_addr[row];
 		if (*new_line == '\n')
 			new_line++;
@@ -44,10 +55,16 @@ static void	print_line_trail(t_term *term, char *input)
 	}
 }
 
+/**
+ * It prints the line trail
+ * 
+ * @param term the term structure
+ * @param input the string to be printed
+ */
 void	ft_print_trail(t_term *term, char *input)
 {
 	ft_run_capability("vi");
-	print_line_trail(term, input);
+	ft_print_line_trail(term, input);
 	ft_setcursor(term->c_col, term->c_row);
 	ft_run_capability("ve");
 }

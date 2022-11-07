@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/26 10:58:57 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/07 14:09:13 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ DOWN = B
 RIGHT = C
 LEFT = D
 MOVE = \033[
+C_INVISIBLE = \033[?25l
+C_VISIBLE = \033[?25h
 
 #FORBID KEYBOARD INTERACT
 $(shell stty -echo)
@@ -83,7 +85,7 @@ INC			=	$(addprefix $(INC_DIR), $(_INC))
 
 HEADERS		=	-I$(INC_DIR)
 
-ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(YELLOW)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
+ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✓$(RESET)" || (printf "$@ $(RED)$(BOLD)✘$(RESET)\n\n" | printf "$(C_VISIBLE)" && exit 1)
 
 all: $(NAME)
 
@@ -92,6 +94,7 @@ $(NAME): $(DIR_OBJS) $(OBJS)
 	@ranlib $(NAME)
 	@printf "Compiled $(BOLD)$(YELLOW)$(NAME)$(RESET)!\n\n"
 	@stty echo
+	@printf "$(C_VISIBLE)"
 
 $(DIR_OBJS):
 	@stty -echo
@@ -100,16 +103,19 @@ $(DIR_OBJS):
 	@printf "$(NAME): $(YELLOW)$(DIR_OBJS) directory was created.$(RESET)\n\n\n"
 
 $(DIR_OBJS)%.o: $(DIR_LIBFT)%.c
+	@printf "$(C_INVISIBLE)"
 	@printf "$(MOVE)2$(UP)"
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft
 	
 $(DIR_OBJS)%.o: $(DIR_PRINTF)%.c
+	@printf "$(C_INVISIBLE)"
 	@printf "$(MOVE)2$(UP)"
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft
 	
 $(DIR_OBJS)%.o: $(DIR_VEC)%.c
+	@printf "$(C_INVISIBLE)"
 	@printf "$(MOVE)2$(UP)"
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft

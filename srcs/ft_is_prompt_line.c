@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_run_capability.c                                :+:      :+:    :+:   */
+/*   ft_is_prompt_line.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:40 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/27 14:26:34 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/07 15:31:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It takes a capability name as a string, and runs the capability
+ * It returns the address of the first character of a line if the line is a
+ * prompt line, otherwise it
+ * returns NULL
  * 
- * @param cap The capability name.
+ * @param term the term structure
+ * @param row the row of the cursor
+ * 
+ * @return The address of the first character of the line.
  */
-void	ft_run_capability(char *cap)
+char	*ft_is_prompt_line(t_term *term, size_t row)
 {
-	char	*p;
-
-	p = tgetstr(cap, NULL);
-	if (p == NULL)
-	{
-		ft_putstr_fd("error: ", 2);
-		ft_putstr_fd(cap, 2);
-		ft_putstr_fd(" : cannot ft_run_capability()", 2);
-	}
-	else
-		tputs(p, 1, ft_putc);
+	if (!row || term->nl_addr[row][-1] == '\n'
+		|| term->nl_addr[row][-1] == '\\')
+		return (term->nl_addr[row]);
+	return (NULL);
 }

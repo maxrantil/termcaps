@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_run_capability.c                                :+:      :+:    :+:   */
+/*   ft_get_prompt_len.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:40 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/07 14:59:55 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/07 15:18:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It takes a capability name as a string, and runs the capability
+ * It returns the length of the prompt on the given row
  * 
- * @param cap The capability name.
+ * @param term the term structure
+ * @param row the row of the cursor
+ * 
+ * @return The length of the prompt.
  */
-void	ft_run_capability(char *cap)
+size_t	ft_get_prompt_len(t_term *term, size_t row)
 {
-	char	*p;
+	size_t	prompt_len;
 
-	p = tgetstr(cap, NULL);
-	if (p == NULL)
-	{
-		ft_putstr_fd("error: ", 2);
-		ft_putstr_fd(cap, 2);
-		ft_putstr_fd(" : cannot ft_run_capability()", 2);
-	}
-	else
-		tputs(p, 1, ft_putc);
+	prompt_len = 0;
+	if (!row)
+		prompt_len = term->prompt_len;
+	else if (ft_is_prompt_line(term, row))
+		prompt_len = term->m_prompt_len;
+	return (prompt_len);
 }

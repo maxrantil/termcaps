@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 16:30:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:18:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/**
+ * It moves the cursor to the beginning of the line
+ * 
+ * @param term the terminal structure
+ */
 static void	ft_cursor_beginning(t_term *term)
 {
 	if (!term->c_row)
@@ -21,7 +26,7 @@ static void	ft_cursor_beginning(t_term *term)
 	}
 	else
 	{
-		if (is_prompt_line(term, term->c_row))
+		if (ft_is_prompt_line(term, term->c_row))
 			term->c_col = term->m_prompt_len;
 		else
 			term->c_col = 0;
@@ -30,13 +35,19 @@ static void	ft_cursor_beginning(t_term *term)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
+/**
+ * It moves the cursor to the end of the line
+ * 
+ * @param term the terminal structure
+ * @param input the input string
+ */
 static void	ft_cursor_end(t_term *term, char *input)
 {
 	size_t	len;
 
 	len = term->index;
 	term->c_col = 0;
-	if (!term->c_row || is_prompt_line(term, term->c_row))
+	if (!term->c_row || ft_is_prompt_line(term, term->c_row))
 	{
 		if (!term->c_row)
 			term->c_col = term->prompt_len;
@@ -52,6 +63,12 @@ static void	ft_cursor_end(t_term *term, char *input)
 	ft_setcursor(term->c_col, term->c_row);
 }
 
+/**
+ * It moves the cursor to the beginning or end of the line
+ * 
+ * @param input the string that the user is typing
+ * @param term the t_term struct
+ */
 static void	shift_arrow(char *input, t_term *term)
 {
 	if (term->ch == 'D' && term->bytes)
@@ -60,6 +77,12 @@ static void	shift_arrow(char *input, t_term *term)
 		ft_cursor_end(term, input);
 }
 
+/**
+ * It parses the escape sequences and calls the appropriate function
+ * 
+ * @param term the t_term struct
+ * @param input the string that the user is typing
+ */
 void	ft_esc_parse(t_term *term, char *input)
 {
 	term->ch = ft_get_input();

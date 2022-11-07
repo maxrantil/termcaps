@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_run_capability.c                                :+:      :+:    :+:   */
+/*   ft_shift_nl_addr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:40 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/07 14:17:02 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/07 15:19:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It takes a capability name as a string, and runs the capability
+ * It shifts the newline addresses
+ * in the `nl_addr` array by `num` characters
  * 
- * @param cap The capability name.
+ * @param term the terminal structure
+ * @param num the number of characters to shift the addresses by
  */
-void	ft_run_capability(char *cap)
+void	ft_shift_nl_addr(t_term *term, int num)
 {
-	char	*p;
+	size_t	row;
 
-	p = tgetstr(cap, NULL);
-	if (p == NULL)
-	{
-		ft_putstr_fd("error: ", 2);
-		ft_putstr_fd(cap, 2);
-		ft_putstr_fd(" : cannot ft_run_capability()", 2);
-	}
-	else
-		tputs(p, 1, ft_putc);
+	row = term->c_row + 1;
+	while (term->nl_addr[row] && !ft_is_prompt_line(term, row))
+		row++;
+	while (term->nl_addr[row++])
+		term->nl_addr[row - 1] = &term->nl_addr[row - 1][num];
 }

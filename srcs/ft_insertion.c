@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 11:15:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:27:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	shift_insert(t_term *term, char *input)
+/**
+ * It shifts the characters in the input string to the right, starting at the 
+ * current index, and ending at the end of the string
+ * 
+ * @param term a pointer to the t_term struct
+ * @param input the string that is being edited
+ */
+static void	ft_shift_insert(t_term *term, char *input)
 {
 	int	bytes_cpy;
 
@@ -26,7 +33,16 @@ void	shift_insert(t_term *term, char *input)
 	}
 }
 
-size_t	len_lowest_line(t_term *term, char *input, size_t row)
+/**
+ * It returns the length of the lowest line in the terminal
+ * 
+ * @param term the terminal structure
+ * @param input the string of characters that the user has typed in
+ * @param row the row of the cursor
+ * 
+ * @return The length of the lowest line.
+ */
+static size_t	ft_len_lowest_line(t_term *term, char *input, size_t row)
 {
 	size_t	len;
 
@@ -34,7 +50,7 @@ size_t	len_lowest_line(t_term *term, char *input, size_t row)
 		len = term->nl_addr[row + 1] - term->nl_addr[row];
 	else
 		len = &input[term->bytes] - term->nl_addr[row];
-	if (is_prompt_line(term, row))
+	if (ft_is_prompt_line(term, row))
 	{
 		if (!row)
 			len += term->prompt_len;
@@ -44,21 +60,28 @@ size_t	len_lowest_line(t_term *term, char *input, size_t row)
 	return (len);
 }
 
-static void	trigger_nl(t_term *term, char *input)
+/**
+ * It adds a newline to the
+ * input string, and updates the cursor position
+ * 
+ * @param term the term struct
+ * @param input the input string
+ */
+static void	ft_trigger_nl(t_term *term, char *input)
 {
 	size_t	len;
 	size_t	row;
 
-	row = row_lowest_line(term);
-	len = len_lowest_line(term, input, row);
+	row = ft_row_lowest_line(term);
+	len = ft_len_lowest_line(term, input, row);
 	if (len == term->ws_col)
 	{
 		term->total_row++;
-		add_nl_last_row(term, input, term->bytes);
+		ft_add_nl_last_row(term, input, term->bytes);
 	}
 	if (len == term->ws_col + 1)
 		if (term->nl_addr[row + 1])
-			add_nl_mid_row(term, input, row + 1,
+			ft_add_nl_mid_row(term, input, row + 1,
 				(size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
 	if (term->c_col == term->ws_col)
 	{
@@ -67,28 +90,24 @@ static void	trigger_nl(t_term *term, char *input)
 	}
 }
 
-void	shift_nl_addr(t_term *term, int num)
-{
-	size_t	row;
-
-	row = term->c_row + 1;
-	while (term->nl_addr[row] && !is_prompt_line(term, row))
-		row++;
-	while (term->nl_addr[row++])
-		term->nl_addr[row - 1] = &term->nl_addr[row - 1][num];
-}
-
-void	insertion(t_term *term, char *input)
+/**
+ * It inserts a character into the input string, and then shifts the 
+ * rest of the string to the right
+ * 
+ * @param term the term struct
+ * @param input the string that is being edited
+ */
+void	ft_insertion(t_term *term, char *input)
 {
 	ft_putc(term->ch);
 	if (term->ch == D_QUO || term->ch == S_QUO)
 		if (!term->index || input[term->index - 1] != '\\')
 			quote_handling(term, term->ch);
 	ft_setcursor(++term->c_col, term->c_row);
-	shift_nl_addr(term, 1);
+	ft_shift_nl_addr(term, 1);
 	if (input[term->index])
-		shift_insert(term, input);
+		ft_shift_insert(term, input);
 	input[term->index++] = term->ch;
 	term->bytes++;
-	trigger_nl(term, input);
+	ft_trigger_nl(term, input);
 }
