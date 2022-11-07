@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:24:52 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 15:15:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:36:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	word_right(t_term *term, char *input)
 	ft_setcursor(term->c_col, row - 1);
 }
 
-static size_t	get_prompt_len(t_term *term, int num)
+static size_t	mv_prompt_len(t_term *term, int num)
 {
 	size_t	prompt_len;
 
@@ -77,7 +77,7 @@ void	line_up(t_term *term)
 	size_t	prompt_len;
 
 	len = term->nl_addr[term->c_row] - term->nl_addr[term->c_row - 1];
-	prompt_len = get_prompt_len(term, -1);
+	prompt_len = mv_prompt_len(term, -1);
 	if (term->c_col < (len + prompt_len))
 	{
 		if (term->c_col < prompt_len)
@@ -105,7 +105,7 @@ void	line_down(char *input, t_term *term)
 	size_t	len;
 	size_t	prompt_len;
 
-	prompt_len = get_prompt_len(term, 1);
+	prompt_len = mv_prompt_len(term, 1);
 	if (term->c_row < (term->total_row - 1))
 		len = (term->nl_addr[term->c_row + 2] - term->nl_addr[term->c_row + 1]);
 	else

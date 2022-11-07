@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:26:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 15:49:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:39:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,29 +31,24 @@ void	remove_nl_addr(t_term *term, size_t row)
 	term->nl_addr = new_array;
 }
 
+size_t	get_prompt_len(t_term *term, size_t row)
+{
+	size_t	prompt_len;
+
+	prompt_len = 0;
+	if (!row)
+		prompt_len = term->prompt_len;
+	else if (is_prompt_line(term, row))
+		prompt_len = term->m_prompt_len;
+	return (prompt_len);
+}
+
 char	*is_prompt_line(t_term *term, size_t row)
 {
 	if (!row || term->nl_addr[row][-1] == '\n'
 		|| term->nl_addr[row][-1] == '\\')
 		return (term->nl_addr[row]);
 	return (NULL);
-}
-
-void	nl_addr_reset(t_term *term, char *input)
-{
-	size_t	j;
-	size_t	i;
-
-	ft_memdel((void **)&term->nl_addr);
-	term->nl_addr = (char **)ft_memalloc(sizeof(char *)
-			* (term->total_row + 2));
-	j = 0;
-	i = -1;
-	while (++i < term->bytes)
-		if (!i || input[i] == '\n'
-			|| input[i] == '\\' || i == (term->ws_col - 1))
-			term->nl_addr[j++] = &input[i + 1];
-	term->nl_addr[j] = NULL;
 }
 
 void	update_nl_addr_del(t_term *term)

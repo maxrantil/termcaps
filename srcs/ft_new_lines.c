@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 12:46:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:37:52 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,30 @@ void	add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos)
 	new_arr[i] = NULL;
 	ft_memdel((void **)&term->nl_addr);
 	term->nl_addr = new_arr;
+}
+
+void	reset_nl_addr(t_term *term, char *input)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = 0;
+	term->total_row = 0;
+	if (term->nl_addr)
+		ft_memdel((void **)&term->nl_addr);
+	add_nl_last_row(term, input, i);
+	while (input[++i])
+	{
+		len++;
+		if (((len + get_prompt_len(term, term->total_row)) + 1)
+			/ (term->ws_col) || input[i] == '\n')
+		{
+			add_nl_last_row(term, input, i + 1);
+			term->total_row++;
+			len = -1;
+		}
+		if (input[i] == D_QUO || input[i] == S_QUO)
+			quote_handling(term, input[i]);
+	}
 }

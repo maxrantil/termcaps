@@ -6,13 +6,13 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/03 16:28:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:15:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	shift_insert(t_term *term, char *input)
+void	shift_insert(t_term *term, char *input)
 {
 	int	bytes_cpy;
 
@@ -81,6 +81,9 @@ void	shift_nl_addr(t_term *term, int num)
 void	insertion(t_term *term, char *input)
 {
 	ft_putc(term->ch);
+	if (term->ch == D_QUO || term->ch == S_QUO)
+		if (!term->index || input[term->index - 1] != '\\')
+			quote_handling(term, term->ch);
 	ft_setcursor(++term->c_col, term->c_row);
 	shift_nl_addr(term, 1);
 	if (input[term->index])
@@ -88,22 +91,4 @@ void	insertion(t_term *term, char *input)
 	input[term->index++] = term->ch;
 	term->bytes++;
 	trigger_nl(term, input);
-	if (term->ch == ENTER && (term->q_qty % 2))
-	{
-		if (term->nl_addr[term->c_row + 1])
-		{
-			if (&input[term->index] >= term->nl_addr[term->c_row] && &input[term->index] < &term->nl_addr[term->c_row + 1][-1])
-			{
-				ft_setcursor(term->c_col - 1, term->c_row);
-				ft_run_capability("ce");
-			}
-		}
-		else
-			if (&input[term->index] >= term->nl_addr[term->c_row] && &input[term->index] < &input[term->bytes])
-			{		
-				ft_setcursor(term->c_col - 1, term->c_row);
-				ft_run_capability("ce");
-			}
-		create_prompt_line(term, input);
-	}
 }
