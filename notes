@@ -1,9 +1,2 @@
-why 2 ft_quote_decrement with just -1 different?, look in ft_delete.c also
 
-what is this for?
-static void	update_nl_addr(char *input, t_term *term, int num)
-look in ft_delete.c also
 
-whats up with the
-void	ft_alt_cursor_mv(t_term *term, char *input) 
-in ft_opt_mv.c ?

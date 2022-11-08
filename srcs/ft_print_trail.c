@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:05:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 12:51:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_print_line_trail(t_term *term, char *input)
 	new_line = NULL;
 	row = 0;
 	ft_setcursor(0, row);
-	ft_run_capability("cd");
+	// ft_run_capability("cd");
 	while (row <= term->total_row)
 	{
 		if (ft_is_prompt_line(term, row))

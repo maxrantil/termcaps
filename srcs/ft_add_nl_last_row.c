@@ -13,9 +13,9 @@
 #include "keyboard.h"
 
 /**
- * It takes a row number and a position in that row, and adds a newline 
+ * It takes a row number and a position in that row, and adds a newline
  * character at that position
- * 
+ *
  * @param term the term structure
  * @param input the string that contains the newline characters
  * @param row the row number where the newline character is
@@ -36,8 +36,8 @@ void	ft_add_nl_last_row(t_term *term, char *input, size_t pos)
 	}
 	else
 	{
-		fresh_array = (char **)ft_memalloc(sizeof(char *)
-				* (term->total_row + 2));
+		fresh_array = (char **)ft_memalloc(sizeof(char *) \
+		* (term->total_row + 2));
 		while (term->nl_addr[++index])
 			fresh_array[index] = term->nl_addr[index];
 		fresh_array[index++] = &input[pos];

@@ -6,15 +6,16 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 14:15:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:04:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+t_term	*g_term;
 /**
  * It initializes the terminal
- * 
+ *
  * @param term the structure that holds all the information about the terminal.
  * @param input the string that will be edited
  */

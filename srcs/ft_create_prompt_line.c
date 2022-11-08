@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_run_capability.c                                :+:      :+:    :+:   */
+/*   ft_create_prompt_line.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 13:41:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:40 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/08 12:40:40 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/08 12:45:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It takes a capability name as a string, and runs the capability
+ * It creates a new line for the prompt
  *
- * @param cap The capability name.
+ * @param term the term struct
+ * @param input the input string
  */
-void	ft_run_capability(char *cap)
+void	ft_create_prompt_line(t_term *term, char *input, size_t loc)
 {
-	char	*p;
-
-	p = tgetstr(cap, NULL);
-	if (p == NULL)
-	{
-		ft_putstr_fd("error: ", 2);
-		ft_putstr_fd(cap, 2);
-		ft_putstr_fd(" : cannot ft_run_capability()\n", 2);
-	}
+	term->c_row++;
+	term->total_row++;
+	term->c_col = term->m_prompt_len;
+	ft_setcursor(0, term->c_row);
+	write(1, MINI_PROMPT, term->m_prompt_len);
+	if (term->nl_addr[term->c_row])
+		ft_add_nl_mid_row(term, input, term->c_row, loc);
 	else
-		tputs(p, 1, ft_putc);
+		ft_add_nl_last_row(term, input, loc);
 }

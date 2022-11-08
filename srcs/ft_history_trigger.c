@@ -14,7 +14,7 @@
 
 /**
  * It moves the cursor to the end of the input
- * 
+ *
  * @param term the term structure
  * @param input the input string
  */
@@ -36,7 +36,7 @@ static void	ft_history_trigger_end(t_term *term, char *input)
 
 /**
  * It resets the terminal to its initial state
- * 
+ *
  * @param term the term structure
  */
 static void	ft_history_trigger_start(t_term *term)
@@ -56,7 +56,7 @@ static void	ft_history_trigger_start(t_term *term)
  * It takes the input,
  * copies it to a temporary variable, then copies the history entry to the input
  * and prints it
- * 
+ *
  * @param term the term struct
  * @param input the input buffer
  * @param his the history number to go to.

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 16:07:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:34:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 # include "vec.h"
-# include <termcap.h>
-# include <term.h>
-# include <curses.h>
+# include <termcap.h>//control if all these are needed
+# include <term.h>//same same
+# include <curses.h>//same same
 # include <termios.h>
 # include <string.h>
 # include <signal.h>
@@ -71,9 +71,6 @@ typedef struct s_term
 	size_t	total_row_cpy;
 }			t_term;
 
-t_term					*g_term;
-static struct termios	g_orig_termios;
-
 void	ft_init(t_term *term, char *input);
 void	ft_input_cycle(t_term *term, char *input);
 int		ft_putc(int c);
@@ -113,7 +110,7 @@ void	ft_add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos);
 
 /*		     Quote Handling 		*/
 void	quote_handling(t_term *term, char ch);
-void	ft_quote_decrement(char *input, t_term *term);
+void	ft_quote_decrement(char *input, t_term *term, int num);
 
 /*		        Deletion	 		*/
 size_t	ft_row_lowest_line(t_term *term);
@@ -126,5 +123,6 @@ int		ft_get_input(void);
 void	ft_insertion(t_term *term, char *input);
 void	ft_arrow_input(t_term *term, char *input);
 void	ft_esc_parse(t_term *term, char *input);
+void	ft_create_prompt_line(t_term *term, char *input, size_t loc);
 
 #endif
