@@ -72,8 +72,9 @@ void	ft_input_cycle(t_term *term, char *input) //more then 25 lines!
 		{
 			if (term->q_qty && (term->q_qty % 2))
 				ft_create_prompt_line(term, input);
-			else if (input[term->index - 2] == '\\' && (term->index < 3 \
-			|| input[term->index - 3] != '\\'))
+			/* else if (input[term->index - 2] == '\\' && (term->index < 3 \
+			|| input[term->index - 3] != '\\')) */
+			else if (term->index > 1 && input[term->index - 2] == '\\' && input[term->index - 3] != '\\')
 				ft_create_prompt_line(term, input);
 			else
 			{
