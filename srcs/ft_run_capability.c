@@ -14,7 +14,7 @@
 
 /**
  * It takes a capability name as a string, and runs the capability
- * 
+ *
  * @param cap The capability name.
  */
 void	ft_run_capability(char *cap)
@@ -26,7 +26,7 @@ void	ft_run_capability(char *cap)
 	{
 		ft_putstr_fd("error: ", 2);
 		ft_putstr_fd(cap, 2);
-		ft_putstr_fd(" : cannot ft_run_capability()", 2);
+		ft_putstr_fd(" : cannot ft_run_capability()\n", 2);
 	}
 	else
 		tputs(p, 1, ft_putc);

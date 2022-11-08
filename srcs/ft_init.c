@@ -23,7 +23,7 @@ void	ft_init(t_term *term, char *input)
 {
 	ft_init_signals();
 	term->ch = 0;
-	term->inp = input;
+	term->inp = input; //is this in the sruct now? erase the other one then?
 	term->quote = 0;
 	term->q_qty = 0;
 	term->bytes = 0;

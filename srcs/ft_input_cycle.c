@@ -14,7 +14,7 @@
 
 /**
  * It creates a new line for the prompt
- * 
+ *
  * @param term the term struct
  * @param input the input string
  */
@@ -32,10 +32,10 @@ static void	ft_create_prompt_line(t_term *term, char *input)
 }
 
 /**
- * This function is called at the end of the main loop. It sets the cursor 
- * to the bottom of the screen, pushes the input to the history vector, 
+ * This function is called at the end of the main loop. It sets the cursor
+ * to the bottom of the screen, pushes the input to the history vector,
  * and frees the newline address
- * 
+ *
  * @param term the term struct
  * @param input the string that the user has typed in
  */
@@ -53,7 +53,7 @@ static void	ft_end_cycle(t_term *term, char *input)
 /**
  * It's a loop that reads input from the terminal, and then does
  * something with it
- * 
+ *
  * @param term a pointer to the t_term struct
  * @param input the string that will be edited
  */
@@ -72,8 +72,8 @@ void	ft_input_cycle(t_term *term, char *input) //more then 25 lines!
 		{
 			if (term->q_qty && (term->q_qty % 2))
 				ft_create_prompt_line(term, input);
-			else if ((input[term->index - 2] == '\\' && (term->index <= 2 \
-			|| input[term->index - 3] != '\\')))
+			else if (input[term->index - 2] == '\\' && (term->index < 3 \
+			|| input[term->index - 3] != '\\'))
 				ft_create_prompt_line(term, input);
 			else
 			{

@@ -10,3 +10,6 @@ in ft_opt_mv.c ?
 
 ft_arrow_inpu.c line 57
 
+input is now in struct? noneed for it in the functions calls then.
+ft_init.c line 26
+

@@ -17,7 +17,7 @@
 **	written to fildes is transmitted, and all input so far received but not
 **	read shall be discarded before the change is made.
 */
-static struct termios	init_raw(struct termios	orig_termios)
+static struct termios	ft_init_raw(struct termios orig_termios)
 {
 	struct termios	raw;
 
@@ -42,23 +42,18 @@ static struct termios	init_raw(struct termios	orig_termios)
 }
 
 //why doesnt this work without being a static in same file???
-static void	ft_disable_raw_mode(struct termios	orig_termios)
+static void	ft_disable_raw_mode(struct termios orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 	ft_run_capability("te");
 }
 
-static int	ft_keyboard(char *input) //more then 25 lines!
+static int ft_getent(void)
 {
-	struct termios	orig_termios;
-	t_term			term;
-	int				status;
-	char			*termtype;
-	char			term_buffer[2048];
+	char	*termtype;
+	char	term_buffer[2048];
+	int		status;
 
-	ft_init(&term, input);
-	ft_memset(input, '\0', BUFFSIZE);
-	status = tgetent(term_buffer, "ANSI");
 	termtype = getenv("TERM");
 	if (termtype == NULL)
 	{
@@ -66,20 +61,32 @@ static int	ft_keyboard(char *input) //more then 25 lines!
 		exit(1);
 	}
 	status = tgetent(term_buffer, termtype);
-	if (status > 0)
+	if (status < 0)
 	{
-		init_raw(orig_termios);
-		ft_input_cycle(&term, input);
-		ft_history_write_to_file(&term);
-		ft_disable_raw_mode(orig_termios);
-		ft_putendl_fd(input, STDOUT_FILENO);
-		ft_memset(input, '\0', BUFFSIZE);
-	}
-	else
-	{
-		printf("error, tgetent()\n");
+		printf("could not access the termcap data base\n");
 		exit(1);
 	}
+	else if (status == 0)
+	{
+		printf("could not find the termtype\n");
+		exit(1);
+	}
+	return (status);
+}
+
+static int	ft_keyboard(char *input)
+{
+	struct termios	orig_termios;
+	t_term			term;
+
+	ft_init(&term, input);
+	ft_getent();
+	orig_termios = ft_init_raw(orig_termios);
+	ft_input_cycle(&term, input);
+	ft_history_write_to_file(&term);
+	ft_disable_raw_mode(orig_termios);
+	ft_putendl_fd(input, STDOUT_FILENO);
+	ft_memset(input, '\0', BUFFSIZE);
 	return (0);
 }
 
@@ -87,6 +94,7 @@ int	main(void)
 {
 	char	input[BUFFSIZE];
 
+	ft_memset(input, '\0', BUFFSIZE);
 	ft_keyboard(input);
 	return (0);
 }

@@ -17,9 +17,9 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 # include "vec.h"
-# include <termcap.h>
-# include <term.h>
-# include <curses.h>
+# include <termcap.h>//control if all these are needed
+# include <term.h>//same same
+# include <curses.h>//same same
 # include <termios.h>
 # include <string.h>
 # include <signal.h>
