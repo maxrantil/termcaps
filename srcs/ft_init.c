@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 14:15:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:04:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_init(t_term *term, char *input)
 {
 	ft_init_signals();
 	term->ch = 0;
-	term->inp = input; //is this in the sruct now? erase the other one then?
+	term->inp = input;
 	term->quote = 0;
 	term->q_qty = 0;
 	term->bytes = 0;

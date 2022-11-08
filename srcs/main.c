@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 16:21:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 12:05:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 **	written to fildes is transmitted, and all input so far received but not
 **	read shall be discarded before the change is made.
 */
-static struct termios	ft_init_raw(struct termios orig_termios)
+static struct termios	ft_init_raw(void)
 {
+	struct termios	orig_termios;
 	struct termios	raw;
 
 	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1)
@@ -41,7 +42,11 @@ static struct termios	ft_init_raw(struct termios orig_termios)
 	return (orig_termios);
 }
 
-//why doesnt this work without being a static in same file???
+/**
+ * It disables raw mode by setting the terminal attributes to the original terminal attributes
+ * 
+ * @param orig_termios The original terminal attributes.
+ */
 static void	ft_disable_raw_mode(struct termios orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
@@ -74,6 +79,15 @@ static int ft_getent(void)
 	return (status);
 }
 
+/**
+ * It initializes the terminal,
+ * gets the environment variables, sets the terminal to raw mode, and then enters
+ * the input cycle
+ * 
+ * @param input the string that will be modified by the user
+ * 
+ * @return The return value is the number of bytes read.
+ */
 static int	ft_keyboard(char *input)
 {
 	struct termios	orig_termios;
@@ -81,7 +95,7 @@ static int	ft_keyboard(char *input)
 
 	ft_init(&term, input);
 	ft_getent();
-	orig_termios = ft_init_raw(orig_termios);
+	orig_termios = ft_init_raw();
 	ft_input_cycle(&term, input);
 	ft_history_write_to_file(&term);
 	ft_disable_raw_mode(orig_termios);
@@ -90,6 +104,11 @@ static int	ft_keyboard(char *input)
 	return (0);
 }
 
+/**
+ * It takes in a string and sets all the characters to null.
+ * 
+ * @return The return value is the number of bytes that were written to the file descriptor.
+ */
 int	main(void)
 {
 	char	input[BUFFSIZE];

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/07 16:24:16 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/08 12:41:58 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_add_nl_mid_row \
 				ft_arrow_input \
 				ft_backspace \
+				ft_create_prompt_line \
 				ft_delete \
 				ft_deletion_shift \
 				ft_esc_parse \

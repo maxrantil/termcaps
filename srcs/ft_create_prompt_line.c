@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_opt_mv.c                                        :+:      :+:    :+:   */
+/*   ft_create_prompt_line.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/12 09:05:53 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 13:57:04 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/08 12:40:40 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/08 12:45:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It moves the cursor to the beginning or end of the line, or to the
- * beginning or end of the word
- * 
+ * It creates a new line for the prompt
+ *
  * @param term the term struct
- * @param input the string that the user is editing
+ * @param input the input string
  */
-void	ft_opt_mv(t_term *term, char *input)
+void	ft_create_prompt_line(t_term *term, char *input, size_t loc)
 {
-	if (term->ch == 98 || term->ch == 102)
-		ft_word_mv(term, input);
-	else if (term->ch == 49)
-		ft_line_mv(term, input);
+	term->c_row++;
+	term->total_row++;
+	term->c_col = term->m_prompt_len;
+	ft_setcursor(0, term->c_row);
+	write(1, MINI_PROMPT, term->m_prompt_len);
+	if (term->nl_addr[term->c_row])
+		ft_add_nl_mid_row(term, input, term->c_row, loc);
+	else
+		ft_add_nl_last_row(term, input, loc);
 }

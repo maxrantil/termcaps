@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 15:27:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:30:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,24 +90,49 @@ static void	ft_trigger_nl(t_term *term, char *input)
 	}
 }
 
+
 /**
- * It inserts a character into the input string, and then shifts the 
- * rest of the string to the right
+ * It handles the insertion of characters into the input buffer
  * 
- * @param term the term struct
+ * @param term the term structure
  * @param input the string that is being edited
  */
 void	ft_insertion(t_term *term, char *input)
 {
-	ft_putc(term->ch);
-	if (term->ch == D_QUO || term->ch == S_QUO)
-		if (!term->index || input[term->index - 1] != '\\')
-			quote_handling(term, term->ch);
-	ft_setcursor(++term->c_col, term->c_row);
-	ft_shift_nl_addr(term, 1);
-	if (input[term->index])
-		ft_shift_insert(term, input);
-	input[term->index++] = term->ch;
-	term->bytes++;
+	if (term->ch == ENTER)
+	{
+		if (!term->nl_addr[term->c_row + 1])
+		{
+			if (input[term->bytes - 1] == '\\' || term->q_qty % 2)
+			{
+				input[term->bytes++] = term->ch;
+				ft_create_prompt_line(term, input, term->bytes);
+				term->index = term->bytes;
+			}
+		}
+		/* else
+		{
+			if (term->q_qty % 2)
+			{
+				term->index = term->nl_addr[term->c_row + 1] - &input[0];
+				ft_shift_insert(term, input);
+				input[term->index] = term->ch;
+				ft_create_prompt_line(term, input, --term->index);
+			}
+		} */
+	}
+	else
+	{
+		ft_putc(term->ch);
+		if (term->ch == D_QUO || term->ch == S_QUO)
+			if (!term->index || input[term->index - 1] != '\\')
+				quote_handling(term, term->ch);
+		ft_setcursor(++term->c_col, term->c_row);
+		ft_shift_nl_addr(term, 1);
+		if (input[term->index])
+			ft_shift_insert(term, input);
+		input[term->index++] = term->ch;
+		term->bytes++;
+	}
 	ft_trigger_nl(term, input);
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 13:46:21 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:04:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static void	ft_left(t_term *t, char *input)
 			t->c_col = t->m_prompt_len;
 		else
 			t->c_col = t->prompt_len;
-		t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]); //--t->c_row may be undefined, lets check it
+		if (t->c_row > 0)
+			t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]);
 	}
 	ft_setcursor(t->c_col, t->c_row);
 }

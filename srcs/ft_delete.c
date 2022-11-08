@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:17:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 13:56:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,45 +22,6 @@ static void	update_nl_addr_del(t_term *term)
 		if (ft_is_prompt_line(term, row))
 			term->nl_addr[row] = &term->nl_addr[row][-1];
 		row++;
-	}
-}
-
-/* static void	update_nl_addr(char *input, t_term *term, int num)
-{
-	size_t		i;
-
-	if (term->nl_addr[term->c_row + 1])
-	{	
-		i = term->c_row;
-		while (++i <= term->total_row)
-			term->nl_addr[i] = &term->nl_addr[i][num];
-	}
-	if (!term->index)
-		term->nl_addr[0] = &input[0];
-} */
-
-/**
- * If the quote quantity is even, then the quote is set to the current character 
- * and the quote quantity is decremented. 
- * 
- * If the quote quantity is odd and the quote is equal to the current character,
- * then the quote is set to 0 and the quote quantity is decremented.
- * 
- * @param input the string that is being parsed
- * @param term the structure that contains all the information about the 
- * current state of the terminal.
- */
-static void	ft_quote_decremented(char *input, t_term *term)
-{
-	if (!(term->q_qty % 2))
-	{	
-		term->quote = input[term->index];
-		term->q_qty--;
-	}
-	else if ((term->q_qty % 2) && term->quote == input[term->index])
-	{
-		term->quote = 0;
-		term->q_qty--;
 	}
 }
 
@@ -80,7 +41,7 @@ void	ft_delete(t_term *term, char *input)
 
 	if (term->index
 		&& (input[term->index] == D_QUO || input[term->index] == S_QUO))
-		ft_quote_decremented(input, term);
+		ft_quote_decrement(input, term, 0);
 	row = ft_row_lowest_line(term);
 	if (term->nl_addr[row + 1]
 		&& (&input[term->index + 1] == term->nl_addr[term->c_row + 1]
