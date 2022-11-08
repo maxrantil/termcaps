@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:18:39 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 16:45:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,14 @@ static void	ft_line_down(char *input, t_term *term)
 	else
 		len = &input[term->bytes] - term->nl_addr[term->c_row + 1];
 	if (term->c_col < (len + prompt_len))
-		term->index = &term->nl_addr[term->c_row + 1]
-		[term->c_col - prompt_len] - term->nl_addr[0];
+	{
+		if (term->c_col < prompt_len)
+		{
+			term->c_col = prompt_len;
+			term->index = term->nl_addr[term->c_row + 1] - term->nl_addr[0];
+		}
+		term->index = &term->nl_addr[term->c_row + 1][term->c_col - prompt_len] - term->nl_addr[0];
+	}
 	else
 	{
 		term->c_col = len + prompt_len;

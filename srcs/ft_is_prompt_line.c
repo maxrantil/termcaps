@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:26:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 15:31:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 16:56:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
  */
 char	*ft_is_prompt_line(t_term *term, size_t row)
 {
-	if (!row || term->nl_addr[row][-1] == '\n'
-		|| term->nl_addr[row][-1] == '\\')
+	if (!row || term->nl_addr[row][-1] == '\n')
 		return (term->nl_addr[row]);
 	return (NULL);
 }

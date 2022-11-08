@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 16:54:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ static void	ft_trigger_nl(t_term *term, char *input)
 	}
 	if (len == term->ws_col + 1)
 		if (term->nl_addr[row + 1])
-			ft_add_nl_mid_row(term, input, row + 1,
-				(size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
+			ft_add_nl_mid_row(term, input, row + 1, (size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
 	if (term->c_col == term->ws_col)
 	{
 		term->c_col = 0;
