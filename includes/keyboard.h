@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 14:34:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:43:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_add_nl_last_row(t_term *term, char *input, size_t pos);
 void	ft_add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos);
 
 /*		     Quote Handling 		*/
-void	quote_handling(t_term *term, char ch);
+void	ft_quote_handling(t_term *term, char ch);
 void	ft_quote_decrement(char *input, t_term *term, int num);
 
 /*		        Deletion	 		*/

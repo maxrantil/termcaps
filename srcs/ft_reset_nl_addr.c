@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 15:26:52 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:43:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	ft_reset_nl_addr(t_term *term, char *input)
 			len = -1;
 		}
 		if (input[i] == D_QUO || input[i] == S_QUO)
-			quote_handling(term, input[i]);
+			ft_quote_handling(term, input[i]);
 	}
 }

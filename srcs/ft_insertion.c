@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 14:30:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:43:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_insertion(t_term *term, char *input)
 		ft_putc(term->ch);
 		if (term->ch == D_QUO || term->ch == S_QUO)
 			if (!term->index || input[term->index - 1] != '\\')
-				quote_handling(term, term->ch);
+				ft_quote_handling(term, term->ch);
 		ft_setcursor(++term->c_col, term->c_row);
 		ft_shift_nl_addr(term, 1);
 		if (input[term->index])

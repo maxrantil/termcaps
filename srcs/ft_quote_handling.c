@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:23:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 16:08:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 14:43:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param term the term structure
  * @param ch the character that was just typed
  */
-void	quote_handling(t_term *term, char ch)
+void	ft_quote_handling(t_term *term, char ch)
 {
 	if (!term->q_qty || (term->q_qty % 2 && !term->quote))
 	{
