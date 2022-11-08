@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 14:37:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/08 17:55:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ static void	ft_end_cycle(t_term *term, char *input)
 		ft_strdel(&term->input_cpy);
 }
 
+void ft_restart_cycle(t_term *t, char *input)
+{
+	ft_putendl_fd(input, STDOUT_FILENO);
+	ft_memset(input, '\0', BUFFSIZE);
+	t->quote = 0;
+	t->q_qty = 0;
+	t->bytes = 0;
+	t->index = 0;
+	t->c_col = t->prompt_len;
+	t->total_row += 2;
+	t->c_row = t->total_row;
+	// printf("NUM OF LINE SIN MEM %d\n", tgetnum("lm"));
+	// printf("NUM OF LINE SIN MEM %zu\n", t->ws_row);
+}
 /**
  * It's a loop that reads input from the terminal, and then does
  * something with it
@@ -52,7 +66,11 @@ void	ft_input_cycle(t_term *term, char *input) //more then 25 lines!
 			if (input[term->bytes - 2] != '\\' && !(term->q_qty % 2))
 			{
 				ft_end_cycle(term, input);
-				break ;
+				ft_restart_cycle(term, input);
+				ft_add_nl_last_row(term, input, 0);
+				write(1, PROMPT, term->prompt_len);
+				ft_setcursor(term->c_col, term->c_row);
+				continue;
 			}
 		}
 		else if (term->ch == CTRL_D && term->index < term->bytes)
