@@ -64,7 +64,7 @@ void	ft_input_cycle(t_term *term, char *input) //more then 25 lines!
 	while (term->ch != -1)
 	{
 		term->ch = ft_get_input();
-		if (term->ch == ENTER && !term->bytes)
+		if (term->ch == ENTER && !term->bytes) //make a function for ENTER
 			break ;
 		if (ft_isprint(term->ch) || term->ch == ENTER)
 			ft_insertion(term, input);
