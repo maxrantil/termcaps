@@ -6,50 +6,50 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:05:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:15:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	backpace_continue(t_term *term, size_t row, size_t len)
+static void	backpace_continue(t_term *t, size_t row, size_t len)
 {
-	if (!term->c_col)
+	if (!t->c_col)
 	{
-		term->c_col = term->ws_col;
-		ft_setcursor(term->c_col, --term->c_row);
+		t->c_col = t->ws_col;
+		ft_setcursor(t->c_col, --t->c_row);
 	}
 	else
 	{
-		if (term->c_col == term->ws_col)
-			term->c_col--;
-		ft_setcursor(--term->c_col, term->c_row);
+		if (t->c_col == t->ws_col)
+			t->c_col--;
+		ft_setcursor(--t->c_col, t->c_row);
 	}
 	if (!len)
 	{
-		ft_remove_nl_addr(term, row);
-		term->total_row--;
+		ft_remove_nl_addr(t, row);
+		t->total_row--;
 	}
 	ft_run_capability("ce");
-	ft_shift_nl_addr(term, -1);
-	ft_deletion_shift(term, BCK);
+	ft_shift_nl_addr(t, -1);
+	ft_deletion_shift(t, BCK);
 }
 
-void	ft_backspace(t_term *term)
+void	ft_backspace(t_term *t)
 {
 	size_t	row;
 	size_t	len;
 
-	if (&term->inp[term->index] == term->nl_addr[term->c_row]
-		&& ft_is_prompt_line(term, term->c_row))
+	if (&t->inp[t->index] == t->nl_addr[t->c_row]
+		&& ft_is_prompt_line(t, t->c_row))
 		return ;
-	row = ft_row_lowest_line(term);
-	if (term->nl_addr[row + 1])
-		len = (term->nl_addr[row + 1] - term->nl_addr[row]) - 1;
+	row = ft_row_lowest_line(t);
+	if (t->nl_addr[row + 1])
+		len = (t->nl_addr[row + 1] - t->nl_addr[row]) - 1;
 	else
-		len = &term->inp[term->bytes] - term->nl_addr[row];
-	if (term->index
-		&& (term->inp[term->index - 1] == D_QUO || term->inp[term->index - 1] == S_QUO))
-		ft_quote_decrement(term, 1);
-	backpace_continue(term, row, len);
+		len = &t->inp[t->bytes] - t->nl_addr[row];
+	if (t->index
+		&& (t->inp[t->index - 1] == D_QUO || t->inp[t->index - 1] == S_QUO))
+		ft_quote_decrement(t, 1);
+	backpace_continue(t, row, len);
 }

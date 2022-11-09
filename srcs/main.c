@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:03:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:22:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ static int ft_getent(void)
 static int	ft_keyboard()
 {
 	struct termios	orig_termios;
-	t_term			term;
+	t_term			t;
 
-	ft_init(&term);
+	ft_init(&t);
 	ft_getent();
 	orig_termios = ft_init_raw();
-	ft_input_cycle(&term);
-	ft_history_write_to_file(&term);
+	ft_input_cycle(&t);
+	ft_history_write_to_file(&t);
 	ft_disable_raw_mode(orig_termios);
 	return (0);
 }

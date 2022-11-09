@@ -6,18 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:59:21 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 08:52:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:17:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It writes the history to a file with a maximum och 1024 lines.
- * O_WRONLY access modes: write only 
- * @param term The terminal structure.
- */
-void	ft_history_write_to_file(t_term *term)
+void	ft_history_write_to_file(t_term *t)
 {
 	char	*file;
 	size_t	cpy;
@@ -28,11 +23,11 @@ void	ft_history_write_to_file(t_term *term)
 	if (fd)
 	{
 		cpy = 0;
-		if (term->v_history.len > 1024)
-			cpy = term->v_history.len % 1024;
-		while (cpy < term->v_history.len)
+		if (t->v_history.len > 1024)
+			cpy = t->v_history.len % 1024;
+		while (cpy < t->v_history.len)
 		{
-			ft_putendl_fd((char *)vec_get(&term->v_history, cpy), fd);
+			ft_putendl_fd((char *)vec_get(&t->v_history, cpy), fd);
 			cpy++;
 		}
 		close(fd);

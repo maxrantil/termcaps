@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 09:58:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:21:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_print_prompt(size_t row)
 		ft_putstr(MINI_PROMPT);
 }
 
-static void	ft_print_line_trail(t_term *term)
+static void	ft_print_line_trail(t_term *t)
 {
 	size_t	row;
 	char	*new_line;
@@ -29,25 +29,25 @@ static void	ft_print_line_trail(t_term *term)
 	row = 0;
 	ft_setcursor(0, row);
 	ft_run_capability("cd");
-	while (row <= term->total_row)
+	while (row <= t->total_row)
 	{
-		if (ft_is_prompt_line(term, row))
+		if (ft_is_prompt_line(t, row))
 			ft_print_prompt(row);
-		new_line = term->nl_addr[row];
+		new_line = t->nl_addr[row];
 		if (*new_line == '\n')
 			new_line++;
-		if (term->nl_addr[row + 1])
-			write(1, new_line, term->nl_addr[row + 1] - new_line);
+		if (t->nl_addr[row + 1])
+			write(1, new_line, t->nl_addr[row + 1] - new_line);
 		else
-			write(1, new_line, &term->inp[term->bytes] - new_line);
+			write(1, new_line, &t->inp[t->bytes] - new_line);
 		ft_setcursor(0, ++row);
 	}
 }
 
-void	ft_print_trail(t_term *term)
+void	ft_print_trail(t_term *t)
 {
 	ft_run_capability("vi");
-	ft_print_line_trail(term);
-	ft_setcursor(term->c_col, term->c_row);
+	ft_print_line_trail(t);
+	ft_setcursor(t->c_col, t->c_row);
 	ft_run_capability("ve");
 }

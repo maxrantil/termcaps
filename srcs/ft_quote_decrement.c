@@ -6,22 +6,22 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:23:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 09:59:39 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:13:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_quote_decrement(t_term *term, int num)
+void	ft_quote_decrement(t_term *t, int num)
 {
-	if (!(term->q_qty % 2))
+	if (!(t->q_qty % 2))
 	{	
-		term->quote = term->inp[term->index - num];
-		term->q_qty--;
+		t->quote = t->inp[t->index - num];
+		t->q_qty--;
 	}
-	else if ((term->q_qty % 2) && term->quote == term->inp[term->index - num])
+	else if ((t->q_qty % 2) && t->quote == t->inp[t->index - num])
 	{
-		term->quote = 0;
-		term->q_qty--;
+		t->quote = 0;
+		t->q_qty--;
 	}
 }
