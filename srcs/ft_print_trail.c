@@ -6,17 +6,12 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 17:05:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 09:58:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It prints the prompt
- * 
- * @param row the row of the cursor
- */
 static void	ft_print_prompt(size_t row)
 {
 	if (!row)
@@ -25,13 +20,7 @@ static void	ft_print_prompt(size_t row)
 		ft_putstr(MINI_PROMPT);
 }
 
-/**
- * It prints the line trail
- * 
- * @param term the t_term struct
- * @param input the input string
- */
-static void	ft_print_line_trail(t_term *term, char *input)
+static void	ft_print_line_trail(t_term *term)
 {
 	size_t	row;
 	char	*new_line;
@@ -50,21 +39,15 @@ static void	ft_print_line_trail(t_term *term, char *input)
 		if (term->nl_addr[row + 1])
 			write(1, new_line, term->nl_addr[row + 1] - new_line);
 		else
-			write(1, new_line, &input[term->bytes] - new_line);
+			write(1, new_line, &term->inp[term->bytes] - new_line);
 		ft_setcursor(0, ++row);
 	}
 }
 
-/**
- * It prints the line trail
- * 
- * @param term the term structure
- * @param input the string to be printed
- */
-void	ft_print_trail(t_term *term, char *input)
+void	ft_print_trail(t_term *term)
 {
 	ft_run_capability("vi");
-	ft_print_line_trail(term, input);
+	ft_print_line_trail(term);
 	ft_setcursor(term->c_col, term->c_row);
 	ft_run_capability("ve");
 }

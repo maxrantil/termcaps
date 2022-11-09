@@ -6,20 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:10:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It takes a string and
- * creates an array of pointers to the beginning of each line in the string
- * 
- * @param term the term structure
- * @param input the string to be parsed
- */
-void	ft_reset_nl_addr(t_term *term, char *input)
+void	ft_reset_nl_addr(t_term *term)
 {
 	size_t	i;
 	size_t	len;
@@ -29,18 +22,18 @@ void	ft_reset_nl_addr(t_term *term, char *input)
 	term->total_row = 0;
 	if (term->nl_addr)
 		ft_memdel((void **)&term->nl_addr);
-	ft_add_nl_last_row(term, input, i);
-	while (input[++i])
+	ft_add_nl_last_row(term, i);
+	while (term->inp[++i])
 	{
 		len++;
 		if (((len + ft_get_prompt_len(term, term->total_row)) + 1)
-			/ (term->ws_col) || input[i] == '\n')
+			/ (term->ws_col) || term->inp[i] == '\n')
 		{
-			ft_add_nl_last_row(term, input, i + 1);
+			ft_add_nl_last_row(term, i + 1);
 			term->total_row++;
 			len = -1;
 		}
-		if (input[i] == D_QUO || input[i] == S_QUO)
-			ft_quote_handling(term, input[i]);
+		if (term->inp[i] == D_QUO || term->inp[i] == S_QUO)
+			ft_quote_handling(term, term->inp[i]);
 	}
 }

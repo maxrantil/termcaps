@@ -6,19 +6,19 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 15:21:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:08:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /**
- * It moves the cursor to the end of the input
+ * It moves the cursor to the end of the term->inp
  *
  * @param term the term structure
- * @param input the input string
+ * @param term->inp the term->inp string
  */
-static void	ft_history_trigger_end(t_term *term, char *input)
+static void	ft_history_trigger_end(t_term *term)
 {
 	term->index = term->bytes;
 	term->c_row = term->total_row;
@@ -29,7 +29,7 @@ static void	ft_history_trigger_end(t_term *term, char *input)
 		else
 			term->c_col = term->m_prompt_len;
 	}
-	term->c_col += &input[term->bytes] - term->nl_addr[term->c_row];
+	term->c_col += &term->inp[term->bytes] - term->nl_addr[term->c_row];
 	ft_setcursor(term->c_col, term->total_row);
 	ft_run_capability("ve");
 }
@@ -53,15 +53,15 @@ static void	ft_history_trigger_start(t_term *term)
 }
 
 /**
- * It takes the input,
- * copies it to a temporary variable, then copies the history entry to the input
+ * It takes the term->inp,
+ * copies it to a temporary variable, then copies the history entry to the term->inp
  * and prints it
  *
  * @param term the term struct
- * @param input the input buffer
+ * @param term->inp the term->inp buffer
  * @param his the history number to go to.
  */
-void	ft_history_trigger(t_term *term, char *input, int his)
+void	ft_history_trigger(t_term *term, int his)
 {
 	char	*history;
 
@@ -71,18 +71,18 @@ void	ft_history_trigger(t_term *term, char *input, int his)
 	{
 		term->bytes = ft_strlen(history);
 		if (!term->input_cpy)
-			term->input_cpy = ft_strdup(input);
-		ft_memset((void *)input, '\0', BUFF_SIZE);
-		ft_memcpy((void *)input, (void *)history, term->bytes);
+			term->input_cpy = ft_strdup(term->inp);
+		ft_memset((void *)term->inp, '\0', BUFF_SIZE);
+		ft_memcpy((void *)term->inp, (void *)history, term->bytes);
 	}
 	else
 	{
 		term->bytes = ft_strlen(term->input_cpy);
-		ft_memset((void *)input, '\0', BUFF_SIZE);
-		ft_memcpy((void *)input, (void *)term->input_cpy, term->bytes);
+		ft_memset((void *)term->inp, '\0', BUFF_SIZE);
+		ft_memcpy((void *)term->inp, (void *)term->input_cpy, term->bytes);
 		ft_strdel(&term->input_cpy);
 	}
-	ft_reset_nl_addr(term, input);
-	ft_print_trail(term, input);
-	ft_history_trigger_end(term, input);
+	ft_reset_nl_addr(term);
+	ft_print_trail(term);
+	ft_history_trigger_end(term);
 }

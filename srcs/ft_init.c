@@ -6,24 +6,19 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 14:04:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 09:52:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 t_term	*g_term;
-/**
- * It initializes the terminal
- *
- * @param term the structure that holds all the information about the terminal.
- * @param input the string that will be edited
- */
-void	ft_init(t_term *term, char *input)
+
+void	ft_init(t_term *term)
 {
 	ft_init_signals();
 	term->ch = 0;
-	term->inp = input;
+	ft_memset(term->inp, '\0', BUFFSIZE);
 	term->quote = 0;
 	term->q_qty = 0;
 	term->bytes = 0;

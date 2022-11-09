@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrow_input.c                                   :+:      :+:    :+:   */
+/*   ft_arrow_term->inp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,16 +15,16 @@
 /**
  * If the cursor is not at the end of the line, move it one space to the right
  *
- * @param input the string that is being edited
+ * @param term->inp the string that is being edited
  * @param t the struct that holds all the information about the terminal
  */
-static void	ft_right(t_term *t, char *input)
+static void	ft_right(t_term *t)
 {
 	if (t->index < t->bytes)
 	{
 		if (t->nl_addr[t->c_row + 1])
 		{
-			if (&input[t->index] < (t->nl_addr[t->c_row + 1] - 1))
+			if (&t->inp[t->index] < (t->nl_addr[t->c_row + 1] - 1))
 			{
 				t->index++;
 				ft_setcursor(++t->c_col, t->c_row);
@@ -41,12 +41,12 @@ static void	ft_right(t_term *t, char *input)
 /**
  * It moves the cursor left one character
  *
- * @param input the string that the user is typing in
+ * @param term->inp the string that the user is typing in
  * @param t the t_term struct
  */
-static void	ft_left(t_term *t, char *input)
+static void	ft_left(t_term *t)
 {
-	if (&input[t->index] == t->nl_addr[t->c_row])
+	if (&t->inp[t->index] == t->nl_addr[t->c_row])
 	{
 		if (t->c_row == 1)
 			t->c_col = t->prompt_len;
@@ -63,18 +63,18 @@ static void	ft_left(t_term *t, char *input)
  * It handles the arrow keys
  *
  * @param term the term struct
- * @param input the string that is being edited
+ * @param term->inp the string that is being edited
  */
-void	ft_arrow_input(t_term *term, char *input)
+void	ft_arrow_input(t_term *term)
 {
 	static size_t	his;
 
 	if (term->ch == 'D' && term->index)
-		ft_left(term, input);
+		ft_left(term);
 	else if (term->ch == 'C')
-		ft_right(term, input);
+		ft_right(term);
 	else if (term->ch == 'A' && his < term->v_history.len)
-		ft_history_trigger(term, input, ++his);
+		ft_history_trigger(term, ++his);
 	else if (term->ch == 'B' && his > 0)
-		ft_history_trigger(term, input, --his);
+		ft_history_trigger(term, --his);
 }

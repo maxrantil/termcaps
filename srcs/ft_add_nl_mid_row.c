@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 16:16:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 09:49:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
  * character at that position
  * 
  * @param term the term structure
- * @param input the input string
+ * @param term->inp the term->inp string
  * @param row the row number where the newline character is
- * @param pos the position of the cursor in the input string
+ * @param pos the position of the cursor in the term->inp string
  */
-void	ft_add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos)
+void	ft_add_nl_mid_row(t_term *term, size_t row, size_t pos)
 {
 	size_t	i;
 	size_t	j;
@@ -33,7 +33,7 @@ void	ft_add_nl_mid_row(t_term *term, char *input, size_t row, size_t pos)
 	while (++i <= term->total_row)
 	{
 		if (i == row)
-			new_arr[i] = &input[pos];
+			new_arr[i] = &term->inp[pos];
 		else
 			new_arr[i] = term->nl_addr[j++];
 	}

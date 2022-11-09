@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 16:45:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:10:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	ft_mv_prompt_len(t_term *term, int num)
  * @param input the input string
  * @param term the t_term struct
  */
-static void	ft_line_down(char *input, t_term *term)
+static void	ft_line_down(t_term *term)
 {
 	size_t	len;
 	size_t	prompt_len;
@@ -47,7 +47,7 @@ static void	ft_line_down(char *input, t_term *term)
 	if (term->c_row < (term->total_row - 1))
 		len = (term->nl_addr[term->c_row + 2] - term->nl_addr[term->c_row + 1]);
 	else
-		len = &input[term->bytes] - term->nl_addr[term->c_row + 1];
+		len = &term->inp[term->bytes] - term->nl_addr[term->c_row + 1];
 	if (term->c_col < (len + prompt_len))
 	{
 		if (term->c_col < prompt_len)
@@ -67,7 +67,7 @@ static void	ft_line_down(char *input, t_term *term)
 				- term->nl_addr[0];
 		}
 		else
-			term->index = (&input[term->bytes] - term->nl_addr[0]);
+			term->index = (&term->inp[term->bytes] - term->nl_addr[0]);
 	}
 	ft_setcursor(term->c_col, ++term->c_row);
 }
@@ -113,7 +113,7 @@ static void	ft_line_up(t_term *term)
  * @param term the structure that holds all the information about the terminal
  * @param input the string that the user is typing
  */
-void	ft_line_mv(t_term *term, char *input)
+void	ft_line_mv(t_term *term)
 {
 	term->ch = ft_get_input();
 	if (term->ch == 59)
@@ -125,7 +125,7 @@ void	ft_line_mv(t_term *term, char *input)
 			if (term->ch == 65 && term->c_row)
 				ft_line_up(term);
 			if (term->ch == 66 && term->c_row < term->total_row)
-				ft_line_down(input, term);
+				ft_line_down(term);
 			term->ch = 0;
 		}
 	}
