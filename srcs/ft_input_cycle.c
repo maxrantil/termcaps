@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:19:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 15:19:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,31 @@ static void	ft_end_cycle(t_term *t)
 		ft_strdel(&t->input_cpy);
 }
 
-void ft_restart_cycle(t_term *t)
+static int	ft_get_linenbr()
+{
+	char	buf[16];
+	int		len;
+	int		i;
+
+	ft_memset(buf, '\0', sizeof(buf));
+	write(0, "\033[6n", 4);
+	len = 0;
+	while (read(0, buf + len, 1) == 1)
+	{
+		if (buf[len++] == 'R')
+			break;
+	}
+	i = -1;
+	len = 0;
+	while (buf[i++] != ';')
+	{
+		if (ft_isdigit(buf[i]))
+			buf[len++] = buf[i];
+	}
+	return (ft_atoi(buf));
+}
+
+static void ft_restart_cycle(t_term *t)
 {
 	ft_putendl_fd(t->inp, STDOUT_FILENO);
 	ft_memset(t->inp, '\0', BUFFSIZE);
@@ -32,11 +56,11 @@ void ft_restart_cycle(t_term *t)
 	t->bytes = 0;
 	t->index = 0;
 	t->c_col = t->prompt_len;
-	t->total_row += 2;
-	t->c_row = t->total_row;
+	t->total_row = ft_get_linenbr();
+	t->c_row = t->total_row - 1;
 }
 
-void	ft_input_cycle(t_term *t) //more then 25 lines!
+void	ft_input_cycle(t_term *t)
 {
 	ft_add_nl_last_row(t, 0);
 	write(1, PROMPT, t->prompt_len);
