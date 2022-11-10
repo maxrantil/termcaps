@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_backspace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:15:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:54:56 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	backpace_continue(t_term *t, size_t row, size_t len)
 	if (!t->c_col)
 	{
 		t->c_col = t->ws_col;
-		ft_setcursor(t->c_col, --t->c_row);
+		ft_setcursor(t->c_col, --t->c_row + t->start_row);
 	}
 	else
 	{
 		if (t->c_col == t->ws_col)
 			t->c_col--;
-		ft_setcursor(--t->c_col, t->c_row);
+		ft_setcursor(--t->c_col, t->c_row + t->start_row);
 	}
 	if (!len)
 	{

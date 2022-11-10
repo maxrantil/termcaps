@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:18:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:47:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_init(t_term *t)
 	ft_init_signals();
 	t->ch = 0;
 	ft_memset(t->inp, '\0', BUFFSIZE);
+	t->start_row = ft_get_linenbr();
 	t->quote = 0;
 	t->q_qty = 0;
 	t->bytes = 0;

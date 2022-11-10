@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:19:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:08:38 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	ft_trigger_nl(t_term *t)
 	if (t->c_col == t->ws_col)
 	{
 		t->c_col = 0;
-		ft_setcursor(t->c_col, ++t->c_row);
+		ft_putchar('\n');
+		ft_setcursor(t->c_col, ++t->c_row + t->start_row);
 	}
 }
 
@@ -96,7 +97,7 @@ void	ft_insertion(t_term *t)
 		if (t->ch == D_QUO || t->ch == S_QUO)
 			if (!t->index || t->inp[t->index - 1] != '\\')
 				ft_quote_handling(t, t->ch);
-		ft_setcursor(++t->c_col, t->c_row);
+		ft_setcursor(++t->c_col, t->c_row + t->start_row);
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])
 			ft_shift_insert(t);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:12:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:44:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_term
 	size_t	bytes;
 	size_t	c_col;
 	size_t	c_row;
+	size_t	start_row;
 	size_t	total_row;
 	size_t	prompt_len;
 	size_t	m_prompt_len;
@@ -79,6 +80,7 @@ void	ft_setcursor(int col, int row);
 void	ft_run_capability(char *cap);
 void	ft_window_size(t_term *t);
 void	ft_init_signals(void);
+int		ft_get_linenbr(void);
 
 /* void	kill_process(int sig); */
 

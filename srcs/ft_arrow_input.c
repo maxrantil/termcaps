@@ -27,13 +27,13 @@ static void	ft_right(t_term *t)
 			if (&t->inp[t->index] < (t->nl_addr[t->c_row + 1] - 1))
 			{
 				t->index++;
-				ft_setcursor(++t->c_col, t->c_row);
+				ft_setcursor(++t->c_col, t->c_row + t->start_row);
 			}
 		}
 		else
 		{
 			t->index++;
-			ft_setcursor(++t->c_col, t->c_row);
+			ft_setcursor(++t->c_col, t->c_row + t->start_row);
 		}
 	}
 }
@@ -56,7 +56,7 @@ static void	ft_left(t_term *t)
 			t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]);
 	}
 	t->index--;
-	ft_setcursor(--t->c_col, t->c_row);
+	ft_setcursor(--t->c_col, t->c_row + t->start_row);
 }
 
 void	ft_arrow_input(t_term *t)

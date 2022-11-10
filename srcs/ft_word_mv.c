@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word_mv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:23:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:57:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	ft_word_left(t_term *t)
 		t->c_col += t->prompt_len;
 	else if (ft_is_prompt_line(t, t->c_row))
 		t->c_col += t->m_prompt_len;
-	ft_setcursor(t->c_col, t->c_row);
+	ft_setcursor(t->c_col, t->c_row + t->start_row);
 }
 
 static void	ft_word_right(t_term *t)
@@ -58,7 +58,7 @@ static void	ft_word_right(t_term *t)
 		t->c_col += t->prompt_len;
 	else if (ft_is_prompt_line(t, row - 1))
 		t->c_col += t->m_prompt_len;
-	ft_setcursor(t->c_col, row - 1);
+	ft_setcursor(t->c_col, row - 1 + t->start_row);
 }
 
 void	ft_word_mv(t_term *t)

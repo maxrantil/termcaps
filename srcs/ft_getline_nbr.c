@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_create_prompt_line.c                            :+:      :+:    :+:   */
+/*   ft_getline_nbr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 12:40:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 12:02:25 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/10 11:50:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_create_prompt_line(t_term *t, size_t loc)
+int	ft_get_linenbr(void)
 {
-	t->c_row++;
-	t->total_row++;
-	t->c_col = t->m_prompt_len;
-	ft_putchar('\n');
-	ft_setcursor(0, t->c_row + t->start_row);
-	write(1, MINI_PROMPT, t->m_prompt_len);
-	if (t->nl_addr[t->c_row])
-		ft_add_nl_mid_row(t, t->c_row, loc);
-	else
-		ft_add_nl_last_row(t, loc);
+	char	buf[16];
+	int		len;
+	int		i;
+
+	ft_memset(buf, '\0', sizeof(buf));
+	write(0, "\033[6n", 4);
+	len = 0;
+	while (read(0, buf + len, 1) == 1)
+	{
+		if (buf[len++] == 'R')
+			break;
+	}
+	len = 0;
+	i = -1;
+	while (buf[i++] != ';')
+	{
+		if (ft_isdigit(buf[i]))
+			buf[len++] = buf[i];
+	}
+	buf[len] = '\0';
+	return (ft_atoi(buf) - 1);
 }

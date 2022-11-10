@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 15:25:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:06:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,14 @@
 
 static void	ft_end_cycle(t_term *t)
 {
-	ft_setcursor(0, t->total_row + 1);
+	// ft_setcursor(0, t->total_row + t->start_row + 1);
+	ft_putchar('\n');
 	vec_push(&t->v_history, t->inp);
 	if (!ft_strcmp(t->inp, "history"))
 		ft_history(t);
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
-}
-
-static int	ft_get_linenbr()
-{
-	char	buf[16];
-	int		len;
-	int		i;
-
-	ft_memset(buf, '\0', sizeof(buf));
-	write(0, "\033[6n", 4);
-	len = 0;
-	while (read(0, buf + len, 1) == 1)
-	{
-		if (buf[len++] == 'R')
-			break;
-	}
-	len = 0;
-	i = -1;
-	while (buf[i++] != ';')
-	{
-		if (ft_isdigit(buf[i]))
-			buf[len++] = buf[i];
-	}
-	buf[len] = '\0';
-	return (ft_atoi(buf));
 }
 
 static void ft_restart_cycle(t_term *t)
@@ -57,8 +33,9 @@ static void ft_restart_cycle(t_term *t)
 	t->bytes = 0;
 	t->index = 0;
 	t->c_col = t->prompt_len;
-	t->total_row = ft_get_linenbr();
-	t->c_row = t->total_row - 1;
+	t->start_row = ft_get_linenbr();
+	t->total_row = 0;
+	t->c_row = t->total_row;
 }
 
 void	ft_input_cycle(t_term *t)
@@ -78,7 +55,7 @@ void	ft_input_cycle(t_term *t)
 				ft_restart_cycle(t);
 				ft_add_nl_last_row(t, 0);
 				write(1, PROMPT, t->prompt_len);
-				ft_setcursor(t->c_col, t->c_row);
+				ft_setcursor(t->c_col, t->c_row + t->start_row);
 				continue;
 			}
 		}

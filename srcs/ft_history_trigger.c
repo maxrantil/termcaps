@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:17:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:56:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_history_trigger_end(t_term *t)
 			t->c_col = t->m_prompt_len;
 	}
 	t->c_col += &t->inp[t->bytes] - t->nl_addr[t->c_row];
-	ft_setcursor(t->c_col, t->total_row);
+	ft_setcursor(t->c_col, t->total_row + t->start_row);
 	ft_run_capability("ve");
 }
 
@@ -36,7 +36,7 @@ static void	ft_history_trigger_start(t_term *t)
 	t->c_col = 0;
 	t->c_row = 0;
 	t->total_row = 0;
-	ft_setcursor(t->c_col, t->c_row);
+	ft_setcursor(t->c_col, t->c_row + t->start_row);
 	ft_run_capability("cd");
 	ft_putstr(PROMPT);
 }

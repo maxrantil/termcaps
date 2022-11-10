@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_window_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:23:01 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:49:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_new_cur_pos(t_term *t)
 			t->c_col = t->m_prompt_len;
 	}
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	ft_setcursor(t->c_col, t->c_row);
+	ft_setcursor(t->c_col, t->c_row + t->start_row);
 }
 
 void	ft_window_size(t_term *t)
