@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 15:51:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:42:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,23 @@ static void	ft_trigger_nl(t_term *t)
 {
 	ssize_t	len;
 	ssize_t	row;
+	
 
 	row = ft_row_lowest_line(t);
 	len = ft_len_lowest_line(t, row);
 	if (len == t->ws_col)
 	{
 		t->total_row++;
+		if (t->total_row + t->start_row >= t->ws_row)
+		{
+			ft_run_capability("vi");
+			ft_run_capability("sc");
+			ft_setcursor(0, t->ws_row);
+			ft_run_capability("sf");
+			ft_run_capability("rc");
+			ft_run_capability("ve");
+			ft_setcursor(t->c_col, ft_get_linenbr() - 1);
+		}
 		ft_add_nl_last_row(t, t->bytes);
 	}
 	if (len == t->ws_col + 1)
@@ -63,8 +74,8 @@ static void	ft_trigger_nl(t_term *t)
 	{
 		t->c_row++;
 		t->c_col = 0;
-		ft_putchar('\n');
-		ft_setcursor(t->c_col, ft_get_linenbr());
+		// ft_putchar('\n');
+		ft_setcursor(t->c_col, ft_get_linenbr() + 1);
 	}
 }
 

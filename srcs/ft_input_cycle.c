@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:46:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:50:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	ft_input_cycle(t_term *t)
 			ft_backspace(t);
 		if (t->ch == ESCAPE)
 			ft_esc_parse(t);
-		// if (t->inp[t->index])
-		// 	ft_print_trail(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}

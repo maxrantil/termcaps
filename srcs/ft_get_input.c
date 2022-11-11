@@ -6,17 +6,12 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/07 14:12:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:51:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It reads one character from the standard input and returns it
- * 
- * @return The character that was read from the standard input.
- */
 int	ft_get_input(void)
 {
 	int	c;

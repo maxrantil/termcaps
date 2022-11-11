@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:53:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:48:10 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_print_line_trail(t_term *t)
 		}
 		else
 		{
-			ft_setcursor(0, ft_display_row_v2(t, row));
+			ft_setcursor(0, ft_get_linenbr());
 			if (ft_is_prompt_line(t, row))
 				ft_print_prompt(row);
 			new_line = t->nl_addr[row];
