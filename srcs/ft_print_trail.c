@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_trail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 12:43:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 13:58:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_print_line_trail(t_term *t)
 		}
 		else
 		{
-			ft_setcursor(0, ft_display_row(t, row));
+			ft_setcursor(0, ft_display_row_v2(t, row));
 			if (ft_is_prompt_line(t, row))
 				ft_print_prompt(row);
 			new_line = t->nl_addr[row];
@@ -115,8 +115,11 @@ static void	ft_print_line_trail(t_term *t)
 
 void	ft_print_trail(t_term *t)
 {
+	size_t row;
+
+	row = ft_get_linenbr();
 	ft_run_capability("vi");
 	ft_print_line_trail(t);
-	ft_setcursor(t->c_col, ft_display_row(t, t->c_row));
+	ft_setcursor(t->c_col, row);
 	ft_run_capability("ve");
 }

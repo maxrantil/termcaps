@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 12:49:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 13:58:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ static void	ft_trigger_nl(t_term *t)
 			ft_add_nl_mid_row(t, row + 1, (size_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
 	if (t->c_col == t->ws_col)
 	{
+		t->c_row++;
 		t->c_col = 0;
 		ft_putchar('\n');
-		ft_setcursor(t->c_col, ft_display_row_v2(t, ++t->c_row));
+		ft_setcursor(t->c_col, ft_get_linenbr());
 	}
 }
 
@@ -80,16 +81,6 @@ void	ft_insertion(t_term *t)
 				t->index = t->bytes;
 			}
 		}
-		/* else
-		{
-			if (t->q_qty % 2)
-			{
-				t->index = t->nl_addr[t->c_row + 1] - &t->inp[0];
-				ft_shift_insert(term, t->inp);
-				t->inp[t->index] = t->ch;
-				ft_create_prompt_line(term, t->inp, --t->index);
-			}
-		} */
 	}
 	else
 	{
@@ -97,7 +88,13 @@ void	ft_insertion(t_term *t)
 		if (t->ch == D_QUO || t->ch == S_QUO)
 			if (!t->index || t->inp[t->index - 1] != '\\')
 				ft_quote_handling(t, t->ch);
-		ft_setcursor(++t->c_col, ft_display_row_v2(t, t->c_row));
+		if (t->c_col == t->ws_col)
+		{
+			t->c_col = 0;
+			ft_setcursor(t->c_col, ft_get_linenbr() + 1);
+		}
+		else
+			ft_setcursor(++t->c_col, ft_get_linenbr());
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])
 			ft_shift_insert(t);

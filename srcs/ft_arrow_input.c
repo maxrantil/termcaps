@@ -73,8 +73,9 @@ static void	ft_right(t_term *t)
 // }
 static void	ft_left(t_term *t)
 {
-	// size_t	row;
+	size_t	row;
 
+	row = ft_get_linenbr();
 	if (&t->inp[t->index] == t->nl_addr[t->c_row])
 	{
 		if (t->c_row == 1)
@@ -83,6 +84,7 @@ static void	ft_left(t_term *t)
 			t->c_col = t->m_prompt_len;
 		if (t->c_row > 0)
 			t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]);
+		row--;
 	}
 	// ft_setcursor(t->ws_col - 15, t->ws_row - 3);
 	// ft_putnbr(t->start_row + t->c_row);
@@ -94,7 +96,8 @@ static void	ft_left(t_term *t)
 	// else
 	// 	row = t->c_row + t->start_row;
 	t->index--;
-	ft_setcursor(--t->c_col, ft_display_row(t, t->c_row));
+	// ft_setcursor(--t->c_col, ft_display_row(t, t->c_row));
+	ft_setcursor(--t->c_col, row);
 }
 
 void	ft_arrow_input(t_term *t)
