@@ -6,15 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 10:52:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_arrfree(void ***arr, ssize_t len)
+void	ft_arrfree(void ***arr, size_t len)
 {
-	ssize_t	i;
+	size_t	i;
 
 	if (!arr || !len)
 		return ;

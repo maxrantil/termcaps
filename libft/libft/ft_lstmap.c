@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 15:06:34 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_delnode(void *content, ssize_t content_size)
+static void	ft_delnode(void *content, size_t content_size)
 {
 	if (content != NULL)
 	{

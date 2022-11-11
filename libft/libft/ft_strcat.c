@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:13:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strcat(char *s1, const char *s2)
 {
-	ssize_t	i;
-	ssize_t	j;
+	size_t	i;
+	size_t	j;
 
 	i = ft_strlen(s1);
 	j = 0;

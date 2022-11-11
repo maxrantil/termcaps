@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 15:14:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ignore_zero_flag(t_ftprintf *data)
 	data->zero = 0;
 }
 
-ssize_t	get_it(t_ftprintf *data)
+size_t	get_it(t_ftprintf *data)
 {
-	ssize_t	c_single;
-	ssize_t	ret;
+	size_t	c_single;
+	size_t	ret;
 
 	c_single = 0;
 	ret = 0;

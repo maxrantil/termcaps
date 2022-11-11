@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:24:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memalloc(ssize_t size)
+void	*ft_memalloc(size_t size)
 {
 	void	*mem;
 

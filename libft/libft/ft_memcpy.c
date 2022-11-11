@@ -6,17 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:10:27 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, ssize_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char	*original;
 	unsigned char	*copy;
-	ssize_t			i;
+	size_t			i;
 
 	original = (unsigned char *)src;
 	copy = (unsigned char *)dst;

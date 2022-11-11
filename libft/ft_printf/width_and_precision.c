@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 13:16:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exec_precision(t_ftprintf *data)
 	if (data->precision && !data->plus_flag && *data->fmt != '%')
 	{
 		sub += (data->va_ret < 0);
-		while ((ssize_t)sub-- > data->len_va_arg)
+		while ((size_t)sub-- > data->len_va_arg)
 			data->char_count += write(1, "0", 1);
 	}
 }
@@ -115,7 +115,7 @@ void	exec_width(t_ftprintf *data)
 					&& ft_strcmp(data->hold_str, "0")))) \
 					&& data->precision_flag && !data->precision));
 		sub *= (sub > 0);
-		while ((ssize_t)sub-- > data->len_va_arg)
+		while ((size_t)sub-- > data->len_va_arg)
 			data->char_count += write(1, " ", 1);
 	}
 }

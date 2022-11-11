@@ -64,7 +64,7 @@ void	ft_arrow_input(t_term *t)
 		ft_left(t);
 	else if (t->ch == 'C' && t->index < t->bytes)
 		ft_right(t);
-	else if (t->ch == 'A' && his < t->v_history.len)
+	else if (t->ch == 'A' && (size_t)his < t->v_history.len)
 		ft_history_trigger(t, ++his);
 	else if (t->ch == 'B' && his > 0)
 		ft_history_trigger(t, --his);

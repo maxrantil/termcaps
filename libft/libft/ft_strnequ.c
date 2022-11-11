@@ -6,15 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 20:49:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strnequ(char const *s1, char const *s2, ssize_t n)
+int	ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	ssize_t	i;
+	size_t	i;
 
 	if (s1 == NULL || s2 == NULL)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:06:19 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:29:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ typedef struct s_ftprintf
 	va_list				ap;
 	const char			*fmt;
 	int					space_count;
-	ssize_t				char_count;
-	ssize_t				astx_flag;
-	ssize_t				len_va_arg;
+	size_t				char_count;
+	size_t				astx_flag;
+	size_t				len_va_arg;
 	int					plus_flag;
 	int					minus_flag;
-	ssize_t				width;
-	ssize_t				width_check;
-	ssize_t				precision;
+	size_t				width;
+	size_t				width_check;
+	size_t				precision;
 	long long			va_ret;
 	unsigned long long	va_u_ret;
 	int					hash_flag;
-	ssize_t				zero;
+	size_t				zero;
 	int					zero_flag;
 	char				*hold_str;
 	int					le_f;
@@ -106,7 +106,7 @@ void	check_oct_length(t_ftprintf *data);
 int		ft_printf(const char *fmt, ...);
 void	check_parser(t_ftprintf *data);
 void	pf_putint(t_ftprintf *data);
-ssize_t	get_it(t_ftprintf *data);
+size_t	get_it(t_ftprintf *data);
 char	*conv_to_str(long long nbr, t_ftprintf *data);
 char	*uint_str(unsigned long long nbr, t_ftprintf *data);
 void	pf_print_hex_hash(t_ftprintf *data);
