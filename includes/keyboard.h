@@ -6,10 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 12:03:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:09:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef KEYBOARD_H
 # define KEYBOARD_H
 
 # include "libft.h"

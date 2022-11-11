@@ -6,10 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 12:02:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:10:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "keyboard.h"
 
 static void	ft_end_cycle(t_term *t)
 {
