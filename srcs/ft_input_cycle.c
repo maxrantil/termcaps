@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 12:06:50 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/10 12:25:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_end_cycle(t_term *t)
 {
-	// ft_setcursor(0, t->total_row + t->start_row + 1);
+	ft_setcursor(0, t->total_row + t->start_row);
 	ft_putchar('\n');
 	vec_push(&t->v_history, t->inp);
 	if (!ft_strcmp(t->inp, "history"))
@@ -67,8 +67,8 @@ void	ft_input_cycle(t_term *t)
 			ft_backspace(t);
 		if (t->ch == ESCAPE)
 			ft_esc_parse(t);
-		if (t->inp[t->index])
-			ft_print_trail(t);
+		// if (t->inp[t->index])
+		// 	ft_print_trail(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}

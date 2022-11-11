@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:16:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 16:50:22 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,6 @@ void	ft_delete(t_term *t)
 		ft_remove_nl_addr(t, row);
 		t->total_row--;
 	}
+	if (t->inp[t->index])
+		ft_print_trail(t);
 }
