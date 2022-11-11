@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 12:06:50 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:59:21 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	ft_end_cycle(t_term *t)
 {
 	// ft_setcursor(0, t->total_row + t->start_row + 1);
-	ft_putchar('\n');
+	/* ft_putchar('\n'); */
 	vec_push(&t->v_history, t->inp);
 	if (!ft_strcmp(t->inp, "history"))
 		ft_history(t);
@@ -36,6 +36,9 @@ static void ft_restart_cycle(t_term *t)
 	t->start_row = ft_get_linenbr();
 	t->total_row = 0;
 	t->c_row = t->total_row;
+	ft_add_nl_last_row(t, 0);
+	write(1, PROMPT, t->prompt_len);
+	ft_setcursor(t->c_col, t->c_row + t->start_row);
 }
 
 void	ft_input_cycle(t_term *t)
@@ -53,16 +56,18 @@ void	ft_input_cycle(t_term *t)
 			{
 				ft_end_cycle(t);
 				ft_restart_cycle(t);
-				ft_add_nl_last_row(t, 0);
-				write(1, PROMPT, t->prompt_len);
-				ft_setcursor(t->c_col, t->c_row + t->start_row);
 				continue;
 			}
 		}
-		else if (t->ch == CTRL_D && t->index < t->bytes)
-			ft_delete(t);
+		else if (t->ch == CTRL_D)
+		{
+			if (t->index < t->bytes)
+				ft_delete(t);
+			if (!t->bytes)
+				break ;
+		}
 		else if (t->ch == CTRL_C)
-			break ;
+			ft_restart_cycle(t);
 		else if (t->ch == BACKSPACE && t->index)
 			ft_backspace(t);
 		if (t->ch == ESCAPE)

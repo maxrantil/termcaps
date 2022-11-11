@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/10 11:46:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:04:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static struct termios	ft_init_raw(void)
  */
 static void	ft_disable_raw_mode(struct termios orig_termios)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 	ft_run_capability("te");
 }
 

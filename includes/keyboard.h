@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/10 11:44:41 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:22:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ void	ft_run_capability(char *cap);
 void	ft_window_size(t_term *t);
 void	ft_init_signals(void);
 int		ft_get_linenbr(void);
-
-/* void	kill_process(int sig); */
 
 /*				History				*/
 void	ft_history(t_term *t);
