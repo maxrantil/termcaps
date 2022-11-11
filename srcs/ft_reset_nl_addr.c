@@ -6,41 +6,34 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:21:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It takes a string and
- * creates an array of pointers to the beginning of each line in the string
- * 
- * @param term the term structure
- * @param input the string to be parsed
- */
-void	ft_reset_nl_addr(t_term *term, char *input)
+void	ft_reset_nl_addr(t_term *t)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 0;
 	len = 0;
-	term->total_row = 0;
-	if (term->nl_addr)
-		ft_memdel((void **)&term->nl_addr);
-	ft_add_nl_last_row(term, input, i);
-	while (input[++i])
+	t->total_row = 0;
+	if (t->nl_addr)
+		ft_memdel((void **)&t->nl_addr);
+	ft_add_nl_last_row(t, i);
+	while (t->inp[++i])
 	{
 		len++;
-		if (((len + ft_get_prompt_len(term, term->total_row)) + 1)
-			/ (term->ws_col) || input[i] == '\n')
+		if (((len + ft_get_prompt_len(t, t->total_row)) + 1)
+			/ (t->ws_col) || t->inp[i] == '\n')
 		{
-			ft_add_nl_last_row(term, input, i + 1);
-			term->total_row++;
+			ft_add_nl_last_row(t, i + 1);
+			t->total_row++;
 			len = -1;
 		}
-		if (input[i] == D_QUO || input[i] == S_QUO)
-			ft_quote_handling(term, input[i]);
+		if (t->inp[i] == D_QUO || t->inp[i] == S_QUO)
+			ft_quote_handling(t, t->inp[i]);
 	}
 }

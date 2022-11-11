@@ -3,136 +3,108 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 10:55:28 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It shifts the characters in the input string to the right, starting at the 
- * current index, and ending at the end of the string
- * 
- * @param term a pointer to the t_term struct
- * @param input the string that is being edited
- */
-static void	ft_shift_insert(t_term *term, char *input)
+static void	ft_shift_insert(t_term *t)
 {
 	int	bytes_cpy;
 
-	bytes_cpy = term->bytes;
-	while (&input[bytes_cpy] >= &input[term->index])
+	bytes_cpy = t->bytes;
+	while (&t->inp[bytes_cpy] >= &t->inp[t->index])
 	{
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy + 1] = input[bytes_cpy] ^ input[bytes_cpy + 1];
-		input[bytes_cpy] = input[bytes_cpy] ^ input[bytes_cpy + 1];
+		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
+		t->inp[bytes_cpy + 1] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
+		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
 		bytes_cpy--;
 	}
 }
 
-/**
- * It returns the length of the lowest line in the terminal
- * 
- * @param term the terminal structure
- * @param input the string of characters that the user has typed in
- * @param row the row of the cursor
- * 
- * @return The length of the lowest line.
- */
-static size_t	ft_len_lowest_line(t_term *term, char *input, size_t row)
+static size_t	ft_len_lowest_line(t_term *t, size_t row)
 {
 	size_t	len;
 
-	if (term->nl_addr[row + 1])
-		len = term->nl_addr[row + 1] - term->nl_addr[row];
+	if (t->nl_addr[row + 1])
+		len = t->nl_addr[row + 1] - t->nl_addr[row];
 	else
-		len = &input[term->bytes] - term->nl_addr[row];
-	if (ft_is_prompt_line(term, row))
+		len = &t->inp[t->bytes] - t->nl_addr[row];
+	if (ft_is_prompt_line(t, row))
 	{
 		if (!row)
-			len += term->prompt_len;
+			len += t->prompt_len;
 		else
-			len += term->m_prompt_len;
+			len += t->m_prompt_len;
 	}
 	return (len);
 }
 
-/**
- * It adds a newline to the
- * input string, and updates the cursor position
- * 
- * @param term the term struct
- * @param input the input string
- */
-static void	ft_trigger_nl(t_term *term, char *input)
+static void	ft_trigger_nl(t_term *t)
 {
 	size_t	len;
 	size_t	row;
 
-	row = ft_row_lowest_line(term);
-	len = ft_len_lowest_line(term, input, row);
-	if (len == term->ws_col)
+	row = ft_row_lowest_line(t);
+	len = ft_len_lowest_line(t, row);
+	if (len == t->ws_col)
 	{
-		term->total_row++;
-		ft_add_nl_last_row(term, input, term->bytes);
+		t->total_row++;
+		ft_add_nl_last_row(t, t->bytes);
 	}
-	if (len == term->ws_col + 1)
-		if (term->nl_addr[row + 1])
-			ft_add_nl_mid_row(term, input, row + 1,
-				(size_t)(&term->nl_addr[row + 1][-1] - term->nl_addr[0]));
-	if (term->c_col == term->ws_col)
+	if (len == t->ws_col + 1)
+		if (t->nl_addr[row + 1])
+			ft_add_nl_mid_row(t, row + 1, (size_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
+	if (t->c_col == t->ws_col)
 	{
-		term->c_col = 0;
-		ft_setcursor(term->c_col, ++term->c_row);
+		t->c_col = 0;
+		ft_putchar('\n');
+		ft_setcursor(t->c_col, ft_get_row_display(t, ++t->c_row));
 	}
 }
 
-
-/**
- * It handles the insertion of characters into the input buffer
- * 
- * @param term the term structure
- * @param input the string that is being edited
- */
-void	ft_insertion(t_term *term, char *input)
+void	ft_insertion(t_term *t)
 {
-	if (term->ch == ENTER)
+	if (t->ch == ENTER)
 	{
-		if (!term->nl_addr[term->c_row + 1])
+		if (!t->nl_addr[t->c_row + 1])
 		{
-			if (input[term->bytes - 1] == '\\' || term->q_qty % 2)
+			if (t->inp[t->bytes - 1] == '\\' || t->q_qty % 2)
 			{
-				input[term->bytes++] = term->ch;
-				ft_create_prompt_line(term, input, term->bytes);
-				term->index = term->bytes;
+				t->inp[t->bytes++] = t->ch;
+				ft_create_prompt_line(t, t->bytes);
+				t->index = t->bytes;
 			}
 		}
 		/* else
 		{
-			if (term->q_qty % 2)
+			if (t->q_qty % 2)
 			{
-				term->index = term->nl_addr[term->c_row + 1] - &input[0];
-				ft_shift_insert(term, input);
-				input[term->index] = term->ch;
-				ft_create_prompt_line(term, input, --term->index);
+				t->index = t->nl_addr[t->c_row + 1] - &t->inp[0];
+				ft_shift_insert(term, t->inp);
+				t->inp[t->index] = t->ch;
+				ft_create_prompt_line(term, t->inp, --t->index);
 			}
 		} */
 	}
 	else
 	{
-		ft_putc(term->ch);
-		if (term->ch == D_QUO || term->ch == S_QUO)
-			if (!term->index || input[term->index - 1] != '\\')
-				ft_quote_handling(term, term->ch);
-		ft_setcursor(++term->c_col, term->c_row);
-		ft_shift_nl_addr(term, 1);
-		if (input[term->index])
-			ft_shift_insert(term, input);
-		input[term->index++] = term->ch;
-		term->bytes++;
+		ft_putc(t->ch);
+		if (t->ch == D_QUO || t->ch == S_QUO)
+			if (!t->index || t->inp[t->index - 1] != '\\')
+				ft_quote_handling(t, t->ch);
+		ft_setcursor(++t->c_col, ft_get_row_display(t, t->c_row));
+		ft_shift_nl_addr(t, 1);
+		if (t->inp[t->index])
+			ft_shift_insert(t);
+		t->inp[t->index++] = t->ch;
+		if (t->inp[t->index])
+			ft_print_trail(t);
+		t->bytes++;
 	}
-	ft_trigger_nl(term, input);
+	ft_trigger_nl(t);
 }

@@ -3,59 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_window_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:19:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:49:47 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It sets the cursor position to the position of the character at 
- * the index of the input string
- * 
- * @param term the terminal structure
- */
-static void	set_new_cur_pos(t_term *term)
+static void	set_new_cur_pos(t_term *t)
 {
-	while (term->nl_addr[term->c_row] \
-	&& &term->inp[term->index] >= term->nl_addr[term->c_row])
-		term->c_row++;
-	term->c_row--;
-	term->c_col = 0;
-	if (ft_is_prompt_line(term, term->c_row))
+	while (t->nl_addr[t->c_row] \
+	&& &t->inp[t->index] >= t->nl_addr[t->c_row])
+		t->c_row++;
+	t->c_row--;
+	t->c_col = 0;
+	if (ft_is_prompt_line(t, t->c_row))
 	{
-		if (!term->c_row)
-			term->c_col = term->prompt_len;
+		if (!t->c_row)
+			t->c_col = t->prompt_len;
 		else
-			term->c_col = term->m_prompt_len;
+			t->c_col = t->m_prompt_len;
 	}
-	term->c_col += &term->inp[term->index] - term->nl_addr[term->c_row];
-	ft_setcursor(term->c_col, term->c_row);
+	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
+	ft_setcursor(t->c_col, t->c_row + t->start_row);
 }
 
-/**
- * It resets the cursor position and prints the input string
- * 
- * @param term the structure that holds all the information about the terminal.
- */
-void	ft_window_size(t_term *term)
+void	ft_window_size(t_term *t)
 {
 	struct winsize	size;
 
 	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
 		perror("TIOCGWINSZ");
-	term->ws_col = size.ws_col;
-	term->ws_row = size.ws_row;
-	if (*term->inp)
+	t->ws_col = size.ws_col;
+	t->ws_row = size.ws_row;
+	if (*t->inp)
 	{
-		term->quote = 0;
-		term->q_qty = 0;
-		ft_reset_nl_addr(term, term->inp);
-		term->c_row = 0;
-		set_new_cur_pos(term);
-		ft_print_trail(term, term->inp);
+		t->quote = 0;
+		t->q_qty = 0;
+		ft_reset_nl_addr(t);
+		t->c_row = 0;
+		set_new_cur_pos(t);
+		ft_print_trail(t);
 	}
 }

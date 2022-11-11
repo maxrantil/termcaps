@@ -3,107 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 15:18:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 10:25:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It moves the cursor to the beginning of the line
- * 
- * @param term the terminal structure
- */
-static void	ft_cursor_beginning(t_term *term)
+static void	ft_cursor_beginning(t_term *t)
 {
-	if (!term->c_row)
+	size_t row;
+	
+	row = 0;
+	if (!t->c_row)
 	{
-		term->c_col = term->prompt_len;
-		term->index = 0;
+		t->c_col = t->prompt_len;
+		t->index = 0;
 	}
 	else
 	{
-		if (ft_is_prompt_line(term, term->c_row))
-			term->c_col = term->m_prompt_len;
+		if (ft_is_prompt_line(t, t->c_row))
+			t->c_col = t->m_prompt_len;
 		else
-			term->c_col = 0;
-		term->index = term->nl_addr[term->c_row] - term->nl_addr[0];
+			t->c_col = 0;
+		t->index = t->nl_addr[t->c_row] - t->nl_addr[0];
 	}
-	ft_setcursor(term->c_col, term->c_row);
+	row = ft_get_row_display(t, row);
+	ft_setcursor(t->c_col, row);
 }
 
-/**
- * It moves the cursor to the end of the line
- * 
- * @param term the terminal structure
- * @param input the input string
- */
-static void	ft_cursor_end(t_term *term, char *input)
+static void	ft_cursor_end(t_term *t)
 {
 	size_t	len;
+	size_t	row;
 
-	len = term->index;
-	term->c_col = 0;
-	if (!term->c_row || ft_is_prompt_line(term, term->c_row))
+	row = 0;
+	t->c_col = 0;
+	len = t->index;
+	if (!t->c_row || ft_is_prompt_line(t, t->c_row))
 	{
-		if (!term->c_row)
-			term->c_col = term->prompt_len;
+		if (!t->c_row)
+			t->c_col = t->prompt_len;
 		else
-			term->c_col = term->m_prompt_len;
+			t->c_col = t->m_prompt_len;
 	}
-	if (term->nl_addr[term->c_row + 1])
-		term->index = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
+	if (t->nl_addr[t->c_row + 1])
+		t->index = (t->nl_addr[t->c_row + 1] - t->nl_addr[0]) - 1;
 	else
-		term->index = term->bytes;
-	len = term->index - len;
-	term->c_col += &input[term->index] - term->nl_addr[term->c_row];
-	ft_setcursor(term->c_col, term->c_row);
+		t->index = t->bytes;
+	len = t->index - len;
+	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
+	row = ft_get_row_display(t, row);
+	ft_setcursor(t->c_col, row);
 }
 
-/**
- * It moves the cursor to the beginning or end of the line
- * 
- * @param input the string that the user is typing
- * @param term the t_term struct
- */
-static void	shift_arrow(char *input, t_term *term)
+static void	shift_arrow(t_term *t)
 {
-	if (term->ch == 'D' && term->bytes)
-		ft_cursor_beginning(term);
-	if (term->ch == 'C')
-		ft_cursor_end(term, input);
+	if (t->ch == 'D' && t->bytes)
+		ft_cursor_beginning(t);
+	if (t->ch == 'C')
+		ft_cursor_end(t);
 }
 
-/**
- * It parses the escape sequences and calls the appropriate function
- * 
- * @param term the t_term struct
- * @param input the string that the user is typing
- */
-void	ft_esc_parse(t_term *term, char *input)
+void	ft_esc_parse(t_term *t)
 {
-	term->ch = ft_get_input();
-	if (term->ch == '[')
+	t->ch = ft_get_input();
+	if (t->ch == '[')
 	{
-		term->ch = ft_get_input();
-		if (term->ch >= 'A' && term->ch <= 'D')
-			ft_arrow_input(term, input);
-		if (term->ch == 49)
-			ft_opt_mv(term, input);
-		if (term->ch == 'H' && term->bytes)
-			ft_cursor_beginning(term);
-		if (term->ch == 'F')
-			ft_cursor_end(term, input);
-		if (term->ch == '2')
+		t->ch = ft_get_input();
+		if (t->ch >= 'A' && t->ch <= 'D')
+			ft_arrow_input(t);
+		if (t->ch == 49)
+			ft_opt_mv(t);
+		if (t->ch == 'H' && t->bytes)
+			ft_cursor_beginning(t);
+		if (t->ch == 'F')
+			ft_cursor_end(t);
+		if (t->ch == '2')
 		{
-			term->ch = ft_get_input();
-			shift_arrow(input, term);
+			t->ch = ft_get_input();
+			shift_arrow(t);
 		}
 	}
-	if (term->ch == 98 || term->ch == 102)
-		ft_opt_mv(term, input);
-	term->ch = 0;
+	if (t->ch == 98 || t->ch == 102)
+		ft_opt_mv(t);
+	t->ch = 0;
 }

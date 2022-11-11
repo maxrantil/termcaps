@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/08 12:41:58 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/10 11:45:37 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_line_mv \
 				ft_opt_mv \
 				ft_print_trail \
+				ft_getline_nbr \
 				ft_putc \
 				ft_quote_decrement \
 				ft_quote_handling \

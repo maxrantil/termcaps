@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/08 12:05:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/10 11:46:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,17 @@ static int ft_getent(void)
 	return (status);
 }
 
-/**
- * It initializes the terminal,
- * gets the environment variables, sets the terminal to raw mode, and then enters
- * the input cycle
- * 
- * @param input the string that will be modified by the user
- * 
- * @return The return value is the number of bytes read.
- */
-static int	ft_keyboard(char *input)
+static int	ft_keyboard()
 {
 	struct termios	orig_termios;
-	t_term			term;
+	t_term			t;
 
-	ft_init(&term, input);
 	ft_getent();
 	orig_termios = ft_init_raw();
-	ft_input_cycle(&term, input);
-	ft_history_write_to_file(&term);
+	ft_init(&t);
+	ft_input_cycle(&t);
+	ft_history_write_to_file(&t);
 	ft_disable_raw_mode(orig_termios);
-	ft_putendl_fd(input, STDOUT_FILENO);
-	ft_memset(input, '\0', BUFFSIZE);
 	return (0);
 }
 
@@ -111,9 +100,6 @@ static int	ft_keyboard(char *input)
  */
 int	main(void)
 {
-	char	input[BUFFSIZE];
-
-	ft_memset(input, '\0', BUFFSIZE);
-	ft_keyboard(input);
+	ft_keyboard();
 	return (0);
 }
