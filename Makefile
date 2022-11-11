@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/11 12:43:37 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/11 15:26:32 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
 CFLAGS		+=	-Wunreachable-code -Wtype-limits
-CFLAGS		+=	-Wpedantic
+CFLAGS		+=	-Wpedantic -Wconversion
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g

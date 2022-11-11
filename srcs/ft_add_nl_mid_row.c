@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:14:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:27:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_add_nl_mid_row(t_term *t, size_t row, size_t pos)
 {
-	size_t	i;
+	ssize_t	i;
 	size_t	j;
 	char	**new_arr;
 
