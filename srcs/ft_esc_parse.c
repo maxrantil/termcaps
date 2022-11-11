@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 10:25:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_cursor_beginning(t_term *t)
 {
-	size_t row;
+	ssize_t row;
 	
 	row = 0;
 	if (!t->c_row)
@@ -30,14 +30,14 @@ static void	ft_cursor_beginning(t_term *t)
 			t->c_col = 0;
 		t->index = t->nl_addr[t->c_row] - t->nl_addr[0];
 	}
-	row = ft_get_row_display(t, row);
+	row = ft_display_row(t, row);
 	ft_setcursor(t->c_col, row);
 }
 
 static void	ft_cursor_end(t_term *t)
 {
-	size_t	len;
-	size_t	row;
+	ssize_t	len;
+	ssize_t	row;
 
 	row = 0;
 	t->c_col = 0;
@@ -55,7 +55,7 @@ static void	ft_cursor_end(t_term *t)
 		t->index = t->bytes;
 	len = t->index - len;
 	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
-	row = ft_get_row_display(t, row);
+	row = ft_display_row(t, row);
 	ft_setcursor(t->c_col, row);
 }
 
@@ -76,7 +76,7 @@ void	ft_esc_parse(t_term *t)
 		if (t->ch >= 'A' && t->ch <= 'D')
 			ft_arrow_input(t);
 		if (t->ch == 49)
-			ft_opt_mv(t);
+			ft_opt_mv(t);//why two of these? line 92
 		if (t->ch == 'H' && t->bytes)
 			ft_cursor_beginning(t);
 		if (t->ch == 'F')

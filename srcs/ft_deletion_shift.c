@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:21:37 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/09 10:16:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:46:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_deletion_shift(t_term *t, int mode)
 {
-	int	index_cpy;
+	ssize_t	index_cpy;
 
 	if (mode == BCK)
 		t->index--;

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:19:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 16:04:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:58:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@
  */
 int	ft_putc(int c)
 {
-	return (write(1, &c, 1));
+	return ((int)write(1, &c, 1));
 }

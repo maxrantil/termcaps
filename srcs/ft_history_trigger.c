@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/10 11:56:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:10:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ static void	ft_history_trigger_start(t_term *t)
 	ft_putstr(PROMPT);
 }
 
-void	ft_history_trigger(t_term *t, int his)
+void	ft_history_trigger(t_term *t, ssize_t his)
 {
 	char	*history;
 
 	ft_history_trigger_start(t);
-	history = (char *)vec_get(&t->v_history, t->v_history.len - his);
+	history = (char *)vec_get(&t->v_history, t->v_history.len - (size_t)his);
 	if (history)
 	{
-		t->bytes = ft_strlen(history);
+		t->bytes = (ssize_t)ft_strlen(history);
 		if (!t->input_cpy)
 			t->input_cpy = ft_strdup(t->inp);
 		ft_memset((void *)t->inp, '\0', BUFF_SIZE);
-		ft_memcpy((void *)t->inp, (void *)history, t->bytes);
+		ft_memcpy((void *)t->inp, (void *)history, (size_t)t->bytes);
 	}
 	else
 	{
-		t->bytes = ft_strlen(t->input_cpy);
+		t->bytes = (ssize_t)ft_strlen(t->input_cpy);
 		ft_memset((void *)t->inp, '\0', BUFF_SIZE);
-		ft_memcpy((void *)t->inp, (void *)t->input_cpy, t->bytes);
+		ft_memcpy((void *)t->inp, (void *)t->input_cpy, (size_t)t->bytes);
 		ft_strdel(&t->input_cpy);
 	}
 	ft_reset_nl_addr(t);

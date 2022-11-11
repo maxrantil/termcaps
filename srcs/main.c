@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 10:04:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:02:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static struct termios	ft_init_raw(void)
 		exit(1);
 	}
 	raw = orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
-	raw.c_iflag &= ~(IXON | BRKINT);
+	raw.c_lflag &= ~(size_t)(ICANON | ECHO | IEXTEN | ISIG);
+	raw.c_iflag &= ~(size_t)(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)

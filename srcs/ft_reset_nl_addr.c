@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:21:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_reset_nl_addr(t_term *t)
 {
-	size_t	i;
-	size_t	len;
+	ssize_t	i;
+	ssize_t	len;
 
 	i = 0;
 	len = 0;

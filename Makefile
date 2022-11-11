@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/10 11:45:37 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/11 15:26:32 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
 CFLAGS		+=	-Wunreachable-code -Wtype-limits
-CFLAGS		+=	-Wpedantic
+CFLAGS		+=	-Wpedantic -Wconversion
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
@@ -73,6 +73,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_create_prompt_line \
 				ft_delete \
 				ft_deletion_shift \
+				ft_display_row \
 				ft_esc_parse \
 				ft_get_input \
 				ft_get_prompt_len \

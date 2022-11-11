@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_row_lowest_line.c                               :+:      :+:    :+:   */
+/*   ft_display_row.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 15:21:37 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Created: 2022/11/11 12:42:10 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/11 16:51:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-ssize_t	ft_row_lowest_line(t_term *t)
+ssize_t	ft_display_row(t_term *t, ssize_t c_row)
 {
 	ssize_t	row;
 
-	row = t->c_row;
-	while (t->nl_addr[row + 1] && !ft_is_prompt_line(t, row + 1))
-		row++;
+	row = 0;
+	if ((t->start_row + c_row) > t->ws_row) // THis works for cursor movement
+		row = t->start_row - (t->total_row - c_row);
+	else
+		row = c_row + t->start_row;
+	return (row);
+}
+
+ssize_t	ft_display_row_v2(t_term *t, ssize_t c_row)
+{
+	ssize_t	row;
+
+	row = 0;
+	if ((t->start_row + c_row) > t->ws_row) // THis works for cursor movement
+		row = t->ws_row;
+	else
+		row = c_row + t->start_row;
 	return (row);
 }
