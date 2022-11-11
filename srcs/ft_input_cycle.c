@@ -6,16 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 11:59:21 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:02:09 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "keyboard.h"
 
 static void	ft_end_cycle(t_term *t)
 {
-	// ft_setcursor(0, t->total_row + t->start_row + 1);
-	/* ft_putchar('\n'); */
 	vec_push(&t->v_history, t->inp);
 	if (!ft_strcmp(t->inp, "history"))
 		ft_history(t);
@@ -72,8 +69,8 @@ void	ft_input_cycle(t_term *t)
 			ft_backspace(t);
 		if (t->ch == ESCAPE)
 			ft_esc_parse(t);
-		if (t->inp[t->index])
-			ft_print_trail(t);
+		// if (t->inp[t->index])
+		// 	ft_print_trail(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}

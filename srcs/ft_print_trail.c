@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 11:58:40 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 11:00:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,116 @@ static void	ft_print_prompt(size_t row)
 		ft_putstr(MINI_PROMPT);
 }
 
+size_t	ft_get_row_display(t_term *t, size_t c_row)
+{
+	size_t	row;
+
+	row = 0;
+	// if (t->start_row == t->ws_row) // This works for creating new_lines
+	if (((t->start_row + c_row) + 1) >= t->ws_row) // THis works for cursor movement
+		row = t->start_row - (t->total_row - c_row);
+	else
+		row = c_row + t->start_row;
+	return (row);
+}
+
 static void	ft_print_line_trail(t_term *t)
 {
 	size_t	row;
 	char	*new_line;
 
+	row = t->c_row;
 	new_line = NULL;
-	row = 0;
-	ft_setcursor(0, row + t->start_row);
 	ft_run_capability("cd");
 	while (row <= t->total_row)
 	{
-		if (ft_is_prompt_line(t, row))
-			ft_print_prompt(row);
-		new_line = t->nl_addr[row];
-		if (*new_line == '\n')
-			new_line++;
-		if (t->nl_addr[row + 1])
-			write(1, new_line, t->nl_addr[row + 1] - new_line);
+		if (row == t->c_row)
+		{
+			if (t->nl_addr[row + 1])
+				write(1, &t->inp[t->index], t->nl_addr[row + 1] - &t->inp[t->index]);
+			else
+				write(1, &t->inp[t->index], (&t->inp[t->bytes] - &t->inp[t->index]) + 1);	
+		}
 		else
-			write(1, new_line, &t->inp[t->bytes] - new_line);
-		ft_setcursor(0, ++row + t->start_row);
+		{
+			ft_setcursor(0, ft_get_row_display(t, row));
+			if (ft_is_prompt_line(t, row))
+				ft_print_prompt(row);
+			new_line = t->nl_addr[row];
+			if (t->nl_addr[row + 1])
+				write(1, new_line, t->nl_addr[row + 1] - new_line);
+			else
+				write(1, new_line, (&t->inp[t->bytes] - new_line) + 1);
+		}
+		row++;
+		// ft_setcursor(0, ++row + t->start_row);
 	}
 }
+// static void	ft_print_line_trail(t_term *t)
+// {
+// 	size_t	row;
+// 	char	*new_line;
+
+// 	new_line = NULL;
+// 	row = t->c_row;
+// 	ft_run_capability("cd");
+// 	while (row <= t->total_row)
+// 	{
+// 		if (row == t->c_row)
+// 		{
+// 			if (t->nl_addr[row + 1])
+// 				write(1, &t->inp[t->index], t->nl_addr[row + 1] - &t->inp[t->index]);
+// 			else
+// 				write(1, &t->inp[t->index], (&t->inp[t->bytes] - &t->inp[t->index]) + 1);	
+// 		}
+// 		else
+// 		{
+// 			ft_setcursor(0, row + t->start_row);
+// 			if (ft_is_prompt_line(t, row))
+// 				ft_print_prompt(row);
+// 			new_line = t->nl_addr[row];
+// 			// if (*new_line == '\n')
+// 			// 	new_line++;
+// 			if (t->nl_addr[row + 1])
+// 				write(1, new_line, t->nl_addr[row + 1] - new_line);
+// 			else
+// 				write(1, new_line, (&t->inp[t->bytes] - new_line) + 1);
+// 			// ft_putchar('\n');
+// 		}
+// 		row++;
+// 		// ft_setcursor(0, ++row + t->start_row);
+// 	}
+// }
+// static void	ft_print_line_trail(t_term *t)
+// {
+// 	size_t	row;
+// 	char	*new_line;
+
+// 	new_line = NULL;
+// 	row = 0;
+// 	ft_setcursor(0, row + t->start_row);
+// 	ft_run_capability("cd");
+// 	while (row <= t->total_row)
+// 	{
+// 		if (ft_is_prompt_line(t, row))
+// 			ft_print_prompt(row);
+// 		new_line = t->nl_addr[row];
+// 		// if (*new_line == '\n')
+// 		// 	new_line++;
+// 		if (t->nl_addr[row + 1])
+// 			write(1, new_line, t->nl_addr[row + 1] - new_line);
+// 		else
+// 			write(1, new_line, (&t->inp[t->bytes] - new_line) + 1);
+// 		// ft_putchar('\n');
+// 		row++;
+// 		// ft_setcursor(0, ++row + t->start_row);
+// 	}
+// }
 
 void	ft_print_trail(t_term *t)
 {
 	ft_run_capability("vi");
 	ft_print_line_trail(t);
-	ft_setcursor(t->c_col, t->c_row + t->start_row);
+	ft_setcursor(t->c_col, ft_get_row_display(t, t->c_row));
 	ft_run_capability("ve");
 }

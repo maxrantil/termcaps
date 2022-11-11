@@ -27,13 +27,15 @@ static void	ft_right(t_term *t)
 			if (&t->inp[t->index] < (t->nl_addr[t->c_row + 1] - 1))
 			{
 				t->index++;
-				ft_setcursor(++t->c_col, t->c_row + t->start_row);
+				ft_setcursor(++t->c_col, ft_get_row_display(t, t->c_row));
+				// ft_setcursor(++t->c_col, t->c_row + t->start_row);
 			}
 		}
 		else
 		{
 			t->index++;
-			ft_setcursor(++t->c_col, t->c_row + t->start_row);
+			ft_setcursor(++t->c_col, ft_get_row_display(t, t->c_row));
+			// ft_setcursor(++t->c_col, t->c_row + t->start_row);
 		}
 	}
 }
@@ -44,8 +46,35 @@ static void	ft_right(t_term *t)
  * @param t->inp the string that the user is typing in
  * @param t the t_term struct
  */
+// static void	ft_left(t_term *t)
+// {
+// 	size_t	row;
+
+// 	// row = t->c_row + t->start_row;
+// 	if (&t->inp[t->index] == t->nl_addr[t->c_row])
+// 	{
+// 		if (t->c_row == 1)
+// 			t->c_col = t->prompt_len;
+// 		else
+// 			t->c_col = t->m_prompt_len;
+// 		if (t->c_row > 0)
+// 			t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]);
+// 		// if (t->c_row + t->start_row > t->ws_row)
+// 		// 	row = (t->ws_row - (t->total_row + 1)) + t->c_row;
+// 		// else
+// 		// 	row = t->c_row + t->start_row;
+// 	}
+// 	if (t->c_row + t->start_row >= t->ws_row - 1)
+// 		row = (t->ws_row - (t->total_row + 1)) + t->c_row;
+// 	else
+// 		row = t->c_row + t->start_row;
+// 	t->index--;
+// 	ft_setcursor(--t->c_col, row);
+// }
 static void	ft_left(t_term *t)
 {
+	// size_t	row;
+
 	if (&t->inp[t->index] == t->nl_addr[t->c_row])
 	{
 		if (t->c_row == 1)
@@ -55,8 +84,17 @@ static void	ft_left(t_term *t)
 		if (t->c_row > 0)
 			t->c_col += (t->nl_addr[t->c_row] - t->nl_addr[--t->c_row]);
 	}
+	// ft_setcursor(t->ws_col - 15, t->ws_row - 3);
+	// ft_putnbr(t->start_row + t->c_row);
+	// ft_putchar('I');
+	// ft_putnbr(t->ws_row);
+	// // ft_setcursor(t->c_col, t->c_row);
+	// if (((t->start_row + t->c_row) + 1) >= t->ws_row)
+	// 	row = t->start_row - (t->total_row - t->c_row);
+	// else
+	// 	row = t->c_row + t->start_row;
 	t->index--;
-	ft_setcursor(--t->c_col, t->c_row + t->start_row);
+	ft_setcursor(--t->c_col, ft_get_row_display(t, t->c_row));
 }
 
 void	ft_arrow_input(t_term *t)

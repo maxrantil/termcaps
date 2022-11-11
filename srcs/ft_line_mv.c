@@ -6,11 +6,13 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 11:58:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:28:45 mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
+
+
 
 static size_t	ft_mv_prompt_len(t_term *t, int num)
 {
@@ -27,6 +29,7 @@ static size_t	ft_mv_prompt_len(t_term *t, int num)
 static void	ft_line_down(t_term *t)
 {
 	size_t	len;
+	size_t	row;
 	size_t	prompt_len;
 
 	prompt_len = ft_mv_prompt_len(t, 1);
@@ -55,7 +58,12 @@ static void	ft_line_down(t_term *t)
 		else
 			t->index = (&t->inp[t->bytes] - t->nl_addr[0]);
 	}
-	ft_setcursor(t->c_col, ++t->c_row + t->start_row);
+	t->c_row++;
+	if (((t->start_row + t->c_row) + 1) >= t->ws_row)
+		row = t->start_row - (t->total_row - t->c_row);
+	else
+		row = t->c_row + t->start_row;
+	ft_setcursor(t->c_col, row);
 }
 
 static void	ft_line_up(t_term *t)
@@ -84,8 +92,39 @@ static void	ft_line_up(t_term *t)
 		t->c_col = (len + prompt_len) - 1;
 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
 	}
-	ft_setcursor(t->c_col, --t->c_row + t->start_row);
+	ft_setcursor(t->c_col, ft_get_row_display(t, --t->c_row));
 }
+// static void	ft_line_up(t_term *t)
+// {
+// 	size_t	len;
+// 	size_t 	row;
+// 	size_t	prompt_len;
+
+// 	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
+// 	prompt_len = ft_mv_prompt_len(t, -1);
+// 	if (t->c_col < (len + prompt_len))
+// 	{
+// 		if (t->c_col < prompt_len)
+// 		{
+// 			t->c_col = prompt_len;
+// 			if (t->c_row == 1)
+// 				t->index = 0;
+// 			else
+// 				t->index = t->nl_addr[t->c_row - 1] - t->nl_addr[0];
+// 		}
+// 		else
+// 			t->index = (&t->nl_addr[t->c_row - 1]
+// 				[t->c_col - prompt_len] - t->nl_addr[0]);
+// 	}
+// 	else
+// 	{
+// 		t->c_col = (len + prompt_len) - 1;
+// 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
+// 	}
+// 	t->c_row--;
+// 	row = ft_get_row_display(t, t->c_row);
+// 	ft_setcursor(t->c_col, row);
+// }
 
 void	ft_line_mv(t_term *t)
 {

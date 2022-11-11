@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 11:54:56 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:25:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,25 @@ static void	backpace_continue(t_term *t, size_t row, size_t len)
 	if (!t->c_col)
 	{
 		t->c_col = t->ws_col;
-		ft_setcursor(t->c_col, --t->c_row + t->start_row);
+		ft_setcursor(t->c_col, ft_get_row_display(t, --t->c_row));
 	}
 	else
 	{
 		if (t->c_col == t->ws_col)
 			t->c_col--;
-		ft_setcursor(--t->c_col, t->c_row + t->start_row);
+		ft_setcursor(--t->c_col, ft_get_row_display(t, t->c_row));
 	}
 	if (!len)
 	{
+		if (((t->start_row + t->c_row) + 1) >= t->ws_row)
+		{
+			ft_setcursor(0, 0);
+			ft_run_capability("sr");
+			ft_setcursor(t->c_col, t->ws_row);
+		}
 		ft_remove_nl_addr(t, row);
 		t->total_row--;
-	}
+	}	
 	ft_run_capability("ce");
 	ft_shift_nl_addr(t, -1);
 	ft_deletion_shift(t, BCK);
@@ -52,4 +58,6 @@ void	ft_backspace(t_term *t)
 		&& (t->inp[t->index - 1] == D_QUO || t->inp[t->index - 1] == S_QUO))
 		ft_quote_decrement(t, 1);
 	backpace_continue(t, row, len);
+	if (t->inp[t->index])
+		ft_print_trail(t);
 }

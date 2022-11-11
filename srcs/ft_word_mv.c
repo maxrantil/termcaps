@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 11:57:44 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 10:25:25 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	ft_word_left(t_term *t)
 {
+	size_t	row;;
+
 	while (t->index && ft_isspace(&t->inp[t->index - 1]))
 	{
 		if (&t->inp[t->index + 1] == t->nl_addr[t->c_row])
@@ -31,34 +33,61 @@ static void	ft_word_left(t_term *t)
 		t->c_col += t->prompt_len;
 	else if (ft_is_prompt_line(t, t->c_row))
 		t->c_col += t->m_prompt_len;
-	ft_setcursor(t->c_col, t->c_row + t->start_row);
+	row = ft_get_row_display(t, t->c_row);
+	ft_setcursor(t->c_col, row);
 }
 
+// static void	ft_word_right(t_term *t)
+// {
+// 	size_t	row;
+
+// 	row = t->c_row + 1;
+// 	while (t->index < t->bytes && ft_isspace(&t->inp[t->index]))
+// 	{
+// 		if (t->nl_addr[row] \
+// 		&& &t->inp[t->index + 1] == t->nl_addr[row])
+// 			break ;
+// 		t->index++;
+// 	}
+// 	while (t->index < t->bytes && !ft_isspace(&t->inp[t->index]))
+// 	{
+// 		if (t->nl_addr[row] \
+// 		&& &t->inp[t->index + 1] == t->nl_addr[row])
+// 			break ;
+// 		t->index++;
+// 	}
+// 	t->c_col = &t->inp[t->index] - t->nl_addr[row - 1];
+// 	if (t->nl_addr[row - 1] == &t->inp[0])
+// 		t->c_col += t->prompt_len;
+// 	else if (ft_is_prompt_line(t, row - 1))
+// 		t->c_col += t->m_prompt_len;
+// 	ft_setcursor(t->c_col, row + t->start_row);
+// }
 static void	ft_word_right(t_term *t)
 {
 	size_t	row;
 
-	row = t->c_row + 1;
+	row = t->c_row;
 	while (t->index < t->bytes && ft_isspace(&t->inp[t->index]))
 	{
-		if (t->nl_addr[row] \
-		&& &t->inp[t->index + 1] == t->nl_addr[row])
+		if (t->nl_addr[row + 1] && &t->inp[t->index + 1] == t->nl_addr[row + 1])
 			break ;
 		t->index++;
 	}
 	while (t->index < t->bytes && !ft_isspace(&t->inp[t->index]))
 	{
-		if (t->nl_addr[row] \
-		&& &t->inp[t->index + 1] == t->nl_addr[row])
+		if (t->nl_addr[row + 1] \
+		&& &t->inp[t->index + 1] == t->nl_addr[row + 1])
 			break ;
 		t->index++;
 	}
-	t->c_col = &t->inp[t->index] - t->nl_addr[row - 1];
-	if (t->nl_addr[row - 1] == &t->inp[0])
+	t->c_col = &t->inp[t->index] - t->nl_addr[row];
+	if (t->nl_addr[row] == &t->inp[0])
 		t->c_col += t->prompt_len;
-	else if (ft_is_prompt_line(t, row - 1))
+	else if (ft_is_prompt_line(t, row))
 		t->c_col += t->m_prompt_len;
-	ft_setcursor(t->c_col, row - 1 + t->start_row);
+	row = ft_get_row_display(t, row);
+	ft_setcursor(t->c_col, row);
 }
 
 void	ft_word_mv(t_term *t)
@@ -67,12 +96,12 @@ void	ft_word_mv(t_term *t)
 		ft_word_left(t);
 	else if (t->ch == 102 && (t->index < t->bytes))
 	{
-		if (t->nl_addr[t->c_row + 1])
-		{
-			if (&t->inp[t->index] < &t->nl_addr[t->c_row + 1][-1])
-				ft_word_right(t);
-		}
-		else
-			ft_word_right(t);
+		// if (t->nl_addr[t->c_row + 1])
+		// {
+		// 	if (&t->inp[t->index] < &t->nl_addr[t->c_row + 1][-1])
+		// 		ft_word_right(t);
+		// }
+		// else
+		ft_word_right(t);
 	}
 }
