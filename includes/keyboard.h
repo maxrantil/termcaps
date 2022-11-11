@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 12:46:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:59:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ typedef struct s_term
 	char	inp[BUFFSIZE];
 	char	quote;
 	t_vec	v_history;
-	size_t	q_qty;
-	size_t	ws_col;
-	size_t	ws_row;
-	size_t	index;
-	size_t	bytes;
-	size_t	c_col;
-	size_t	c_row;
-	size_t	start_row;
-	size_t	total_row;
-	size_t	prompt_len;
-	size_t	m_prompt_len;
+	ssize_t	q_qty;
+	ssize_t	ws_col;
+	ssize_t	ws_row;
+	ssize_t	index;
+	ssize_t	bytes;
+	ssize_t	c_col;
+	ssize_t	c_row;
+	ssize_t	start_row;
+	ssize_t	total_row;
+	ssize_t	prompt_len;
+	ssize_t	m_prompt_len;
 	char	**nl_addr;
 	char	*input_cpy;
-	size_t	total_row_cpy;
+	ssize_t	total_row_cpy;
 }			t_term;
 
 void	ft_init(t_term *t);
 void	ft_input_cycle(t_term *t);
 int		ft_putc(int c);
 void	ft_clearscreen(void);
-void	ft_setcursor(int col, int row);
+void	ft_setcursor(ssize_t col, ssize_t row);
 void	ft_run_capability(char *cap);
 void	ft_window_size(t_term *t);
 void	ft_init_signals(void);
@@ -86,7 +86,7 @@ int		ft_get_linenbr(void);
 void	ft_history(t_term *t);
 void	ft_history_get(t_term *t);
 void	ft_history_write_to_file(t_term *t);
-void	ft_history_trigger(t_term *t, int his);
+void	ft_history_trigger(t_term *t, ssize_t his);
 
 /*		    Cursor Movement			*/
 void	ft_opt_mv(t_term *t);
@@ -94,28 +94,28 @@ void	ft_line_mv(t_term *t);
 void	ft_word_mv(t_term *t);
 
 /*		  Printing to Display		*/
-size_t	ft_display_row(t_term *t, size_t c_row);
+ssize_t	ft_display_row(t_term *t, ssize_t c_row);
 void	ft_print_trail(t_term *t);
 
 /*		   New Line Mangement		*/
-// size_t	ft_display_row((t_term *t, size_t c_row);
+// ssize_t	ft_display_row((t_term *t, ssize_t c_row);
 void	ft_shift_nl_addr(t_term *t, int num);
-size_t	get_last_non_prompt_line(t_term *t);
-size_t	ft_get_prompt_len(t_term *t, size_t row);
+ssize_t	get_last_non_prompt_line(t_term *t);
+ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 void	nl_addr_reset(t_term *t);
-void	ft_remove_nl_addr(t_term *t, size_t row);
+void	ft_remove_nl_addr(t_term *t, ssize_t row);
 void	ft_reset_nl_addr(t_term *t);
-char	*ft_is_prompt_line(t_term *t, size_t row);
+char	*ft_is_prompt_line(t_term *t, ssize_t row);
 void	nl_terminal_size(t_term *t);
-void	ft_add_nl_last_row(t_term *t, size_t pos);
-void	ft_add_nl_mid_row(t_term *t, size_t row, size_t pos);
+void	ft_add_nl_last_row(t_term *t, ssize_t pos);
+void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 
 /*		     Quote Handling 		*/
 void	ft_quote_handling(t_term *t, char ch);
 void	ft_quote_decrement(t_term *t, int num);
 
 /*		        Deletion	 		*/
-size_t	ft_row_lowest_line(t_term *t);
+ssize_t	ft_row_lowest_line(t_term *t);
 void	ft_delete(t_term *t);
 void	ft_backspace(t_term *t);
 void	ft_deletion_shift(t_term *t, int mode);
@@ -125,8 +125,8 @@ int		ft_get_input(void);
 void	ft_insertion(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_esc_parse(t_term *t);
-void	ft_create_prompt_line(t_term *t, size_t loc);
+void	ft_create_prompt_line(t_term *t, ssize_t loc);
 
-size_t	ft_display_row_v2(t_term *t, size_t c_row);
+ssize_t	ft_display_row_v2(t_term *t, ssize_t c_row);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:11:21 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:26:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, ssize_t n)
 {
 	int	i;
 

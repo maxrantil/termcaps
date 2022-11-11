@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 16:46:14 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	initialize_data(const char *format, t_ftprintf *data, int flag)
 
 void	check_parser(t_ftprintf *data)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	while (FLAGS[i])

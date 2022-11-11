@@ -6,21 +6,21 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 15:27:09 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:40:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_add_nl_mid_row(t_term *t, size_t row, size_t pos)
+void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos)
 {
 	ssize_t	i;
-	size_t	j;
+	ssize_t	j;
 	char	**new_arr;
 
 	j = 0;
 	i = -1;
-	new_arr = (char **)ft_memalloc(sizeof(char *) * (t->total_row + 2));
+	new_arr = (char **)ft_memalloc((ssize_t)sizeof(char *) * (t->total_row + 2));
 	while (++i <= t->total_row)
 	{
 		if (i == row)

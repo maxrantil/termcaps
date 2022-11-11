@@ -14,9 +14,9 @@
 
 
 
-static size_t	ft_mv_prompt_len(t_term *t, int num)
+static ssize_t	ft_mv_prompt_len(t_term *t, int num)
 {
-	size_t	prompt_len;
+	ssize_t	prompt_len;
 
 	prompt_len = 0;
 	if (t->c_row == 1 && (num < 0))
@@ -28,9 +28,9 @@ static size_t	ft_mv_prompt_len(t_term *t, int num)
 
 static void	ft_line_down(t_term *t)
 {
-	size_t	len;
-	// size_t	row;
-	size_t	prompt_len;
+	ssize_t	len;
+	// ssize_t	row;
+	ssize_t	prompt_len;
 
 	prompt_len = ft_mv_prompt_len(t, 1);
 	if (t->c_row < (t->total_row - 1))
@@ -68,8 +68,8 @@ static void	ft_line_down(t_term *t)
 
 static void	ft_line_up(t_term *t)
 {
-	size_t	len;
-	size_t	prompt_len;
+	ssize_t	len;
+	ssize_t	prompt_len;
 
 	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
 	prompt_len = ft_mv_prompt_len(t, -1);
@@ -98,9 +98,9 @@ static void	ft_line_up(t_term *t)
 }
 // static void	ft_line_up(t_term *t)
 // {
-// 	size_t	len;
-// 	size_t 	row;
-// 	size_t	prompt_len;
+// 	ssize_t	len;
+// 	ssize_t 	row;
+// 	ssize_t	prompt_len;
 
 // 	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
 // 	prompt_len = ft_mv_prompt_len(t, -1);

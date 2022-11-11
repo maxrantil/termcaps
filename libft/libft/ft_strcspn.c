@@ -6,16 +6,16 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 10:36:23 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/28 10:36:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strcspn(const char *s1, const char *s2)
+ssize_t	ft_strcspn(const char *s1, const char *s2)
 {
-	size_t	i;
-	size_t	j;
+	ssize_t	i;
+	ssize_t	j;
 
 	if (!s1 || !s2)
 		return (0);

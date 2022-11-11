@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:32:09 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_precision_str(t_ftprintf *data)
 	sub = data->precision;
 	if (data->precision)
 	{
-		while ((size_t)sub-- > data->len_va_arg)
+		while ((ssize_t)sub-- > data->len_va_arg)
 			data->char_count += write(1, "0", 1);
 	}
 }
@@ -43,7 +43,7 @@ void	str_precision_width(t_ftprintf *data)
 	{
 		sub += data->width;
 		sub *= (sub > 0);
-		while ((size_t)sub-- > data->len_va_arg)
+		while ((ssize_t)sub-- > data->len_va_arg)
 			data->char_count += write(1, " ", 1);
 	}
 }

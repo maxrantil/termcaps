@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:59:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	bankers_rounding(long double nbr, char last_digit, t_ftprintf *data)
 	return (res);
 }
 
-static char	*join_unit_mant(char *mantissa, size_t x, t_ftprintf *data)
+static char	*join_unit_mant(char *mantissa, ssize_t x, t_ftprintf *data)
 {
 	char	*combo;
 	int		i;
@@ -69,7 +69,7 @@ static char	*mant_to_a(long double nbr, t_ftprintf *data)
 {
 	char		*mantissa;
 	int			i;
-	size_t		x;
+	ssize_t		x;
 	int			round_up;
 
 	i = 0;

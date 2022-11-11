@@ -20,11 +20,11 @@
  */
 static void	ft_right(t_term *t)
 {
-	size_t row;
+	ssize_t row;
 
 	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1] && ft_is_prompt_line(t, t->c_row + 1))
 		return ;
-	row = (size_t)ft_get_linenbr();
+	row = (ssize_t)ft_get_linenbr();
 	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1])
 	{
 		t->c_col = -1;
@@ -37,11 +37,11 @@ static void	ft_right(t_term *t)
 
 static void	ft_left(t_term *t)
 {
-	size_t	row;
+	ssize_t	row;
 
 	if (&t->inp[t->index] == t->nl_addr[t->c_row] && ft_is_prompt_line(t, t->c_row))
 		return ;
-	row = (size_t)ft_get_linenbr();
+	row = (ssize_t)ft_get_linenbr();
 	if (&t->inp[t->index] == t->nl_addr[t->c_row])
 	{
 		t->c_col = 0;
@@ -58,7 +58,7 @@ static void	ft_left(t_term *t)
 
 void	ft_arrow_input(t_term *t)
 {
-	static size_t	his;
+	static ssize_t	his;
 
 	if (t->ch == 'D' && t->index)
 		ft_left(t);

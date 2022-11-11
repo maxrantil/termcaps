@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:04:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ft_word_left(t_term *t)
 
 // static void	ft_word_right(t_term *t)
 // {
-// 	size_t	row;
+// 	ssize_t	row;
 
 // 	row = t->c_row + 1;
 // 	while (t->index < t->bytes && ft_isspace(&t->inp[t->index]))
@@ -62,7 +62,7 @@ static void	ft_word_left(t_term *t)
 // }
 static void	ft_word_right(t_term *t)
 {
-	size_t	row;
+	ssize_t	row;
 
 	row = t->c_row;
 	while (t->index < t->bytes && ft_isspace(&t->inp[t->index]))

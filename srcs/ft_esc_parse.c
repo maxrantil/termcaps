@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 13:01:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_cursor_beginning(t_term *t)
 {
-	size_t row;
+	ssize_t row;
 	
 	row = 0;
 	if (!t->c_row)
@@ -36,8 +36,8 @@ static void	ft_cursor_beginning(t_term *t)
 
 static void	ft_cursor_end(t_term *t)
 {
-	size_t	len;
-	size_t	row;
+	ssize_t	len;
+	ssize_t	row;
 
 	row = 0;
 	t->c_col = 0;

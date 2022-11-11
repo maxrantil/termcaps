@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/10 16:50:22 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	update_nl_addr_del(t_term *t)
 {
-	size_t	row;
+	ssize_t	row;
 
 	row = t->c_row + 1;
 	while (t->nl_addr[row])
@@ -27,8 +27,8 @@ static void	update_nl_addr_del(t_term *t)
 
 void	ft_delete(t_term *t)
 {
-	size_t	len;
-	size_t	row;
+	ssize_t	len;
+	ssize_t	row;
 
 	if (t->index
 		&& (t->inp[t->index] == D_QUO || t->inp[t->index] == S_QUO))

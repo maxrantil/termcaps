@@ -6,15 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 12:42:10 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 13:03:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-size_t	ft_display_row(t_term *t, size_t c_row)
+ssize_t	ft_display_row(t_term *t, ssize_t c_row)
 {
-	size_t	row;
+	ssize_t	row;
 
 	row = 0;
 	// if (t->start_row == t->ws_row) // This works for creating new_lines
@@ -27,9 +27,9 @@ size_t	ft_display_row(t_term *t, size_t c_row)
 	return (row);
 }
 
-size_t	ft_display_row_v2(t_term *t, size_t c_row)
+ssize_t	ft_display_row_v2(t_term *t, ssize_t c_row)
 {
-	size_t	row;
+	ssize_t	row;
 
 	row = 0;
 	// if (t->start_row == t->ws_row) // This works for creating new_lines

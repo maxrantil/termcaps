@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:59:21 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:17:52 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_history_write_to_file(t_term *t)
 {
 	char	*file;
-	size_t	cpy;
+	ssize_t	cpy;
 	int		fd;
 
 	file = ft_strjoin(getenv("HOME"), "/.42sh_history");

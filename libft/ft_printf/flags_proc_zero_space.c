@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 18:05:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_flag_zero(t_ftprintf *data)
 		sub -= (data->hash_flag > 0) * 2;
 	sub -= (data->for_plus > 0 || data->space_count > 0);
 	sub *= (sub > 0);
-	while ((size_t)sub-- > data->len_va_arg)
+	while ((ssize_t)sub-- > data->len_va_arg)
 		data->char_count += write(1, "0", 1);
 }
 

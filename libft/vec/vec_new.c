@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:04:31 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/20 13:37:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // initialize its length and element size.
 */
 
-int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
+int	vec_new(t_vec *dst, ssize_t init_len, ssize_t elem_size)
 {
 	if (!dst || elem_size == 0)
 		return (-1);

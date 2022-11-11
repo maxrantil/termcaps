@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 12:41:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	backpace_continue(t_term *t, size_t row, size_t len)
+static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 {
 	if (!t->c_col)
 	{
@@ -43,8 +43,8 @@ static void	backpace_continue(t_term *t, size_t row, size_t len)
 
 void	ft_backspace(t_term *t)
 {
-	size_t	row;
-	size_t	len;
+	ssize_t	row;
+	ssize_t	len;
 
 	if (&t->inp[t->index] == t->nl_addr[t->c_row]
 		&& ft_is_prompt_line(t, t->c_row))

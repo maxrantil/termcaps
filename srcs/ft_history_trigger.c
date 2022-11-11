@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/10 11:56:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:44:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	ft_history_trigger_start(t_term *t)
 	ft_putstr(PROMPT);
 }
 
-void	ft_history_trigger(t_term *t, int his)
+void	ft_history_trigger(t_term *t, ssize_t his)
 {
 	char	*history;
 
