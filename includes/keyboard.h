@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 12:09:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 12:46:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void	ft_line_mv(t_term *t);
 void	ft_word_mv(t_term *t);
 
 /*		  Printing to Display		*/
-size_t	ft_get_row_display(t_term *t, size_t c_row);
+size_t	ft_display_row(t_term *t, size_t c_row);
 void	ft_print_trail(t_term *t);
 
 /*		   New Line Mangement		*/
-// size_t	ft_get_row_display((t_term *t, size_t c_row);
+// size_t	ft_display_row((t_term *t, size_t c_row);
 void	ft_shift_nl_addr(t_term *t, int num);
 size_t	get_last_non_prompt_line(t_term *t);
 size_t	ft_get_prompt_len(t_term *t, size_t row);
@@ -126,5 +126,7 @@ void	ft_insertion(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_esc_parse(t_term *t);
 void	ft_create_prompt_line(t_term *t, size_t loc);
+
+size_t	ft_display_row_v2(t_term *t, size_t c_row);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_trail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 11:00:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:43:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@ static void	ft_print_prompt(size_t row)
 		ft_putstr(PROMPT);
 	else
 		ft_putstr(MINI_PROMPT);
-}
-
-size_t	ft_get_row_display(t_term *t, size_t c_row)
-{
-	size_t	row;
-
-	row = 0;
-	// if (t->start_row == t->ws_row) // This works for creating new_lines
-	if (((t->start_row + c_row) + 1) >= t->ws_row) // THis works for cursor movement
-		row = t->start_row - (t->total_row - c_row);
-	else
-		row = c_row + t->start_row;
-	return (row);
 }
 
 static void	ft_print_line_trail(t_term *t)
@@ -52,7 +39,7 @@ static void	ft_print_line_trail(t_term *t)
 		}
 		else
 		{
-			ft_setcursor(0, ft_get_row_display(t, row));
+			ft_setcursor(0, ft_display_row(t, row));
 			if (ft_is_prompt_line(t, row))
 				ft_print_prompt(row);
 			new_line = t->nl_addr[row];
@@ -130,6 +117,6 @@ void	ft_print_trail(t_term *t)
 {
 	ft_run_capability("vi");
 	ft_print_line_trail(t);
-	ft_setcursor(t->c_col, ft_get_row_display(t, t->c_row));
+	ft_setcursor(t->c_col, ft_display_row(t, t->c_row));
 	ft_run_capability("ve");
 }

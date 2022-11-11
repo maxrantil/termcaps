@@ -92,7 +92,8 @@ static void	ft_line_up(t_term *t)
 		t->c_col = (len + prompt_len) - 1;
 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
 	}
-	ft_setcursor(t->c_col, ft_get_row_display(t, --t->c_row));
+	// ft_setcursor(t->c_col, ft_display_row(t, --t->c_row));
+	ft_setcursor(t->c_col, (ft_get_linenbr() - 1));
 }
 // static void	ft_line_up(t_term *t)
 // {
@@ -122,7 +123,7 @@ static void	ft_line_up(t_term *t)
 // 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
 // 	}
 // 	t->c_row--;
-// 	row = ft_get_row_display(t, t->c_row);
+// 	row = ft_display_row(t, t->c_row);
 // 	ft_setcursor(t->c_col, row);
 // }
 

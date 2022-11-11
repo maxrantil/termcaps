@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_word_mv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 10:25:25 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:59:21 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static void	ft_word_left(t_term *t)
 {
-	size_t	row;;
-
 	while (t->index && ft_isspace(&t->inp[t->index - 1]))
 	{
 		if (&t->inp[t->index + 1] == t->nl_addr[t->c_row])
@@ -33,8 +31,7 @@ static void	ft_word_left(t_term *t)
 		t->c_col += t->prompt_len;
 	else if (ft_is_prompt_line(t, t->c_row))
 		t->c_col += t->m_prompt_len;
-	row = ft_get_row_display(t, t->c_row);
-	ft_setcursor(t->c_col, row);
+	ft_setcursor(t->c_col, ft_display_row_v2(t, t->c_row));
 }
 
 // static void	ft_word_right(t_term *t)
@@ -86,8 +83,7 @@ static void	ft_word_right(t_term *t)
 		t->c_col += t->prompt_len;
 	else if (ft_is_prompt_line(t, row))
 		t->c_col += t->m_prompt_len;
-	row = ft_get_row_display(t, row);
-	ft_setcursor(t->c_col, row);
+	ft_setcursor(t->c_col, ft_display_row_v2(t, row));
 }
 
 void	ft_word_mv(t_term *t)
