@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 10:54:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:03:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYBOARD_H
 # define KEYBOARD_H
 
 # include "libft.h"
@@ -81,8 +80,6 @@ void	ft_run_capability(char *cap);
 void	ft_window_size(t_term *t);
 void	ft_init_signals(void);
 int		ft_get_linenbr(void);
-
-/* void	kill_process(int sig); */
 
 /*				History				*/
 void	ft_history(t_term *t);
