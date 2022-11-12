@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 21:41:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:59:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	ft_shift_insert(t_term *t)
 	}
 }
 
-static ssize_t	ft_len_lowest_line(t_term *t, ssize_t row)
+ssize_t	ft_len_lowest_line(t_term *t, ssize_t row)
 {
 	ssize_t	len;
 
@@ -44,6 +44,14 @@ static ssize_t	ft_len_lowest_line(t_term *t, ssize_t row)
 	return (len);
 }
 
+static void	ft_scroll_down(void)
+{
+	ft_run_capability("sc");
+	ft_run_capability("sf");
+	ft_run_capability("rc");
+	ft_run_capability("up");
+}
+
 static void	ft_trigger_nl(t_term *t)
 {
 	ssize_t	len;
@@ -55,11 +63,7 @@ static void	ft_trigger_nl(t_term *t)
 	{
 		t->total_row++;
 		if (t->start_row + t->total_row >= t->ws_row)
-		{
-			ft_run_capability("sf");
-			ft_run_capability("up");
-			// ft_setcursor(t->c_col, (ft_get_linenbr() - 1) - t->c_row); // problem here
-		}
+			ft_scroll_down();
 		ft_add_nl_last_row(t, t->bytes);
 	}
 	if (len == t->ws_col + 1)

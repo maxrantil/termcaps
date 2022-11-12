@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 21:15:29 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:25:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static void	ft_print_prompt(ssize_t row)
 static void	ft_print_line_trail(t_term *t)
 {
 	ssize_t	row;
+	ssize_t dis_row;
 
 	row = t->c_row;
+	dis_row = ft_get_linenbr();
 	while (row <= t->total_row)
 	{
 		ft_run_capability("ce");
@@ -40,10 +42,11 @@ static void	ft_print_line_trail(t_term *t)
 			if (ft_is_prompt_line(t, row))
 				ft_print_prompt(row);
 			if (t->nl_addr[row + 1])
-				write(1, t->nl_addr[row], (size_t)(t->nl_addr[row + 1] - t->nl_addr[row]) - 1);
+				write(1, t->nl_addr[row], (size_t)(t->nl_addr[row + 1] - t->nl_addr[row]));
 			else
 				write(1, t->nl_addr[row], (size_t)((&t->inp[t->bytes] - t->nl_addr[row]) + 1));
 		}
+		ft_setcursor(0, ++dis_row);
 		row++;
 	}
 }

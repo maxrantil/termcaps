@@ -12,8 +12,6 @@
 
 #include "keyboard.h"
 
-
-
 static ssize_t	ft_mv_prompt_len(t_term *t, int num)
 {
 	ssize_t	prompt_len;
@@ -59,10 +57,6 @@ static void	ft_line_down(t_term *t)
 			t->index = (&t->inp[t->bytes] - t->nl_addr[0]);
 	}
 	t->c_row++;
-	// if (((t->start_row + t->c_row) + 1) >= t->ws_row)
-	// 	row = t->start_row - (t->total_row - t->c_row);
-	// else
-	// 	row = t->c_row + t->start_row;
 	ft_setcursor(t->c_col, (ft_get_linenbr() + 1));
 }
 
@@ -93,40 +87,8 @@ static void	ft_line_up(t_term *t)
 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
 	}
 	t->c_row--;
-	// ft_setcursor(t->c_col, ft_display_row(t, --t->c_row));
 	ft_setcursor(t->c_col, (ft_get_linenbr() - 1));
 }
-// static void	ft_line_up(t_term *t)
-// {
-// 	ssize_t	len;
-// 	ssize_t 	row;
-// 	ssize_t	prompt_len;
-
-// 	len = t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
-// 	prompt_len = ft_mv_prompt_len(t, -1);
-// 	if (t->c_col < (len + prompt_len))
-// 	{
-// 		if (t->c_col < prompt_len)
-// 		{
-// 			t->c_col = prompt_len;
-// 			if (t->c_row == 1)
-// 				t->index = 0;
-// 			else
-// 				t->index = t->nl_addr[t->c_row - 1] - t->nl_addr[0];
-// 		}
-// 		else
-// 			t->index = (&t->nl_addr[t->c_row - 1]
-// 				[t->c_col - prompt_len] - t->nl_addr[0]);
-// 	}
-// 	else
-// 	{
-// 		t->c_col = (len + prompt_len) - 1;
-// 		t->index = (t->nl_addr[t->c_row] - t->nl_addr[0]) - 1;
-// 	}
-// 	t->c_row--;
-// 	row = ft_display_row(t, t->c_row);
-// 	ft_setcursor(t->c_col, row);
-// }
 
 void	ft_line_mv(t_term *t)
 {
