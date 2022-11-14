@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 15:59:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/14 10:32:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_run_capability(char *cap);
 void	ft_window_size(t_term *t);
 void	ft_init_signals(void);
 int		ft_get_linenbr(void);
+ssize_t	ft_len_lowest_line(t_term *t, ssize_t row);
 
 /*				History				*/
 void	ft_history(t_term *t);

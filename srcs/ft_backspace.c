@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_backspace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/12 15:12:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,34 @@ static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 	if (!t->c_col)
 	{
 		t->c_col = t->ws_col;
-		ft_setcursor(t->c_col, ft_display_row(t, --t->c_row));
+		t->c_row--;
+		ft_setcursor(t->c_col, ft_get_linenbr() - 1);
 	}
 	else
 	{
-		if (t->c_col == t->ws_col)
-			t->c_col--;
-		ft_setcursor(--t->c_col, ft_display_row(t, t->c_row));
+		t->c_col--;
+		ft_run_capability("le");
 	}
+	ft_run_capability("ce");
 	if (!len)
 	{
 		if (((t->start_row + t->c_row) + 1) >= t->ws_row)
 		{
-			ft_setcursor(0, 0);
+			ft_run_capability("sc");
+			ft_run_capability("ho");
 			ft_run_capability("sr");
-			ft_setcursor(t->c_col, t->ws_row);
+			ft_run_capability("rc");
+			ft_run_capability("do");
 		}
+		// if (((t->start_row + t->c_row) + 1) >= t->ws_row)
+		// {
+		// 	ft_setcursor(0, 0);
+		// 	ft_run_capability("sr");
+		// 	ft_setcursor(t->c_col, t->ws_row);
+		// }
 		ft_remove_nl_addr(t, row);
 		t->total_row--;
-	}	
-	ft_run_capability("ce");
+	}
 	ft_shift_nl_addr(t, -1);
 	ft_deletion_shift(t, BCK);
 }
@@ -50,10 +58,7 @@ void	ft_backspace(t_term *t)
 		&& ft_is_prompt_line(t, t->c_row))
 		return ;
 	row = ft_row_lowest_line(t);
-	if (t->nl_addr[row + 1])
-		len = (t->nl_addr[row + 1] - t->nl_addr[row]) - 1;
-	else
-		len = &t->inp[t->bytes] - t->nl_addr[row];
+	len = ft_len_lowest_line(t, row);
 	if (t->index
 		&& (t->inp[t->index - 1] == D_QUO || t->inp[t->index - 1] == S_QUO))
 		ft_quote_decrement(t, 1);
