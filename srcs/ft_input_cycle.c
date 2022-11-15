@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 21:00:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:31:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ void	ft_input_cycle(t_term *t)
 			ft_restart_cycle(t);
 		else if (t->ch == BACKSPACE && t->index)
 			ft_backspace(t);
+		else if (t->ch == 11)
+		{
+			while (t->start_row > -1)
+			{
+				ft_setcursor(t->c_col, t->c_row + t->start_row);
+				ft_run_capability("dl");
+				t->start_row--;
+			}
+			write(1, PROMPT, (size_t)t->prompt_len);
+		}
 		if (t->ch == ESCAPE)
 			ft_esc_parse(t);
 		if (t->ch == -1)
