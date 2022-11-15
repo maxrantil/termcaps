@@ -6,17 +6,27 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/15 17:51:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/15 18:10:19 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+static void	ft_scroll_up(t_term *t)
+{
+	ssize_t	row;
+	
+	row = ft_get_linenbr() + 1;
+	ft_run_capability("ho");
+	ft_run_capability("sr");
+	ft_setcursor(t->c_col, row);
+}
+
 static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 {
 	if (!t->c_col)
 	{
-		t->c_col = t->ws_col;
+		t->c_col = t->ws_col - 1;
 		t->c_row--;
 		ft_setcursor(t->c_col, ft_get_linenbr() - 1);
 	}
@@ -27,12 +37,8 @@ static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 	}
 	if (!len)
 	{
-		// if (((t->start_row + t->c_row) + 1) >= t->ws_row)
-		// {
-		// 	ft_setcursor(0, 0);
-		// 	ft_run_capability("sr");
-		// 	ft_setcursor(t->c_col, t->ws_row);
-		// }
+		if (((t->start_row + t->c_row) + 1) >= t->ws_row)
+			ft_scroll_up(t);
 		ft_remove_nl_addr(t, row);
 		t->total_row--;
 	}	
