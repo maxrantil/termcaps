@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getline_nbr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 14:39:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/15 17:34:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ int	ft_get_linenbr(void)
 			break;
 	}
 	len = 0;
-	i = -1;
-	while (buf[i++] != ';')
+	i = 0;
+	while (buf[i] && buf[i] != ';')
 	{
 		if (ft_isdigit(buf[i]))
 			buf[len++] = buf[i];
+		i++;
 	}
 	buf[len] = '\0';
 	return (ft_atoi(buf) - 1);
