@@ -46,7 +46,7 @@ CFLAGS		+=	-Wpedantic -Wconversion
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
-EAK_CHECK	+=	-fsanitize=address
+# EAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs
@@ -78,6 +78,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_get_input \
 				ft_get_prompt_len \
 				ft_history_get \
+				ft_history_file_get \
 				ft_history_trigger \
 				ft_history_write_to_file \
 				ft_history \

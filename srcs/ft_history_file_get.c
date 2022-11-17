@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_history_file_get.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 15:00:51 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/19 18:00:08 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/09 10:17:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "keyboard.h"
 
-# include "libft.h"
+char	*ft_history_file_get(void)
+{
+	char	cwd[1024];
+	char	*home;
+	char	*file;
 
-# define FD_MAX 8192
-# define BUFF_SIZE 8
-
-int	get_next_line(const int fd, char **line);
-
-#endif
+	home = getenv("HOME");
+	if (home)
+		return (ft_strjoin(home, "/.42sh_history"));
+	file = getcwd(cwd, sizeof(cwd));
+	return (ft_strjoin(file, "/.42sh_history"));
+}

@@ -49,6 +49,7 @@
 # define MINI_PROMPT "> "
 
 # define BUFFSIZE   2048
+# define MAX_LINE   1024
 
 typedef struct s_term
 {
@@ -68,6 +69,7 @@ typedef struct s_term
 	ssize_t	prompt_len;
 	ssize_t	m_prompt_len;
 	char	**nl_addr;
+	char	*history_file;
 	char	*input_cpy;
 	ssize_t	total_row_cpy;
 }			t_term;
@@ -85,6 +87,7 @@ ssize_t	ft_len_lowest_line(t_term *t, ssize_t row);
 
 /*				History				*/
 void	ft_history(t_term *t);
+char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);
 void	ft_history_write_to_file(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);

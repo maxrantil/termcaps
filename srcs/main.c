@@ -44,7 +44,7 @@ static struct termios	ft_init_raw(void)
 
 /**
  * It disables raw mode by setting the terminal attributes to the original terminal attributes
- * 
+ *
  * @param orig_termios The original terminal attributes.
  */
 static void	ft_disable_raw_mode(struct termios orig_termios)
@@ -95,7 +95,7 @@ static int	ft_keyboard()
 
 /**
  * It takes in a string and sets all the characters to null.
- * 
+ *
  * @return The return value is the number of bytes that were written to the file descriptor.
  */
 int	main(void)
