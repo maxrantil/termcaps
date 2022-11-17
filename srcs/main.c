@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/11 16:02:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/17 20:34:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static int	ft_keyboard()
 	orig_termios = ft_init_raw();
 	ft_init(&t);
 	ft_input_cycle(&t);
+	if (t.nl_addr)
+		ft_memdel((void **)&t.nl_addr);
 	ft_history_write_to_file(&t);
 	ft_disable_raw_mode(orig_termios);
 	return (0);
