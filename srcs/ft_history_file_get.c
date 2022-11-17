@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_history_file_get.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 09:31:50 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
+/*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
+/*   Updated: 2022/11/09 10:17:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "keyboard.h"
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_history_file_get(void)
 {
-	size_t	i;
-	char	*ss;
+	char	cwd[1024];
+	char	*home;
+	char	*file;
 
-	if (!s)
-		return (NULL);
-	i = 0;
-	ss = ft_strnew(len);
-	while (i < len)
-		ss[i++] = s[start++];
-	return (ss);
+	home = getenv("HOME");
+	if (home)
+		return (ft_strjoin(home, "/.42sh_history"));
+	file = getcwd(cwd, sizeof(cwd));
+	return (ft_strjoin(file, "/.42sh_history"));
 }

@@ -14,12 +14,10 @@
 
 void	ft_history_write_to_file(t_term *t)
 {
-	char	*file;
 	size_t	cpy;
 	int		fd;
 
-	file = ft_strjoin(getenv("HOME"), "/.42sh_history");
-	fd = open(file, O_WRONLY);
+	fd = open(t->history_file, O_WRONLY | O_TRUNC);
 	if (fd)
 	{
 		cpy = 0;
@@ -32,5 +30,6 @@ void	ft_history_write_to_file(t_term *t)
 		}
 		close(fd);
 	}
-	ft_strdel(&file);
+	ft_strdel(&t->history_file);
+	vec_free(&t->v_history);
 }
