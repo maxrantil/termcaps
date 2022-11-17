@@ -53,25 +53,25 @@
 
 typedef struct s_term
 {
-	int		ch;
 	char	inp[BUFFSIZE];
-	char	quote;
 	t_vec	v_history;
-	ssize_t	q_qty;
+	char	**nl_addr;
+	char	*history_file;
+	char	*input_cpy;
 	ssize_t	ws_col;
 	ssize_t	ws_row;
 	ssize_t	index;
 	ssize_t	bytes;
+	ssize_t	start_row;
 	ssize_t	c_col;
 	ssize_t	c_row;
-	ssize_t	start_row;
 	ssize_t	total_row;
+	ssize_t	total_row_cpy;
 	ssize_t	prompt_len;
 	ssize_t	m_prompt_len;
-	char	**nl_addr;
-	char	*history_file;
-	char	*input_cpy;
-	ssize_t	total_row_cpy;
+	ssize_t	q_qty;
+	int		ch;
+	char	quote;
 }			t_term;
 
 void	ft_init(t_term *t);

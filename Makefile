@@ -42,7 +42,7 @@ NAME		=	keyboard
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra
 CFLAGS		+=	-Wunreachable-code -Wtype-limits
-CFLAGS		+=	-Wpedantic -Wconversion
+# CFLAGS		+=	-Wpedantic -Wconversion
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
