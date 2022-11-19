@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/14 10:32:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/19 16:49:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_term
 	ssize_t	prompt_len;
 	ssize_t	m_prompt_len;
 	ssize_t	q_qty;
+	ssize_t	slash;
 	int		ch;
 	char	quote;
 }			t_term;
@@ -117,6 +118,7 @@ void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 /*		     Quote Handling 		*/
 void	ft_quote_handling(t_term *t, char ch);
 void	ft_quote_decrement(t_term *t, int num);
+void	ft_slash_handling(t_term *t);
 
 /*		        Deletion	 		*/
 ssize_t	ft_row_lowest_line(t_term *t);

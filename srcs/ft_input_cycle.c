@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/15 18:31:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/19 16:51:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ void	ft_input_cycle(t_term *t)
 			ft_insertion(t);
 		if (t->ch == ENTER)
 		{
-			if (t->inp[t->bytes - 2] != '\\' && !(t->q_qty % 2))
+			if (!t->slash && !(t->q_qty % 2))
 			{
 				ft_end_cycle(t);
 				ft_restart_cycle(t);
 				continue;
 			}
+			t->slash = 0;
 		}
 		else if (t->ch == CTRL_D)
 		{

@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/11 20:25:58 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/19 16:50:19 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_shift_nl_addr \
 				ft_window_size \
 				ft_word_mv \
+				ft_slash_handling \
 				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
