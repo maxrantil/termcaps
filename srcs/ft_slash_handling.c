@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:28:08 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 16:49:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/19 17:59:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	ft_slash_handling(t_term *t)
 		else
 			t->slash = 0;
 	}
-	
+	else
+		t->slash = 0;	
 }
