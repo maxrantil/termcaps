@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/19 16:50:19 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/21 11:28:27 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_create_prompt_line \
 				ft_delete \
 				ft_deletion_shift \
-				ft_display_row \
 				ft_esc_parse \
 				ft_get_input \
 				ft_get_prompt_len \
