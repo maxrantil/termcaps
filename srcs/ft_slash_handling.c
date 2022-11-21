@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_prompt.c                            :+:      :+:    :+:   */
+/*   ft_slash_handling.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 12:40:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 21:06:13 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/19 16:28:08 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/21 18:33:35 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_create_prompt_line(t_term *t, ssize_t loc)
+void	ft_slash_handling(t_term *t)
 {
-	int	row;
+	ssize_t	i;
 
-	row = ft_get_linenbr();
-	t->c_row++;
-	t->total_row++;
-	if (t->start_row + t->total_row >= t->ws_row)
-		ft_run_capability("sf");
+	i = t->index - 1;
+	if (t->ch == '\\' && t->index == t->bytes)
+	{
+		while (i && t->inp[i] == '\\')
+			i--;
+		if ((t->index - i) % 2)
+			t->slash = 1;
+		else
+			t->slash = 0;
+	}
 	else
-		row++;
-	t->c_col = t->m_prompt_len;
-	ft_setcursor(0, row);
-	write(1, MINI_PROMPT, (size_t)t->m_prompt_len);
-	ft_add_nl_last_row(t, loc);
+		if (t->ch != D_QUO && t->ch != S_QUO)
+			t->slash = 0;
 }

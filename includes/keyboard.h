@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/14 10:32:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/21 18:41:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_term
 	ssize_t	prompt_len;
 	ssize_t	m_prompt_len;
 	ssize_t	q_qty;
+	ssize_t	slash;
 	int		ch;
 	char	quote;
 }			t_term;
@@ -98,11 +99,9 @@ void	ft_line_mv(t_term *t);
 void	ft_word_mv(t_term *t);
 
 /*		  Printing to Display		*/
-ssize_t	ft_display_row(t_term *t, ssize_t c_row);
 void	ft_print_trail(t_term *t);
 
-/*		   New Line Mangement		*/
-// ssize_t	ft_display_row((t_term *t, ssize_t c_row);
+/*		   New Line Mangement		*/;
 void	ft_shift_nl_addr(t_term *t, int num);
 ssize_t	get_last_non_prompt_line(t_term *t);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
@@ -117,6 +116,7 @@ void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 /*		     Quote Handling 		*/
 void	ft_quote_handling(t_term *t, char ch);
 void	ft_quote_decrement(t_term *t, int num);
+void	ft_slash_handling(t_term *t);
 
 /*		        Deletion	 		*/
 ssize_t	ft_row_lowest_line(t_term *t);
@@ -130,7 +130,5 @@ void	ft_insertion(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_esc_parse(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
-
-ssize_t	ft_display_row_v2(t_term *t, ssize_t c_row);
 
 #endif
