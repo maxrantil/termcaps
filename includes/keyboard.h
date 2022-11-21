@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 11:29:52 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:41:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,5 @@ void	ft_insertion(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_esc_parse(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
-
-ssize_t	ft_display_row_v2(t_term *t, ssize_t c_row);
 
 #endif

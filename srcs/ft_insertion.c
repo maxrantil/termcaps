@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/19 16:51:11 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:40:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_insertion(t_term *t)
 			// if (t->inp[t->bytes - 1] == '\\' || t->q_qty % 2)
 			// {
 			// 	t->inp[t->bytes++] = (char)t->ch;
-			// 	ft_create_prompt_line(t, t->bytes);
+			// 	ft_print_prompt(t, t->bytes);
 			// 	t->index = t->bytes;
 			// }
 		}
@@ -102,8 +102,12 @@ void	ft_insertion(t_term *t)
 		ft_putc(t->ch);
 		ft_slash_handling(t);
 		if (t->ch == D_QUO || t->ch == S_QUO)
-			if (!t->index || t->inp[t->index - 1] != '\\')
+		{
+			if (!t->slash)
 				ft_quote_handling(t, (char)t->ch);
+			else
+				t->slash = 0;
+		}
 		t->c_col++;
 		ft_shift_nl_addr(t, 1);
 		if (t->inp[t->index])
