@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 12:20:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/22 13:09:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_term
 	char	**nl_addr;
 	char	*history_file;
 	char	*input_cpy;
+	char	*delim;
 	ssize_t	ws_col;
 	ssize_t	ws_row;
 	ssize_t	index;
@@ -70,7 +71,8 @@ typedef struct s_term
 	ssize_t	prompt_len;
 	ssize_t	m_prompt_len;
 	ssize_t	q_qty;
-	ssize_t	slash;
+	ssize_t	bslash;
+	ssize_t heredoc;
 	int		ch;
 	char	quote;
 }			t_term;
@@ -86,6 +88,7 @@ void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
+void	ft_heredoc_handling(t_term *t);
 void	ft_history(t_term *t);
 char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);
@@ -110,7 +113,7 @@ ssize_t	ft_row_lowest_line(t_term *t);
 void	ft_run_capability(char *cap);
 void	ft_setcursor(ssize_t col, ssize_t row);
 void	ft_shift_nl_addr(t_term *t, int num);
-void	ft_slash_handling(t_term *t);
+void	ft_bslash_handling(t_term *t);
 void	ft_window_size(t_term *t);
 void	ft_word_mv(t_term *t);
 

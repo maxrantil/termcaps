@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/21 18:40:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:05:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,6 @@ static void	ft_shift_insert(t_term *t)
 		t->inp[bytes_cpy] = t->inp[bytes_cpy] ^ t->inp[bytes_cpy + 1];
 		bytes_cpy--;
 	}
-}
-
-ssize_t	ft_len_lowest_line(t_term *t, ssize_t row)
-{
-	ssize_t	len;
-
-	if (t->nl_addr[row + 1])
-		len = t->nl_addr[row + 1] - t->nl_addr[row];
-	else
-		len = &t->inp[t->bytes] - t->nl_addr[row];
-	if (ft_is_prompt_line(t, row))
-	{
-		if (!row)
-			len += t->prompt_len;
-		else
-			len += t->m_prompt_len;
-	}
-	return (len);
 }
 
 static void	ft_scroll_down(void)
@@ -77,36 +59,53 @@ static void	ft_trigger_nl(t_term *t)
 	}
 }
 
+void ft_delim_fetch(t_term *t)
+{
+	char	*ptr;
+	char	*end_q;
+
+	ptr = NULL;
+	if (t->heredoc && !t->delim)
+	{
+		ptr = ft_strchr(t->inp, '<') + 2;
+		while (*ptr && ft_isspace(ptr))
+			ptr++;
+		if (*ptr)
+		{
+			end_q = ptr;
+			while (*end_q && !ft_isspace(end_q))
+				end_q++;
+			t->delim = ft_strsub(ptr, 0, end_q - ptr);
+		}
+	}
+}
+
 void	ft_insertion(t_term *t)
 {
 	if (t->ch == ENTER)
 	{
 		if (!t->nl_addr[t->c_row + 1])
 		{
-			if (t->slash || t->q_qty % 2)
+			if (t->bslash || t->q_qty % 2 || (t->heredoc && ft_strcmp(t->nl_addr[t->c_row], t->delim)))
 			{
 				t->inp[t->bytes++] = (char)t->ch;
 				ft_create_prompt_line(t, t->bytes);
 				t->index = t->bytes;
 			}
-			// if (t->inp[t->bytes - 1] == '\\' || t->q_qty % 2)
-			// {
-			// 	t->inp[t->bytes++] = (char)t->ch;
-			// 	ft_print_prompt(t, t->bytes);
-			// 	t->index = t->bytes;
-			// }
 		}
+		ft_delim_fetch(t);
 	}
 	else
 	{
 		ft_putc(t->ch);
-		ft_slash_handling(t);
-		if (t->ch == D_QUO || t->ch == S_QUO)
+		ft_heredoc_handling(t);
+		ft_bslash_handling(t);
+		if ((t->ch == D_QUO || t->ch == S_QUO) && !t->heredoc)
 		{
-			if (!t->slash)
+			if (!t->bslash)
 				ft_quote_handling(t, (char)t->ch);
 			else
-				t->slash = 0;
+				t->bslash = 0;
 		}
 		t->c_col++;
 		ft_shift_nl_addr(t, 1);

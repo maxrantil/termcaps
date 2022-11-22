@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_slash_handling.c                                :+:      :+:    :+:   */
+/*   ft_bslash_handling.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,21 +12,21 @@
 
 #include "keyboard.h"
 
-void	ft_slash_handling(t_term *t)
+void	ft_bslash_handling(t_term *t)
 {
 	ssize_t	i;
 
 	i = t->index - 1;
-	if (t->ch == '\\' && t->index == t->bytes)
+	if (t->ch == '\\' && t->index == t->bytes && !t->heredoc)
 	{
 		while (i && t->inp[i] == '\\')
 			i--;
 		if ((t->index - i) % 2)
-			t->slash = 1;
+			t->bslash = 1;
 		else
-			t->slash = 0;
+			t->bslash = 0;
 	}
 	else
 		if (t->ch != D_QUO && t->ch != S_QUO)
-			t->slash = 0;
+			t->bslash = 0;
 }

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/22 11:57:19 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/22 13:12:07 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,8 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_deletion_shift \
 				ft_esc_parse \
 				ft_get_input \
+				ft_getline_nbr \
+				ft_heredoc_handling \
 				ft_get_prompt_len \
 				ft_history_get \
 				ft_history_file_get \
@@ -86,10 +88,10 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_input_cycle \
 				ft_insertion \
 				ft_is_prompt_line \
+				ft_len_lowest_line \
 				ft_line_mv \
 				ft_opt_mv \
 				ft_print_trail \
-				ft_getline_nbr \
 				ft_putc \
 				ft_quote_decrement \
 				ft_quote_handling \
@@ -102,7 +104,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_shift_nl_addr \
 				ft_window_size \
 				ft_word_mv \
-				ft_slash_handling \
+				ft_bslash_handling \
 				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
