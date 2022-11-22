@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/19 16:51:26 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:30:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void	ft_input_cycle(t_term *t)
 		}
 		else if (t->ch == CTRL_D)
 		{
-			if (t->index < t->bytes)
-				ft_delete(t);
 			if (!t->bytes)
 				break ;
+			if (t->index < t->bytes)
+				ft_delete(t);
 		}
 		else if (t->ch == CTRL_C)
 			ft_restart_cycle(t);
