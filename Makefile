@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/21 18:40:59 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/22 11:57:19 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_quote_handling \
 				ft_remove_nl_addr \
 				ft_reset_nl_addr \
+				ft_restart_cycle \
 				ft_row_lowest_line \
 				ft_run_capability \
 				ft_setcursor \
