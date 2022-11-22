@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/17 20:34:57 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:43:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,13 @@ static struct termios	ft_init_raw(void)
 		exit(1);
 	}
 	raw = orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
+	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN);
 	raw.c_iflag &= ~(IXON | BRKINT);
+	/* raw.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
+			| INLCR | IGNCR | ICRNL | IXON);
+	raw.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN | ISIG);
+	raw.c_cflag &= ~(CSIZE | PARENB);
+	raw.c_cflag |= CS8; */
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
@@ -37,7 +42,6 @@ static struct termios	ft_init_raw(void)
 		write(2, "error tcsetattr\n", 16);
 		exit(1);
 	}
-	ft_run_capability("ti");
 	ft_run_capability("cl");
 	return (orig_termios);
 }
@@ -50,7 +54,6 @@ static struct termios	ft_init_raw(void)
 static void	ft_disable_raw_mode(struct termios orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
-	ft_run_capability("te");
 }
 
 static int ft_getent(void)
