@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 15:24:21 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:02:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static void	ft_history_trigger_start(t_term *t)
 	t->q_qty = 0;
 	t->c_col = 0;
 	t->c_row = 0;
+	t->index = 0;
 	t->total_row = 0;
-	ft_setcursor(t->c_col, t->c_row + t->start_row);
+	ft_setcursor(t->c_col, t->start_row);
 	ft_run_capability("cd");
 	ft_putstr(PROMPT);
 }

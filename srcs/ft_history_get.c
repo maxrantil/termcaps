@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/09 10:17:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:08:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_history_get(t_term *t)
 	char	*buf;
 	int		fd;
 
-	vec_new(&t->v_history, 0, sizeof(char) * 256);
+	vec_new(&t->v_history, 0, sizeof(char) * BUFF_SIZE);
 	t->history_file = ft_history_file_get();
 	fd = open(t->history_file, O_RDONLY | O_CREAT, 0644);
 	if (fd)
