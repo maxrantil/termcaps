@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/22 15:12:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/24 20:34:42 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_input_cycle(t_term *t)
 	write(1, PROMPT, (size_t)t->prompt_len);
 	while (t->ch != -1)
 	{
-		t->ch = ft_get_input();
+		t->ch = ft_get_input();;
 		if (ft_isprint(t->ch) || t->ch == ENTER)
 			ft_insertion(t);
 		if (t->ch == ENTER)

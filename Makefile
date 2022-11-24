@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/22 13:12:07 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/24 20:11:29 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,10 @@ endif
 FILES 		= 	ft_add_nl_last_row \
 				ft_add_nl_mid_row \
 				ft_arrow_input \
-				ft_create_prompt_line \
 				ft_backspace \
+				ft_bslash_handling \
+				ft_copy \
+				ft_create_prompt_line \
 				ft_delete \
 				ft_deletion_shift \
 				ft_esc_parse \
@@ -104,7 +106,6 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_shift_nl_addr \
 				ft_window_size \
 				ft_word_mv \
-				ft_bslash_handling \
 				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))

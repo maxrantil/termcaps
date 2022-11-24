@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 13:09:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/24 20:09:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_term
 	char	**nl_addr;
 	char	*history_file;
 	char	*input_cpy;
+	char	*clipboard;
 	char	*delim;
 	ssize_t	ws_col;
 	ssize_t	ws_row;
@@ -81,6 +82,7 @@ void	ft_add_nl_last_row(t_term *t, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 void	ft_arrow_input(t_term *t);
 void	ft_backspace(t_term *t);
+void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
 void	ft_delete(t_term *t);
 void	ft_deletion_shift(t_term *t, int mode);
