@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 13:09:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:53:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 # define BCK		1
 # define CTRL_C		3
 # define CTRL_D		4
+# define CTRL_W		23
+# define CTRL_U		21
+# define CTRL_Y		25
 # define D_QUO	34
 # define S_QUO	39
 # define ESCAPE     27

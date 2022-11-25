@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/22 15:12:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/25 12:51:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ void	ft_input_cycle(t_term *t)
 		}
 		else if (t->ch == CTRL_C)
 			ft_restart_cycle(t);
+		/* else if (t->ch == CTRL_W)
+			ft_cut();
+		else if (t->ch == CTRL_U)
+			ft_copy();
+		else if (t->ch == CTRL_Y)
+			ft_paste(); */
 		else if (t->ch == BACKSPACE && t->index)
 			ft_backspace(t);
 		else if (t->ch == 11)
