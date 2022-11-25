@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/22 13:12:07 by mrantil          ###   ########.fr        #
+#    Updated: 2022/11/25 14:08:10 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,17 +69,20 @@ endif
 FILES 		= 	ft_add_nl_last_row \
 				ft_add_nl_mid_row \
 				ft_arrow_input \
-				ft_create_prompt_line \
 				ft_backspace \
+				ft_bslash_handling \
+				ft_copy \
+				ft_create_prompt_line \
+				ft_cut \
 				ft_delete \
 				ft_deletion_shift \
 				ft_esc_parse \
 				ft_get_input \
+				ft_get_prompt_len \
 				ft_getline_nbr \
 				ft_heredoc_handling \
-				ft_get_prompt_len \
-				ft_history_get \
 				ft_history_file_get \
+				ft_history_get \
 				ft_history_trigger \
 				ft_history_write_to_file \
 				ft_history \
@@ -91,6 +94,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_len_lowest_line \
 				ft_line_mv \
 				ft_opt_mv \
+				ft_paste \
 				ft_print_trail \
 				ft_putc \
 				ft_quote_decrement \
@@ -101,10 +105,11 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_row_lowest_line \
 				ft_run_capability \
 				ft_setcursor \
+				ft_shift_insert \
 				ft_shift_nl_addr \
+				ft_trigger_nl \
 				ft_window_size \
 				ft_word_mv \
-				ft_bslash_handling \
 				main \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))

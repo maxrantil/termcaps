@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 12:53:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/25 15:27:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define RIGHT      264
 # define BACKSPACE	127
 # define TAB		9
+# define COPY		0
+# define CUT		1
 
 # define PROMPT "$> "
 # define MINI_PROMPT "> "
@@ -54,37 +56,47 @@
 # define BUFFSIZE   2048
 # define MAX_LINE   1024
 
+typedef	struct clipboard
+{
+	int		type;
+	char	*buff;
+}				t_clipboard;
+
 typedef struct s_term
 {
-	char	inp[BUFFSIZE];
-	t_vec	v_history;
-	char	**nl_addr;
-	char	*history_file;
-	char	*input_cpy;
-	char	*delim;
-	ssize_t	ws_col;
-	ssize_t	ws_row;
-	ssize_t	index;
-	ssize_t	bytes;
-	ssize_t	start_row;
-	ssize_t	c_col;
-	ssize_t	c_row;
-	ssize_t	total_row;
-	ssize_t	total_row_cpy;
-	ssize_t	prompt_len;
-	ssize_t	m_prompt_len;
-	ssize_t	q_qty;
-	ssize_t	bslash;
-	ssize_t heredoc;
-	int		ch;
-	char	quote;
+	char		inp[BUFFSIZE];
+	t_vec		v_history;
+	char		**nl_addr;
+	char		*history_file;
+	char		*input_cpy;
+	char		*delim;
+	ssize_t		ws_col;
+	ssize_t		ws_row;
+	ssize_t		index;
+	ssize_t		bytes;
+	ssize_t		start_row;
+	ssize_t		c_col;
+	ssize_t		c_row;
+	ssize_t		total_row;
+	ssize_t		total_row_cpy;
+	ssize_t		prompt_len;
+	ssize_t		m_prompt_len;
+	ssize_t		q_qty;
+	ssize_t		bslash;
+	ssize_t 	heredoc;
+	int			ch;
+	char		quote;
+	t_clipboard	clipboard;
 }			t_term;
 
 void	ft_add_nl_last_row(t_term *t, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 void	ft_arrow_input(t_term *t);
 void	ft_backspace(t_term *t);
+void	ft_bslash_handling(t_term *t);;
+void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
+void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
 void	ft_deletion_shift(t_term *t, int mode);
 void	ft_esc_parse(t_term *t);
@@ -105,6 +117,7 @@ char	*ft_is_prompt_line(t_term *t, ssize_t row);
 ssize_t	ft_len_lowest_line(t_term *t, ssize_t row);
 void	ft_line_mv(t_term *t);
 void	ft_opt_mv(t_term *t);
+void	ft_paste(t_term *t);
 void	ft_print_trail(t_term *t);
 int		ft_putc(int c);
 void	ft_quote_decrement(t_term *t, int num);
@@ -115,8 +128,9 @@ void	ft_restart_cycle(t_term *t);
 ssize_t	ft_row_lowest_line(t_term *t);
 void	ft_run_capability(char *cap);
 void	ft_setcursor(ssize_t col, ssize_t row);
+void	ft_shift_insert(t_term *t);
 void	ft_shift_nl_addr(t_term *t, int num);
-void	ft_bslash_handling(t_term *t);
+void	ft_trigger_nl(t_term *t);
 void	ft_window_size(t_term *t);
 void	ft_word_mv(t_term *t);
 

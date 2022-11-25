@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/22 12:56:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/25 15:32:05 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,6 @@ void	ft_init(t_term *t)
 	t->input_cpy = NULL;
 	t->heredoc = 0;
 	t->total_row_cpy = 0;
+	t->clipboard.buff = NULL;
+	t->clipboard.type = 0;
 }
