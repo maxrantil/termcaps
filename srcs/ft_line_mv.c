@@ -12,6 +12,11 @@
 
 #include "keyboard.h"
 
+/**
+ * It moves the cursor up or down a line
+ * 
+ * @param t the term structure
+ */
 void	ft_line_mv(t_term *t)
 {
 	t->ch = ft_get_input();
