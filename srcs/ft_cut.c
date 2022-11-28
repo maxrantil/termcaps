@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cut.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:06:06 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 15:32:21 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:11:08 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*cut_to_clipboard(t_term *t)
 void	ft_cut(t_term *t)
 {
 	int	i;
-	
+
 	i = -1;
 	ft_run_capability("vi");
 	if (t->clipboard.buff)

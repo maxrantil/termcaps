@@ -41,7 +41,8 @@ static void	ft_line_down(t_term *t)
 			t->c_col = prompt_len;
 			t->index = t->nl_addr[t->c_row + 1] - t->nl_addr[0];
 		}
-		t->index = &t->nl_addr[t->c_row + 1][t->c_col - prompt_len] - t->nl_addr[0];
+		t->index = &t->nl_addr[t->c_row + 1][t->c_col - prompt_len] \
+			- t->nl_addr[0];
 	}
 	else
 	{

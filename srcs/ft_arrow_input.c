@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrow_t->inp.c                                   :+:      :+:    :+:   */
+/*   ft_arrow_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/08 16:37:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:10:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
  */
 static void	ft_right(t_term *t)
 {
-	ssize_t row;
+	ssize_t	row;
 
-	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1] && ft_is_prompt_line(t, t->c_row + 1))
+	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1] \
+		&& ft_is_prompt_line(t, t->c_row + 1))
 		return ;
 	row = (ssize_t)ft_get_linenbr();
 	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1])
@@ -39,7 +40,8 @@ static void	ft_left(t_term *t)
 {
 	ssize_t	row;
 
-	if (&t->inp[t->index] == t->nl_addr[t->c_row] && ft_is_prompt_line(t, t->c_row))
+	if (&t->inp[t->index] == t->nl_addr[t->c_row] \
+		&& ft_is_prompt_line(t, t->c_row))
 		return ;
 	row = (ssize_t)ft_get_linenbr();
 	if (&t->inp[t->index] == t->nl_addr[t->c_row])
