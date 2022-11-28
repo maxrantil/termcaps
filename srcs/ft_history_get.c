@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/22 16:08:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:15:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_history_get(t_term *t)
 	if (fd)
 	{
 		buf = NULL;
-		while (get_next_line(fd, &buf) > 0) // this needs to be checkoing for \0, not \n. i think
+		while (get_next_line(fd, &buf) > 0)
 		{
-			vec_push(&t->v_history, buf); //&buf or not &buf? valgrind will say invalid read if not but text file font will be strange?
+			vec_push(&t->v_history, buf);
 			ft_strdel(&buf);
 		}
 		ft_strdel(&buf);

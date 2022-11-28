@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_esc_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/21 11:29:35 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:08:10 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	ft_esc_parse(t_term *t)
 		t->ch = ft_get_input();
 		if (t->ch >= 'A' && t->ch <= 'D')
 			ft_arrow_input(t);
-		if (t->ch == 49)
-			ft_opt_mv(t);//why two of these? line 92
+		if (t->ch == '1')
+			ft_opt_mv(t);
 		if (t->ch == 'H' && t->bytes)
 			ft_cursor_beginning(t);
 		if (t->ch == 'F')
@@ -80,7 +80,7 @@ void	ft_esc_parse(t_term *t)
 			shift_arrow(t);
 		}
 	}
-	if (t->ch == 98 || t->ch == 102)
+	if (t->ch == 'b' || t->ch == 'f')
 		ft_opt_mv(t);
 	t->ch = 0;
 }

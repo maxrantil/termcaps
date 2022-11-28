@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/22 15:43:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:27:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ static struct termios	ft_init_raw(void)
 	raw = orig_termios;
 	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN);
 	raw.c_iflag &= ~(IXON | BRKINT);
-	/* raw.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
-			| INLCR | IGNCR | ICRNL | IXON);
-	raw.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN | ISIG);
-	raw.c_cflag &= ~(CSIZE | PARENB);
-	raw.c_cflag |= CS8; */
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
@@ -46,17 +41,12 @@ static struct termios	ft_init_raw(void)
 	return (orig_termios);
 }
 
-/**
- * It disables raw mode by setting the terminal attributes to the original terminal attributes
- *
- * @param orig_termios The original terminal attributes.
- */
 static void	ft_disable_raw_mode(struct termios orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
-static int ft_getent(void)
+static int	ft_getent(void)
 {
 	char	*termtype;
 	char	term_buffer[2048];
@@ -82,7 +72,7 @@ static int ft_getent(void)
 	return (status);
 }
 
-static int	ft_keyboard()
+static int	ft_keyboard(void)
 {
 	struct termios	orig_termios;
 	t_term			t;
@@ -98,11 +88,6 @@ static int	ft_keyboard()
 	return (0);
 }
 
-/**
- * It takes in a string and sets all the characters to null.
- *
- * @return The return value is the number of bytes that were written to the file descriptor.
- */
 int	main(void)
 {
 	ft_keyboard();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 15:27:23 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:14:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define BCK		1
 # define CTRL_C		3
 # define CTRL_D		4
+# define CTRL_L		12
 # define CTRL_W		23
 # define CTRL_U		21
 # define CTRL_Y		25
@@ -56,11 +57,11 @@
 # define BUFFSIZE   2048
 # define MAX_LINE   1024
 
-typedef	struct clipboard
+typedef struct clipboard
 {
 	int		type;
 	char	*buff;
-}				t_clipboard;
+}			t_clipboard;
 
 typedef struct s_term
 {
@@ -83,7 +84,7 @@ typedef struct s_term
 	ssize_t		m_prompt_len;
 	ssize_t		q_qty;
 	ssize_t		bslash;
-	ssize_t 	heredoc;
+	ssize_t		heredoc;
 	int			ch;
 	char		quote;
 	t_clipboard	clipboard;
@@ -99,6 +100,7 @@ void	ft_create_prompt_line(t_term *t, ssize_t loc);
 void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
 void	ft_deletion_shift(t_term *t, int mode);
+void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
@@ -133,13 +135,5 @@ void	ft_shift_nl_addr(t_term *t, int num);
 void	ft_trigger_nl(t_term *t);
 void	ft_window_size(t_term *t);
 void	ft_word_mv(t_term *t);
-
-
-// void	ft_clearscreen(void);
-// ssize_t	get_last_non_prompt_line(t_term *t);
-// void	nl_addr_reset(t_term *t);
-// void	nl_terminal_size(t_term *t);
-
-
 
 #endif

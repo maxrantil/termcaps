@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 10:06:40 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 11:59:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * It fetches the delimiter for the heredoc
- * 
+ *
  * @param t the term structure
  */
 static void	ft_delim_fetch(t_term *t)
@@ -39,7 +39,7 @@ static void	ft_delim_fetch(t_term *t)
 
 /**
  * Insertion of a character into the input string
- * 
+ *
  * @param t the term structure
  */
 static void	ft_insertion_char(t_term *t)
@@ -64,15 +64,15 @@ static void	ft_insertion_char(t_term *t)
 
 /**
  * Handles the enter key & prompting new line.
- * 
+ *
  * @param t the term structure
  */
 static void	ft_insertion_enter(t_term *t)
 {
 	if (!t->nl_addr[t->c_row + 1])
 	{
-		if (t->bslash || t->q_qty % 2 || \
-		(t->heredoc && ft_strcmp(t->nl_addr[t->c_row], t->delim)))
+		if (t->bslash || t->q_qty % 2 || (t->heredoc \
+			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
 		{
 			t->inp[t->bytes++] = (char)t->ch;
 			ft_create_prompt_line(t, t->bytes);
@@ -84,7 +84,7 @@ static void	ft_insertion_enter(t_term *t)
 
 /**
  * Handles the insertion of characters into the input string.
- * 
+ *
  * @param t the t_term struct
  */
 void	ft_insertion(t_term *t)
