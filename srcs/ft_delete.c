@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 15:28:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 10:19:06 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_delete(t_term *t)
 	ssize_t	len;
 	ssize_t	row;
 
-	if (t->index
-		&& (t->inp[t->index] == D_QUO || t->inp[t->index] == S_QUO))
+	if (t->index && (t->inp[t->index] == D_QUO || \
+	t->inp[t->index] == S_QUO))
 		ft_quote_decrement(t, 0);
 	row = ft_row_lowest_line(t);
 	if (t->nl_addr[row + 1]
