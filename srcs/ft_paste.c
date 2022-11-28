@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_paste.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:04:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 15:32:55 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:28:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void	ft_paste(t_term *t)
 		if (t->clipboard.type == CUT)
 			ft_strdel(&t->clipboard.buff);
 		ft_run_capability("ve");
-		
 	}
 }

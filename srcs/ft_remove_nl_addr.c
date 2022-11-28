@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:13:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 16:12:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:24:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * It removes a row from the
  * `nl_addr` array
- * 
+ *
  * @param term the term structure
  * @param row the row number of the line to be removed
  */
@@ -27,7 +27,8 @@ void	ft_remove_nl_addr(t_term *t, ssize_t row)
 
 	i = -1;
 	j = -1;
-	new_array = (char **)ft_memalloc(sizeof(char *) * (size_t)(t->total_row + 1));
+	new_array = (char **)ft_memalloc(sizeof(char *) \
+		* (size_t)(t->total_row + 1));
 	while (t->nl_addr[++i])
 	{
 		if (i != row)

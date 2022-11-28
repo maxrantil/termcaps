@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trigger_nl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 13:22:39 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:25:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_trigger_nl(t_term *t)
 	}
 	if (len == t->ws_col + 1)
 		if (t->nl_addr[row + 1])
-			ft_add_nl_mid_row(t, row + 1, (ssize_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
+			ft_add_nl_mid_row(t, row + 1, \
+				(ssize_t)(&t->nl_addr[row + 1][-1] - t->nl_addr[0]));
 	if (t->c_col == t->ws_col)
 	{
 		t->c_row++;

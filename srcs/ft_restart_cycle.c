@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/22 14:11:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:24:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void ft_restart_cycle(t_term *t)
+void	ft_restart_cycle(t_term *t)
 {
 	ft_putendl_fd(t->inp, STDOUT_FILENO);
 	ft_memset(t->inp, '\0', BUFFSIZE);
