@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_line_mv.c                                       :+:      :+:    :+:   */
+/*   ft_mv_prompt_len.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/11 10:28:45 mbarutel         ###   ########.fr       */
+/*   Created: 2022/11/28 12:23:57 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/11/28 12:37:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-void	ft_line_mv(t_term *t)
+ssize_t	ft_mv_prompt_len(t_term *t, int num)
 {
-	t->ch = ft_get_input();
-	if (t->ch == 59)
-	{
-		t->ch = ft_get_input();
-		if (t->ch == 51)
-		{
-			t->ch = ft_get_input();
-			if (t->ch == 65 && t->c_row && ft_get_linenbr())
-				ft_line_up(t);
-			if (t->ch == 66 && t->c_row < t->total_row)
-				ft_line_down(t);
-			t->ch = 0;
-		}
-	}
+	ssize_t	prompt_len;
+
+	prompt_len = 0;
+	if (t->c_row == 1 && (num < 0))
+		prompt_len = t->prompt_len;
+	else if (ft_is_prompt_line(t, t->c_row + num))
+		prompt_len = t->m_prompt_len;
+	return (prompt_len);
 }
