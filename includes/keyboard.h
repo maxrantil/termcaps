@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:14:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:53:23 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ void	ft_input_cycle(t_term *t);
 void	ft_insertion(t_term *t);
 char	*ft_is_prompt_line(t_term *t, ssize_t row);
 ssize_t	ft_len_lowest_line(t_term *t, ssize_t row);
+void	ft_line_down(t_term *t);
 void	ft_line_mv(t_term *t);
+void	ft_line_up(t_term *t);
+ssize_t	ft_mv_prompt_len(t_term *t, int num);
 void	ft_opt_mv(t_term *t);
 void	ft_paste(t_term *t);
 void	ft_print_trail(t_term *t);
