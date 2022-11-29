@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:43:30 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:25:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:07:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void	ft_word_right(t_term *t)
 
 void	ft_word_mv(t_term *t)
 {
-	if (t->ch == 98 && (&t->inp[t->index] > t->nl_addr[t->c_row]))
+	if (t->ch == ALT_LFT && (&t->inp[t->index] > t->nl_addr[t->c_row]))
 		ft_word_left(t);
-	else if (t->ch == 102 && (t->index < t->bytes))
+	else if (t->ch == ALT_RGHT && (t->index < t->bytes))
 		ft_word_right(t);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:53:23 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:25:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,26 @@
 
 # define DEL		0
 # define BCK		1
+# define ENTER      10
 # define CTRL_C		3
 # define CTRL_D		4
 # define CTRL_L		12
 # define CTRL_W		23
 # define CTRL_U		21
 # define CTRL_Y		25
-# define D_QUO	34
-# define S_QUO	39
+# define D_QUO		34
+# define S_QUO		39
 # define ESCAPE     27
-# define ENTER      10
+# define LINE_MV    49
+# define KEY_SHIFT  50
+# define ARROW_UP   65
+# define ARROW_DOWN	66
+# define ARROW_LFT	67
+# define ARROW_RGHT	68
+# define CURS_END	70
+# define CURS_BIGIN	72
+# define ALT_LFT	98
+# define ALT_RGHT	102
 # define DOWN		261
 # define UP			262
 # define LEFT       263
@@ -85,6 +95,7 @@ typedef struct s_term
 	ssize_t		q_qty;
 	ssize_t		bslash;
 	ssize_t		heredoc;
+	ssize_t		his;
 	int			ch;
 	char		quote;
 	t_clipboard	clipboard;
@@ -92,6 +103,7 @@ typedef struct s_term
 
 void	ft_add_nl_last_row(t_term *t, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
+void	ft_alt_mv(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_backspace(t_term *t);
 void	ft_bslash_handling(t_term *t);;
@@ -121,7 +133,6 @@ void	ft_line_down(t_term *t);
 void	ft_line_mv(t_term *t);
 void	ft_line_up(t_term *t);
 ssize_t	ft_mv_prompt_len(t_term *t, int num);
-void	ft_opt_mv(t_term *t);
 void	ft_paste(t_term *t);
 void	ft_print_trail(t_term *t);
 int		ft_putc(int c);

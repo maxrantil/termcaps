@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 13:49:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:01:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_init_to_zero(t_term *t)
 	t->heredoc = 0;
 	t->total_row_cpy = 0;
 	t->clipboard.type = 0;
+	t->his = 0;
 }
 
 void	ft_init(t_term *t)

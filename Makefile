@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/28 12:52:28 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/11/29 15:10:33 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ endif
 
 FILES 		= 	ft_add_nl_last_row \
 				ft_add_nl_mid_row \
+				ft_alt_mv \
 				ft_arrow_input \
 				ft_backspace \
 				ft_bslash_handling \
@@ -97,7 +98,6 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_line_mv \
 				ft_line_up \
 				ft_mv_prompt_len \
-				ft_opt_mv \
 				ft_paste \
 				ft_print_trail \
 				ft_putc \

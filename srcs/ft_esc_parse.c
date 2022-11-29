@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:08:10 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:27:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void	ft_cursor_end(t_term *t)
 
 static void	shift_arrow(t_term *t)
 {
-	if (t->ch == 'D' && t->bytes)
+	if (t->ch == ARROW_RGHT && t->bytes)
 		ft_cursor_beginning(t);
-	if (t->ch == 'C')
+	if (t->ch == ARROW_LFT)
 		ft_cursor_end(t);
 }
 
@@ -66,21 +66,21 @@ void	ft_esc_parse(t_term *t)
 	if (t->ch == '[')
 	{
 		t->ch = ft_get_input();
-		if (t->ch >= 'A' && t->ch <= 'D')
+		if (t->ch >= ARROW_UP && t->ch <= ARROW_RGHT)
 			ft_arrow_input(t);
-		if (t->ch == '1')
-			ft_opt_mv(t);
-		if (t->ch == 'H' && t->bytes)
+		if (t->ch == LINE_MV)
+			ft_alt_mv(t);
+		if (t->ch == CURS_BIGIN && t->bytes)
 			ft_cursor_beginning(t);
-		if (t->ch == 'F')
+		if (t->ch == CURS_END)
 			ft_cursor_end(t);
-		if (t->ch == '2')
+		if (t->ch == KEY_SHIFT)
 		{
 			t->ch = ft_get_input();
 			shift_arrow(t);
 		}
 	}
-	if (t->ch == 'b' || t->ch == 'f')
-		ft_opt_mv(t);
+	if (t->ch == ALT_LFT || t->ch == ALT_RGHT)
+		ft_alt_mv(t);
 	t->ch = 0;
 }

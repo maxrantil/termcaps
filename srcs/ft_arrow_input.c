@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:10:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:25:39 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,12 @@ static void	ft_left(t_term *t)
 
 void	ft_arrow_input(t_term *t)
 {
-	static ssize_t	his;
-
-	if (t->ch == 'D' && t->index)
+	if (t->ch == ARROW_RGHT && t->index)
 		ft_left(t);
-	else if (t->ch == 'C' && t->index < t->bytes)
+	else if (t->ch == ARROW_LFT && t->index < t->bytes)
 		ft_right(t);
-	else if (t->ch == 'A' && (size_t)his < t->v_history.len)
-		ft_history_trigger(t, ++his);
-	else if (t->ch == 'B' && his > 0)
-		ft_history_trigger(t, --his);
+	else if (t->ch == ARROW_UP && (size_t)t->his < t->v_history.len)
+		ft_history_trigger(t, ++t->his);
+	else if (t->ch == ARROW_DOWN && t->his > 0)
+		ft_history_trigger(t, --t->his);
 }
