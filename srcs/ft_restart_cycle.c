@@ -6,12 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 15:02:05 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:52:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It resets the terminal
+ * to its initial state
+ *
+ * @param t the term structure
+ */
 void	ft_restart_cycle(t_term *t)
 {
 	ft_putendl_fd(t->inp, STDOUT_FILENO);

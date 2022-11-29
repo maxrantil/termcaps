@@ -6,12 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:11:43 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:24:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:15:10 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It shifts all the characters in the input buffer to the right of the
+ * cursor one position to the right
+ *
+ * @param t the term structure
+ */
 void	ft_shift_insert(t_term *t)
 {
 	ssize_t	bytes_cpy;

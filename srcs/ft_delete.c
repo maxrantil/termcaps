@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_delete.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 10:19:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 17:10:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It updates the newline addresses in the terminal structure to account
+ * for the fact that the prompt has been deleted
+ *
+ * @param t the terminal structure
+ */
 static void	update_nl_addr_del(t_term *t)
 {
 	ssize_t	row;
@@ -25,6 +31,14 @@ static void	update_nl_addr_del(t_term *t)
 	}
 }
 
+/*
+ * It deletes the character
+ * under the cursor
+ *
+ * @param t the term structure
+ *
+ * @return the number of bytes that are in the input.
+ */
 void	ft_delete(t_term *t)
 {
 	ssize_t	len;

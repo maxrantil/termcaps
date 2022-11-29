@@ -6,17 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:13:40 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:24:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:50:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
+/*
  * It removes a row from the
- * `nl_addr` array
+ * newline address array
  *
- * @param term the term structure
+ * @param t the terminal structure
  * @param row the row number of the line to be removed
  */
 void	ft_remove_nl_addr(t_term *t, ssize_t row)

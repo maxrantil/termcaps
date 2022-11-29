@@ -6,17 +6,37 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:27:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:09:53 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
 /*
-**	If optional_actions is TCSAFLUSH, the change shall occur after all output
-**	written to fildes is transmitted, and all input so far received but not
-**	read shall be discarded before the change is made.
-*/
+ * ECHO is a bitflag, defined as 00000000000000000000000000001000 in binary.
+ * We use the bitwise-NOT operator (~) on this value to get
+ * 11111111111111111111111111110111. We then bitwise-AND this value with the
+ * flags field, which forces the fourth bit in the flags field to become 0,
+ * and causes every other bit to retain its current value. Flipping bits like
+ * this is common in C.
+ * There is an ICANON flag that allows us to turn off canonical mode.
+ * This means we will finally be reading input byte-by-byte,
+ * instead of line-by-line.
+ * Turning off IEXTEN also fixes Ctrl-O in macOS, whose terminal driver
+ * is otherwise set to discard that control character.
+ * IXON comes from <termios.h>. The I stands for “input flag” (which it is,
+ * unlike the other I flags we’ve seen so far) and XON comes from the names
+ * of the two control characters that Ctrl-S and Ctrl-Q produce: XOFF to pause
+ * transmission and XON to resume transmission.
+ * BRKINT this step probably won’t have any observable effect for you, because
+ * these flags are either already turned off, or they don’t really apply to
+ * modern terminal emulators. But at one time or another, switching them off
+ * was considered (by someone) to be part of enabling “raw mode”, so we carry
+ * on the tradition (of whoever that someone was) in our program.
+ * If optional_actions is TCSAFLUSH, the change shall occur after all output
+ * written to fildes is transmitted, and all input so far received but not
+ * read shall be discarded before the change is made.
+ */
 static struct termios	ft_init_raw(void)
 {
 	struct termios	orig_termios;
@@ -28,7 +48,7 @@ static struct termios	ft_init_raw(void)
 		exit(1);
 	}
 	raw = orig_termios;
-	raw.c_lflag &= ~(ICANON | ECHO | IEXTEN);
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw.c_iflag &= ~(IXON | BRKINT);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
@@ -41,11 +61,24 @@ static struct termios	ft_init_raw(void)
 	return (orig_termios);
 }
 
+/*
+ * It disables raw mode by setting the terminal attributes to the original
+ * terminal attributes
+ *
+ * @param orig_termios The original terminal attributes.
+ */
 static void	ft_disable_raw_mode(struct termios orig_termios)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
+/*
+ * It gets the terminal type from the environment, and then uses the termcap
+ * library to get the
+ * terminal capabilities
+ *
+ * @return The number of lines in the terminal.
+ */
 static int	ft_getent(void)
 {
 	char	*termtype;
@@ -72,6 +105,11 @@ static int	ft_getent(void)
 	return (status);
 }
 
+/*
+ * It initializes the terminal, reads input, and then cleans up
+ *
+ * @return The return value of the last command executed.
+ */
 static int	ft_keyboard(void)
 {
 	struct termios	orig_termios;

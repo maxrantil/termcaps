@@ -6,12 +6,21 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:06:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:12:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It deletes the character
+ * under the cursor if there is one, and if the cursor is at the end of a line
+ * and the line is empty, it ends the current cycle and restarts it.
+ *
+ * @param t the term structure
+ *
+ * @return the value of the function ctrl_d.
+ */
 static int	ctrl_d(t_term *t)
 {
 	if (!t->bytes)
@@ -30,6 +39,11 @@ static int	ctrl_d(t_term *t)
 	return (0);
 }
 
+/*
+ * It handles the control keys
+ *
+ * @param t the term structure
+ */
 static void	ft_ctrl(t_term *t)
 {
 	if (t->ch == CTRL_C)
@@ -47,6 +61,11 @@ static void	ft_ctrl(t_term *t)
 	}
 }
 
+/*
+ * It handles backspaces and escape sequences
+ *
+ * @param t the t_term struct
+ */
 static void	ft_backspace_or_escape(t_term *t)
 {
 	if (t->ch == BACKSPACE && t->index)
@@ -55,6 +74,14 @@ static void	ft_backspace_or_escape(t_term *t)
 		ft_esc_parse(t);
 }
 
+/*
+ * It inserts a character into the line, and if it's an enter, it checks if
+ * the line is complete and if so, it ends the cycle
+ *
+ * @param t the structure containing all the information about the current line
+ *
+ * @return 1 or 0
+ */
 static int	ft_isprint_or_enter(t_term *t)
 {
 	if (ft_isprint(t->ch) || t->ch == ENTER)
@@ -73,6 +100,16 @@ static int	ft_isprint_or_enter(t_term *t)
 	return (0);
 }
 
+/*
+ * It reads input from the terminal, and if the input is a printable
+ * character, it adds it to the current row, if the input is a backspace,
+ * it deletes the last character from the current row, if the
+ * input is an escape sequence, it calls the appropriate function,
+ * and if the input is a control
+ * character, it calls the appropriate function
+ *
+ * @param t the t_term struct
+ */
 void	ft_input_cycle(t_term *t)
 {
 	ft_add_nl_last_row(t, 0);

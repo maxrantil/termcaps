@@ -6,12 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:04:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:28:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:48:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It pastes the contents of the clipboard into the input buffer
+ *
+ * @param t The term structure.
+ */
 void	ft_paste(t_term *t)
 {
 	int		i;

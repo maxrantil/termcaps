@@ -6,12 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 15:27:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:40:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It moves the cursor to the beginning of the line
+ *
+ * @param t the term structure
+ */
 static void	ft_cursor_beginning(t_term *t)
 {
 	if (!t->c_row)
@@ -30,6 +35,11 @@ static void	ft_cursor_beginning(t_term *t)
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
+/*
+ * It moves the cursor to the end of the line
+ *
+ * @param t the term structure
+ */
 static void	ft_cursor_end(t_term *t)
 {
 	ssize_t	len;
@@ -52,6 +62,11 @@ static void	ft_cursor_end(t_term *t)
 	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
+/*
+ * It moves the cursor to the beginning or end of the line
+ *
+ * @param t the term structure
+ */
 static void	shift_arrow(t_term *t)
 {
 	if (t->ch == ARROW_RGHT && t->bytes)
@@ -60,6 +75,11 @@ static void	shift_arrow(t_term *t)
 		ft_cursor_end(t);
 }
 
+/*
+ * It parses the escape sequence and calls the appropriate function
+ *
+ * @param t the term structure
+ */
 void	ft_esc_parse(t_term *t)
 {
 	t->ch = ft_get_input();

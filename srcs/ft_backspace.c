@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_backspace.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 10:26:27 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:36:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It scrolls the terminal up one line
+ *
+ * @param t the term structure
+ */
 static void	ft_scroll_up(t_term *t)
 {
 	ssize_t	row;
@@ -22,6 +27,14 @@ static void	ft_scroll_up(t_term *t)
 	ft_setcursor(t->c_col, row);
 }
 
+/*
+ * It handles the backspace key
+ * when the cursor is not at the beginning of the line
+ *
+ * @param t the term structure
+ * @param row the row of the cursor
+ * @param len the length of the line that is being deleted
+ */
 static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 {
 	if (!t->c_col)
@@ -41,12 +54,18 @@ static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 			ft_scroll_up(t);
 		ft_remove_nl_addr(t, row);
 		t->total_row--;
-	}	
+	}
 	ft_run_capability("ce");
 	ft_shift_nl_addr(t, -1);
 	ft_deletion_shift(t, BCK);
 }
 
+/*
+ * It deletes the character
+ * before the cursor
+ *
+ * @param t the term structure
+ */
 void	ft_backspace(t_term *t)
 {
 	ssize_t	row;

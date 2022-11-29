@@ -6,12 +6,19 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:04:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:11:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It's called at the end of the main loop, and it handles the newline
+ * character, the history, and the
+ * input copy
+ *
+ * @param t the term struct
+ */
 void	ft_end_cycle(t_term *t)
 {
 	if (t->bytes)

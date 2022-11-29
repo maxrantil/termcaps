@@ -6,12 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:39:35 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:14:21 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:41:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It gets the current line number of the cursor
+ *
+ * @return The line number of the cursor.
+ */
 int	ft_get_linenbr(void)
 {
 	char	buf[16];

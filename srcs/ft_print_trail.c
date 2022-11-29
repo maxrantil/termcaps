@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_trail.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:40:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 17:24:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:49:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It prints the prompt
+ *
+ * @param row the row of the cursor
+ */
 static void	print_prompt(ssize_t row)
 {
 	if (!row)
@@ -20,6 +25,13 @@ static void	print_prompt(ssize_t row)
 		ft_putstr(MINI_PROMPT);
 }
 
+/*
+ * It prints the line at the
+ * specified row
+ *
+ * @param t the term struct
+ * @param row the row number of the line to be printed
+ */
 static void	ft_print_line(t_term *t, ssize_t row)
 {
 	if (row == t->c_row)
@@ -44,6 +56,11 @@ static void	ft_print_line(t_term *t, ssize_t row)
 	}
 }
 
+/*
+ * It prints the lines that are after the current line
+ *
+ * @param t the term structure
+ */
 static void	ft_print_line_trail(t_term *t)
 {
 	ssize_t	row;
@@ -59,6 +76,11 @@ static void	ft_print_line_trail(t_term *t)
 	}
 }
 
+/*
+ * It prints the line trail
+ *
+ * @param t the term structure
+ */
 void	ft_print_trail(t_term *t)
 {
 	ft_run_capability("vi");

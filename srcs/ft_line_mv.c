@@ -6,15 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:41:49 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 15:30:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:47:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
+/*
  * It moves the cursor up or down a line
- * 
+ *
  * @param t the term structure
  */
 void	ft_line_mv(t_term *t)

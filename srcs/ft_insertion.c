@@ -6,14 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 11:59:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:12:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * It fetches the delimiter for the heredoc
+/*
+ * It fetches the delimiter
+ * for a heredoc
  *
  * @param t the term structure
  */
@@ -37,8 +38,8 @@ static void	ft_delim_fetch(t_term *t)
 	}
 }
 
-/**
- * Insertion of a character into the input string
+/*
+ * It inserts a character into the input string
  *
  * @param t the term structure
  */
@@ -62,8 +63,9 @@ static void	ft_insertion_char(t_term *t)
 	t->bytes++;
 }
 
-/**
- * Handles the enter key & prompting new line.
+/*
+ * If the user is not at the end of the line, the function will
+ * insert a new line.
  *
  * @param t the term structure
  */
@@ -82,8 +84,8 @@ static void	ft_insertion_enter(t_term *t)
 	ft_delim_fetch(t);
 }
 
-/**
- * Handles the insertion of characters into the input string.
+/*
+ * It handles the insertion of characters into the input string
  *
  * @param t the t_term struct
  */

@@ -6,12 +6,20 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 14:06:06 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:11:08 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:10:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It cuts the word before the cursor to the clipboard
+ *
+ * @param t the term structure
+ *
+ * @return A string that is a copy of the string pointed to by s, but only
+ * up to n characters long.
+ */
 static char	*cut_to_clipboard(t_term *t)
 {
 	ssize_t	i;
@@ -29,6 +37,13 @@ static char	*cut_to_clipboard(t_term *t)
 	return (ft_strsub(&t->inp[i], start, (size_t)((t->index - i) + 1)));
 }
 
+/*
+ * It cuts the current line from the cursor position to the end of the line,
+ * and stores it in the
+ * clipboard
+ *
+ * @param t The term structure
+ */
 void	ft_cut(t_term *t)
 {
 	int	i;

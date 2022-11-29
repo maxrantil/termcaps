@@ -6,12 +6,17 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/28 12:15:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:41:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It reads the history file and stores it in a vector
+ *
+ * @param t the terminal structure
+ */
 void	ft_history_get(t_term *t)
 {
 	char	*buf;

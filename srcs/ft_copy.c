@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_copy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:02:11 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/25 15:32:05 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:37:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It copies the word before the cursor to the clipboard
+ *
+ * @param t The term structure
+ */
 void	ft_copy(t_term *t)
 {
 	ssize_t	i;

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 15:01:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:43:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 t_term	*g_t;
 
+/*
+ * It initializes all the variables in the t_term structure to zero
+ *
+ * @param t the structure that holds all the parameters
+ */
 static void	ft_init_to_zero(t_term *t)
 {
 	t->ch = 0;
@@ -32,6 +37,11 @@ static void	ft_init_to_zero(t_term *t)
 	t->his = 0;
 }
 
+/*
+ * It initializes the terminal
+ *
+ * @param t the structure that holds all the information about the terminal.
+ */
 void	ft_init(t_term *t)
 {
 	ft_init_signals();

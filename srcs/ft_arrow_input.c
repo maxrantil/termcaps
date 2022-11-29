@@ -6,17 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 15:25:39 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:36:21 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * If the cursor is not at the end of the line, move it one space to the right
+/*
+ * It moves the cursor to the right
  *
- * @param t->inp the string that is being edited
- * @param t the struct that holds all the information about the terminal
+ * @param t the term structure
+ *
+ * @return The address of the next line break.
  */
 static void	ft_right(t_term *t)
 {
@@ -36,6 +37,14 @@ static void	ft_right(t_term *t)
 	ft_setcursor(++t->c_col, row);
 }
 
+/*
+ * It moves the cursor to the left
+ *
+ * @param t the term structure
+ *
+ * @return the number of lines that the input string
+ * 		occupies.
+ */
 static void	ft_left(t_term *t)
 {
 	ssize_t	row;
@@ -58,6 +67,11 @@ static void	ft_left(t_term *t)
 	ft_setcursor(--t->c_col, row);
 }
 
+/*
+ * It handles the arrow keys
+ *
+ * @param t the term structure
+ */
 void	ft_arrow_input(t_term *t)
 {
 	if (t->ch == ARROW_RGHT && t->index)

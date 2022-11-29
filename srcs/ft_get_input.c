@@ -6,14 +6,14 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:52:49 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 11:53:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:40:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
- * Reads one character from the standard input and returns it.
+/*
+ * It reads one character from the standard input and returns it
  *
  * @return The character that was read from the standard input.
  */

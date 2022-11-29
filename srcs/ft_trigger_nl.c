@@ -6,12 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:25:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:15:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It scrolls down one line
+ */
 static void	ft_scroll_down(void)
 {
 	ft_run_capability("sc");
@@ -20,6 +23,13 @@ static void	ft_scroll_down(void)
 	ft_run_capability("up");
 }
 
+/*
+ * It adds a newline to the
+ * buffer, and if the cursor is at the end of the line, it moves the cursor
+ * to the next line
+ *
+ * @param t the term structure
+ */
 void	ft_trigger_nl(t_term *t)
 {
 	ssize_t	len;

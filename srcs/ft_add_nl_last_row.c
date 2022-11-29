@@ -6,12 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 13:42:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/28 12:09:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:34:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
+/*
+ * It adds a newline address to the array of newline addresses
+ *
+ * @param t the term structure
+ * @param pos The position of the newline character in the input string.
+ */
 void	ft_add_nl_last_row(t_term *t, ssize_t pos)
 {
 	int		index;
