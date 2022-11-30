@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 17:12:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/30 09:55:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static int	ctrl_d(t_term *t)
  */
 static void	ft_ctrl(t_term *t)
 {
-	if (t->ch == CTRL_C)
-		ft_restart_cycle(t);
-	else if (t->ch == CTRL_W)
+	if (t->ch == CTRL_W)
 		ft_cut(t);
 	else if (t->ch == CTRL_U)
 		ft_copy(t);
