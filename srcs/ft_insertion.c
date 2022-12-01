@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_insertion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 17:12:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/01 13:02:39 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	ft_insertion_char(t_term *t)
 {
 	ft_putc(t->ch);
 	ft_heredoc_handling(t);
-	ft_bslash_handling(t);
 	if ((t->ch == D_QUO || t->ch == S_QUO) && !t->heredoc)
 	{
 		if (!t->bslash)

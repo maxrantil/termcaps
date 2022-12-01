@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_input_cycle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/30 09:55:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/01 13:02:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ static int	ft_isprint_or_enter(t_term *t)
  */
 void	ft_input_cycle(t_term *t)
 {
+	int	ctrl_d_ret;
+
 	ft_add_nl_last_row(t, 0);
 	write(1, PROMPT, (size_t)t->prompt_len);
 	while (t->ch != -1)
@@ -119,13 +121,15 @@ void	ft_input_cycle(t_term *t)
 			continue ;
 		if (t->ch == CTRL_D)
 		{
-			if (ctrl_d(t) == 1)
+			ctrl_d_ret = ctrl_d(t);
+			if (ctrl_d_ret == 1)
 				continue ;
-			if (ctrl_d(t) == -1)
+			if (ctrl_d_ret == -1)
 				break ;
 		}
 		ft_ctrl(t);
 		ft_backspace_or_escape(t);
+		ft_bslash_handling(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}
