@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/30 09:55:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/01 14:17:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_ctrl(t_term *t)
 	else if (t->ch == CTRL_L)
 	{
 		ft_run_capability("cl");
-		write(1, PROMPT, (size_t)t->prompt_len);
+		ft_restart_cycle(t);
 	}
 }
 
