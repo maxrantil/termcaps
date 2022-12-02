@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:56:42 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 16:52:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/01 14:25:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
  */
 void	ft_restart_cycle(t_term *t)
 {
-	ft_putendl_fd(t->inp, STDOUT_FILENO);
+	if (t->ch != CTRL_L)
+		ft_putendl_fd(t->inp, STDOUT_FILENO);
 	ft_memset(t->inp, '\0', BUFFSIZE);
 	t->quote = 0;
 	t->q_qty = 0;
