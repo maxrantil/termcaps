@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 17:09:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/06 13:06:00 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,24 +110,57 @@ static int	ft_getent(void)
  *
  * @return The return value of the last command executed.
  */
-static int	ft_keyboard(void)
+// static int	ft_keyboard(void)
+// {
+// 	struct termios	orig_termios;
+// 	t_term			t;
+
+// 	ft_getent();
+// 	orig_termios = ft_init_raw();
+// 	ft_init(&t);
+// 	ft_input_cycle(&t);
+// 	if (t.nl_addr)
+// 		ft_memdel((void **)&t.nl_addr);
+// 	ft_history_write_to_file(&t);
+// 	ft_disable_raw_mode(orig_termios);
+// 	return (0);
+// }
+
+// int	main(void)
+// {
+// 	ft_keyboard();
+// 	return (0);
+// }
+
+static int	ft_keyboard(t_term *t)
+{
+	int	ret;
+	
+	ft_init(t);
+	ret = ft_input_cycle(t);
+	if (t->nl_addr)
+		ft_memdel((void **)&t->nl_addr);
+	return (ret);
+}
+
+int main(void)
 {
 	struct termios	orig_termios;
 	t_term			t;
+	int				status;
 
+	
+	status = 1;
 	ft_getent();
 	orig_termios = ft_init_raw();
-	ft_init(&t);
-	ft_input_cycle(&t);
-	if (t.nl_addr)
-		ft_memdel((void **)&t.nl_addr);
+	ft_history_get(&t);
+	while (status)
+	{
+		if (ft_keyboard(&t) == 1 || ft_strcmp(t.inp, "exit") == 0)
+			status = 0;
+		else
+			ft_putendl(t.inp);
+	}
 	ft_history_write_to_file(&t);
 	ft_disable_raw_mode(orig_termios);
-	return (0);
-}
-
-int	main(void)
-{
-	ft_keyboard();
-	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_end_cycle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/29 17:11:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/06 21:20:43 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ void	ft_end_cycle(t_term *t)
 {
 	if (t->bytes)
 	{
+		// ft_memcpy(t->history_buff, t->inp, t->bytes);
+		ft_nl_removal(t);
+		// ft_putendl(t->history_buff);
 		ft_putchar('\n');
-		vec_push(&t->v_history, t->inp);
+		vec_push(&t->v_history, t->history_buff);
 	}
-	if (!ft_strncmp(t->inp, "history", 7))
+	if (!ft_strncmp(t->inp, "history", 7)) // I think this should be a built in
 		ft_history(t);
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)

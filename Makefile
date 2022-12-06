@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/11/29 15:10:33 by mrantil          ###   ########.fr        #
+#    Updated: 2022/12/06 15:02:23 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ CFLAGS		+=	-Wunreachable-code -Wtype-limits
 CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
-EAK_CHECK	+=	-fsanitize=address
+# EAK_CHECK	+=	-fsanitize=address
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs
@@ -98,6 +98,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_line_mv \
 				ft_line_up \
 				ft_mv_prompt_len \
+				ft_nl_removal \
 				ft_paste \
 				ft_print_trail \
 				ft_putc \

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/01 14:17:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/06 20:40:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	ft_isprint_or_enter(t_term *t)
 			|| !ft_strcmp(t->nl_addr[t->c_row], t->delim))
 		{
 			ft_end_cycle(t);
-			ft_restart_cycle(t);
+			// ft_restart_cycle(t);
 			return (1);
 		}
 		t->bslash = 0;
@@ -108,9 +108,9 @@ static int	ft_isprint_or_enter(t_term *t)
  *
  * @param t the t_term struct
  */
-void	ft_input_cycle(t_term *t)
+int	ft_input_cycle(t_term *t)
 {
-	int	ctrl_d_ret;
+	int		ctrl_d_ret;
 
 	ft_add_nl_last_row(t, 0);
 	write(1, PROMPT, (size_t)t->prompt_len);
@@ -118,14 +118,18 @@ void	ft_input_cycle(t_term *t)
 	{
 		t->ch = ft_get_input();
 		if (ft_isprint_or_enter(t))
-			continue ;
+			return (0);
 		if (t->ch == CTRL_D)
 		{
 			ctrl_d_ret = ctrl_d(t);
 			if (ctrl_d_ret == 1)
 				continue ;
 			if (ctrl_d_ret == -1)
-				break ;
+			{
+				ft_putchar('\n');
+				ft_putendl("exit");
+				return (1); 
+			}
 		}
 		ft_ctrl(t);
 		ft_backspace_or_escape(t);
@@ -133,4 +137,5 @@ void	ft_input_cycle(t_term *t)
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/01 13:02:32 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:20:08 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_delete(t_term *t)
 	else
 		len = &t->inp[t->bytes] - t->nl_addr[row];
 	update_nl_addr_del(t);
-	ft_deletion_shift(t, DEL);
+	ft_deletion_shift(t->inp, t->index, &t->bytes);
 	ft_run_capability("ce");
 	if (!len)
 	{
