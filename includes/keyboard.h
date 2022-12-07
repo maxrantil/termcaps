@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 21:21:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:11:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # include <fcntl.h>
 # include <sys/ioctl.h>
 
-# define DEL		0
-# define BCK		1
 # define ENTER      10
 # define CTRL_C		3
 # define CTRL_D		4
@@ -102,7 +100,7 @@ typedef struct s_term
 	t_clipboard	clipboard;
 }			t_term;
 
-void	ft_add_nl_last_row(t_term *t, ssize_t pos);
+void	ft_add_nl_last_row(t_term *t, char *array, ssize_t pos);
 void	ft_add_nl_mid_row(t_term *t, ssize_t row, ssize_t pos);
 void	ft_alt_mv(t_term *t);
 void	ft_arrow_input(t_term *t);

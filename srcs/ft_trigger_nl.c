@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_trigger_nl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/11/29 17:15:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/12/07 11:49:57 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_trigger_nl(t_term *t)
 		t->total_row++;
 		if (t->start_row + t->total_row >= t->ws_row)
 			ft_scroll_down();
-		ft_add_nl_last_row(t, t->bytes);
+		ft_add_nl_last_row(t, t->inp, t->bytes);
 	}
 	if (len == t->ws_col + 1)
 		if (t->nl_addr[row + 1])

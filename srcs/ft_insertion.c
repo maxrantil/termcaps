@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/06 21:52:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/07 12:02:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static void	ft_insertion_enter(t_term *t)
 		if (t->bslash || t->q_qty % 2 || (t->heredoc \
 			&& ft_strcmp(t->nl_addr[t->c_row], t->delim)))
 		{
-			// ft_memcpy(t->history_buff, t->inp, t->bytes);
-			// ft_strclr(&t->history_buff[t->bytes]);
+			ft_memcpy(t->history_buff, t->inp, t->bytes);
+			ft_strclr(&t->history_buff[t->bytes]);
 			ft_nl_removal(t);
 			t->inp[t->bytes++] = (char)t->ch;
 			ft_create_prompt_line(t, t->bytes);
