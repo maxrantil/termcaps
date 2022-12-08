@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/07 15:48:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:56:55 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
-void	ft_heredoc_handling(t_term *t);
+void	ft_heredoc_handling(t_term *t, char ch, int index);
 void	ft_history(t_term *t);
 char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);

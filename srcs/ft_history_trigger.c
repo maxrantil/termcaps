@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 13:19:53 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:56:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static ssize_t	ft_reset_nl_addr_prototype(t_term *t, char *inp)
 			t->total_row++;
 			ft_add_nl_last_row(t, inp, i+1);
 		}
-		if (inp[i] == D_QUO || inp[i] == S_QUO)
-			ft_quote_handling(t, inp[i]);
 	}
 	t->bytes = &inp[i] - t->nl_addr[0];
 	t->index = t->bytes;
@@ -79,13 +77,49 @@ static void	ft_history_cpy(char *dst, char *src)
 	}
 }
 
-// static void ft_push_history(t_term *t)
+static void ft_push_history(t_term *t)
+{
+	ft_nl_removal(t);
+	vec_push(&t->v_history, t->history_buff);
+}
+
+// static void	ft_heredoc_handling_proto(t_term *t, char ch, int index)
 // {
-// 	ft_memcpy(t->history_buff, t->inp, t->bytes);
-// 	ft_strclr(&t->history_buff[t->bytes]);
-// 	ft_nl_removal(t);
-// 	vec_push(&t->v_history, t->history_buff);
+// 	if (index >= 1 && ch == '<' && !(t->q_qty % 2))
+// 	{
+// 		if (t->inp[index - 1] == '<')
+// 		{
+// 			if (index > 2 && t->inp[t->index - 2] == '<')
+// 				t->heredoc = 0;
+// 			else
+// 				t->heredoc = 1;
+// 		}
+// 		else
+// 			t->heredoc = 0;
+// 	}
 // }
+
+static void ft_flag_reset(t_term *t)
+{
+	int	i;
+
+	i = -1;
+	t->heredoc = 0;
+	t->bslash = 0;
+	t->quote = 0;
+	t->q_qty = 0;
+	while (t->inp[++i])
+	{
+		ft_heredoc_handling(t, t->inp[i], i);
+		if ((t->inp[i] == D_QUO || t->inp[i] == S_QUO) && !t->heredoc)
+		{
+			if (!t->bslash)
+				ft_quote_handling(t, t->inp[i]);
+			else
+				t->bslash = 0;
+		}
+	}
+}
 
 void	ft_history_trigger(t_term *t, ssize_t his)
 {
@@ -100,11 +134,11 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 			if (t->input_cpy)
 				ft_strdel(&t->input_cpy);
 			t->input_cpy = ft_strsub(t->nl_addr[t->c_row], 0, ft_strlen(t->nl_addr[t->c_row]));
-			// else
-			// {
-			// 	if (*t->inp)
-			// 		ft_push_history(t);
-			// }
+			if (*t->history_buff)
+			{
+				ft_push_history(t);
+				ft_memset((void *)t->history_buff, '\0', ft_strlen(t->history_buff));
+			}
 			t->history_row = t->c_row;
 		}
 		t->c_row = t->history_row;
@@ -135,6 +169,7 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 		else
 			ft_setcursor(0, ft_get_linenbr());
 		ft_run_capability("cd");
+		ft_flag_reset(t);
 		ft_print_new_inp(t);
 		if (!history)
 			t->history_row = -1;
