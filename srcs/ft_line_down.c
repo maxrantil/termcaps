@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:25:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/07 15:16:24 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:21:09 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	ft_line_down(t_term *t)
 	else
 		col = col - t->c_col;
 	prompt_len = ft_get_prompt_len(t, t->c_row + 1);
-	// ft_printf("%d\n", prompt_len);
 	if (t->c_col < (len + prompt_len))
 		ft_move_down(t, prompt_len);
 	else

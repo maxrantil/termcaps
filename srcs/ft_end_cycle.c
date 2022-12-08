@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/07 15:35:06 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:13:10 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_end_cycle(t_term *t)
 	if (!ft_strncmp(t->inp, "history", 7)) // I think this should be a built in
 		ft_history(t);
 	ft_memdel((void **)&t->nl_addr);
+	if (t->input_cpy)
+		ft_strdel(&t->input_cpy);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/07 15:11:59 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:48:48 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_term
 	ssize_t		total_row_cpy;
 	ssize_t		prompt_len;
 	ssize_t		m_prompt_len;
+	ssize_t		history_row;
 	ssize_t		q_qty;
 	ssize_t		bslash;
 	ssize_t		heredoc;

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/06 20:41:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 12:33:03 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_init_to_zero(t_term *t)
 	t->c_row = 0;
 	t->total_row = 0;
 	t->ws_col = 0;
+	t->history_row = -1;
 	t->ws_row = 0;
 	t->index = 0;
 	t->heredoc = 0;

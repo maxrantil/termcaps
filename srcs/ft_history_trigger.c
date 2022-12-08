@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/07 15:40:43 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 13:19:53 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void	ft_print_new_inp(t_term *t)
 }
 
 //TODO: Add back slash handling
-static void	ft_reset_nl_addr_prototype(t_term *t, char *inp)
+// This need check for hitting window size
+static ssize_t	ft_reset_nl_addr_prototype(t_term *t, char *inp)
 {
 	ssize_t	i;
 	ssize_t	row;
@@ -48,7 +49,7 @@ static void	ft_reset_nl_addr_prototype(t_term *t, char *inp)
 	while (inp[++i])
 	{
 		t->c_col++;
-		if (inp[i] == '\n')
+		if (inp[i] == '\n') 
 		{
 			row++;
 			t->c_col = 0;
@@ -60,6 +61,7 @@ static void	ft_reset_nl_addr_prototype(t_term *t, char *inp)
 	}
 	t->bytes = &inp[i] - t->nl_addr[0];
 	t->index = t->bytes;
+	return (row);
 }
 
 static void	ft_history_cpy(char *dst, char *src)
@@ -77,34 +79,65 @@ static void	ft_history_cpy(char *dst, char *src)
 	}
 }
 
+// static void ft_push_history(t_term *t)
+// {
+// 	ft_memcpy(t->history_buff, t->inp, t->bytes);
+// 	ft_strclr(&t->history_buff[t->bytes]);
+// 	ft_nl_removal(t);
+// 	vec_push(&t->v_history, t->history_buff);
+// }
+
 void	ft_history_trigger(t_term *t, ssize_t his)
 {
 	char	*history;
-	// ssize_t	total_row;
+	ssize_t	row;
 
 	if (t->c_row == t->total_row)
 	{
-		// total_row = t->total_row;
+		row = t->c_row;
+		if (t->history_row == -1)
+		{
+			if (t->input_cpy)
+				ft_strdel(&t->input_cpy);
+			t->input_cpy = ft_strsub(t->nl_addr[t->c_row], 0, ft_strlen(t->nl_addr[t->c_row]));
+			// else
+			// {
+			// 	if (*t->inp)
+			// 		ft_push_history(t);
+			// }
+			t->history_row = t->c_row;
+		}
+		t->c_row = t->history_row;
 		ft_run_capability("vi");	
 		history = (char *)vec_get(&t->v_history, t->v_history.len - (size_t)his);
 		if (history)
 		{
-			t->input_cpy = ft_strdup(t->nl_addr[t->c_row]);
 			ft_memset((void *)t->nl_addr[t->c_row], '\0', ft_strlen(t->nl_addr[t->c_row]));
 			ft_history_cpy(t->nl_addr[t->c_row], history);
 		}
 		else
 		{
 			ft_memset((void *)t->nl_addr[t->c_row], '\0', ft_strlen(t->nl_addr[t->c_row]));
-			ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
-			ft_strdel(&t->input_cpy);
+			if (t->input_cpy)
+				ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
 		}
-		ft_reset_nl_addr_prototype(t, t->nl_addr[t->c_row]);
-		// if (total_row != t->total_row)
-			// ft_setcursor(0, ft_get_linenbr() - (t->total_row - total_row));
-		ft_setcursor(0, ft_get_linenbr());
+		ft_reset_nl_addr_prototype(t, t->nl_addr[t->history_row]);
+		if (row > t->history_row)
+		{
+			ft_setcursor(0, ft_get_linenbr() - (row - t->history_row));
+			while (row > t->history_row)
+			{
+				ft_remove_nl_addr(t, row);
+				t->total_row--;
+				row--;
+			}
+		}
+		else
+			ft_setcursor(0, ft_get_linenbr());
 		ft_run_capability("cd");
 		ft_print_new_inp(t);
+		if (!history)
+			t->history_row = -1;
 		ft_run_capability("ve");
 	}
 }
