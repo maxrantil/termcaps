@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 14:47:28 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:15:07 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /*
  * It scrolls down one line
  */
-// static void	ft_scroll_down(void)
-// {
-// 	ft_run_capability("sc");
-// 	ft_run_capability("sf");
-// 	ft_run_capability("rc");
-// 	ft_run_capability("up");
-// }
+static void	ft_scroll_down(void)
+{
+	ft_run_capability("sc");
+	ft_run_capability("sf");
+	ft_run_capability("rc");
+	ft_run_capability("do");
+}
 
 /*
  * It adds a newline to the
@@ -39,12 +39,9 @@ void	ft_trigger_nl(t_term *t)
 	len = ft_len_lowest_line(t, row);
 	if (len == t->ws_col)
 	{
-		
-		// if (ft_get_linenbr() + t->c_row >= t->ws_row)
-		// {
-		// 	// mov cursor to the last row
-		// 	ft_scroll_down();
-		// }
+
+		if (ft_get_linenbr() == (t->ws_row - 1))
+			ft_scroll_down();
 		t->total_row++;
 		if (t->nl_addr[t->c_row + 1])
 			ft_add_nl_mid_row(t, t->c_row + 1, t->index);

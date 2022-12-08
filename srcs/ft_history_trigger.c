@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 13:56:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:17:41 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	ft_print_new_inp(t_term *t)
 	}
 }
 
-//TODO: Add back slash handling
 // This need check for hitting window size
 static ssize_t	ft_reset_nl_addr_prototype(t_term *t, char *inp)
 {

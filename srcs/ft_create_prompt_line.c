@@ -25,7 +25,7 @@ void	ft_create_prompt_line(t_term *t, ssize_t loc)
 	row = ft_get_linenbr();
 	t->c_row++;
 	t->total_row++;
-	if (row == t->ws_row)
+	if (row == (t->ws_row - 1))
 		ft_run_capability("sf");
 	else
 		row++;

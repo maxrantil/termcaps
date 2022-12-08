@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/07 15:14:48 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:22:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_reset_nl_addr(t_term *t)
 	while (t->inp[++i])
 	{
 		len++;
-		if (((len + ft_get_prompt_len(t, t->total_row)) + 1) == t->ws_col \
+		if (((len + ft_get_prompt_len(t, t->total_row))) == t->ws_col \
 			|| t->inp[i] == '\n')
 		{
 			ft_add_nl_last_row(t, t->inp, i + 1);
