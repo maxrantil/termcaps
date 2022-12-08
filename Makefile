@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/12/08 15:14:50 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/08 22:53:51 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_mv_prompt_len \
 				ft_nl_removal \
 				ft_paste \
+				ft_print_input \
 				ft_print_trail \
 				ft_putc \
 				ft_quote_decrement \

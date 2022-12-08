@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 15:14:45 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:58:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
 void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
-void	ft_deletion_shift(char *inp, int index, ssize_t *bytes);
+void	ft_deletion_shift(t_term *t, int index);
 void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
 int		ft_get_input(void);
@@ -135,6 +135,7 @@ void	ft_line_up(t_term *t);
 ssize_t	ft_mv_prompt_len(t_term *t, int num);
 void	ft_nl_removal(t_term *t);
 void	ft_paste(t_term *t);
+void	ft_print_input(t_term *t, ssize_t row, int mode);
 void	ft_print_trail(t_term *t);
 int		ft_putc(int c);
 void	ft_quote_decrement(t_term *t, int num);
