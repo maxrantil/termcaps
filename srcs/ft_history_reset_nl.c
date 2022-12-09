@@ -1,44 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_reset_nl_addr.c                                 :+:      :+:    :+:   */
+/*   ft_history_reset_nl.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:20:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 09:22:39 by mbarutel         ###   ########.fr       */
+/*   Created: 2022/12/09 10:29:50 by mbarutel          #+#    #+#             */
+/*   Updated: 2022/12/09 10:42:33 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/*
- * It takes the input string and creates an array of pointers to the
- * beginning of each line
- *
- * @param t the term structure
+/**
+ * It resets the newline addresses of the history buffer
+ * 
+ * @param t the term struct
+ * @param inp the string to be printed
  */
-void	ft_reset_nl_addr(t_term *t)
+void	ft_history_reset_nl(t_term *t, char *inp)
 {
 	ssize_t	i;
-	ssize_t	len;
+	ssize_t	col;
+	ssize_t	row;
 
 	i = -1;
-	len = 0;
-	t->total_row = 0;
-	if (t->nl_addr)
-		ft_memdel((void **)&t->nl_addr);
-	ft_add_nl_last_row(t, t->inp, 0);
-	while (t->inp[++i])
+	row = t->c_row;
+	while (inp[++i])
 	{
-		len++;
-		if (((len + ft_get_prompt_len(t, t->total_row))) == t->ws_col \
-			|| t->inp[i] == '\n')
+		col++;
+		if (((col + ft_get_prompt_len(t, row))) == t->ws_col || inp[i] == '\n')
 		{
-			ft_add_nl_last_row(t, t->inp, i + 1);
+			row++;
+			col = 0;
 			t->total_row++;
-			len = 0;
+			ft_add_nl_last_row(t, inp, i + 1);
 		}
 	}
-	ft_flag_reset(t);
+	t->bytes = &inp[i] - t->nl_addr[0];
+	t->index = t->bytes;
 }

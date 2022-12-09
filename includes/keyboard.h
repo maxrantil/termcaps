@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 22:58:37 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:31:37 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,13 @@ void	ft_backspace(t_term *t);
 void	ft_bslash_handling(t_term *t);
 void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
+void	ft_ctrl(t_term *t);
 void	ft_cut(t_term *t);
 void	ft_delete(t_term *t);
 void	ft_deletion_shift(t_term *t, int index);
 void	ft_end_cycle(t_term *t);
 void	ft_esc_parse(t_term *t);
+void	ft_flag_reset(t_term *t);
 int		ft_get_input(void);
 ssize_t	ft_get_prompt_len(t_term *t, ssize_t row);
 int		ft_get_linenbr(void);
@@ -121,6 +123,7 @@ void	ft_heredoc_handling(t_term *t, char ch, int index);
 void	ft_history(t_term *t);
 char	*ft_history_file_get(void);
 void	ft_history_get(t_term *t);
+void	ft_history_reset_nl(t_term *t, char *inp);
 void	ft_history_write_to_file(t_term *t);
 void	ft_history_trigger(t_term *t, ssize_t his);
 void	ft_init(t_term *t);

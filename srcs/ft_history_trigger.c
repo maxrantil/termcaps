@@ -6,36 +6,19 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 23:01:58 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:43:40 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static ssize_t	ft_reset_nl_addr_prototype(t_term *t, char *inp)
-{
-	ssize_t	i;
-	ssize_t	col;
-	ssize_t	row;
-
-	i = -1;
-	row = t->c_row;
-	while (inp[++i])
-	{
-		col++;
-		if (((col + ft_get_prompt_len(t, row))) == t->ws_col || inp[i] == '\n') 
-		{
-			row++;
-			col = 0;
-			t->total_row++;
-			ft_add_nl_last_row(t, inp, i+1);
-		}
-	}
-	t->bytes = &inp[i] - t->nl_addr[0];
-	t->index = t->bytes;
-	return (row);
-}
-
+/**
+ * It copies a string,
+ * skipping over escaped characters
+ * 
+ * @param dst The destination string.
+ * @param src The string to be copied.
+ */
 static void	ft_history_cpy(char *dst, char *src)
 {
 	int	i;
@@ -45,93 +28,113 @@ static void	ft_history_cpy(char *dst, char *src)
 	j = 0;
 	while (src[i])
 	{
-		if (src[i] == '\\' && (src[i + 1] && src[i + 1] != '\'' && src[i + 1] != '"'))
+		if (src[i] == '\\' && (src[i + 1] && src[i + 1] != '\'' \
+			&& src[i + 1] != '"'))
 			i++;
 		dst[j++] = src[i++];
 	}
 }
 
-static void ft_push_history(t_term *t)
+/**
+ * It copies the current input into a buffer, pushes the current input into
+ * the history vector, and sets the current row to the history row
+ * 
+ * @param t the term structure
+ */
+static void	ft_history_push(t_term *t)
 {
-	ft_nl_removal(t);
-	vec_push(&t->v_history, t->history_buff);
+	if (t->history_row == -1)
+	{
+		t->input_cpy = ft_strsub(t->nl_addr[t->c_row], 0, \
+		ft_strlen(t->nl_addr[t->c_row]));
+		if (*t->history_buff)
+		{
+			ft_nl_removal(t);
+			vec_push(&t->v_history, t->history_buff);
+			ft_memset((void *)t->history_buff, '\0', \
+			ft_strlen(t->history_buff));
+		}
+		t->history_row = t->c_row;
+	}
+	t->c_row = t->history_row;
 }
 
-static void ft_flag_reset(t_term *t)
+/**
+ * It updates the current
+ * input line with the history line
+ * 
+ * @param t the term structure
+ * @param history the history string to be copied into the input line
+ */
+static void	ft_history_inp_update(t_term *t, char *history)
 {
-	int	i;
-
-	i = -1;
-	t->q_qty = 0;
-	t->quote = 0;
-	t->bslash = 0;
-	t->heredoc = 0;
-	while (t->inp[++i])
+	if (history)
 	{
-		ft_heredoc_handling(t, t->inp[i], i);
-		if ((t->inp[i] == D_QUO || t->inp[i] == S_QUO) && !t->heredoc)
-		{
-			if (!t->bslash)
-				ft_quote_handling(t, t->inp[i]);
-			else
-				t->bslash = 0;
-		}
+		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
+		ft_strlen(t->nl_addr[t->c_row]));
+		ft_history_cpy(t->nl_addr[t->c_row], history);
+	}
+	else
+	{
+		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
+		ft_strlen(t->nl_addr[t->c_row]));
+		if (t->input_cpy)
+			ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
 	}
 }
 
+/**
+ * It clears the line from the cursor to the end of the screen
+ * 
+ * @param t the term structure
+ * @param row the row number of the line to be cleared
+ */
+static void	ft_history_clear_line(t_term *t, ssize_t row)
+{
+	if (row > t->history_row)
+	{
+		ft_setcursor(0, ft_get_linenbr() - (row - t->history_row));
+		while (row > t->history_row)
+		{
+			ft_remove_nl_addr(t, row);
+			t->total_row--;
+			row--;
+		}
+	}
+	else
+		ft_setcursor(0, ft_get_linenbr());
+	ft_run_capability("cd");
+}
+
+/**
+ * It takes the current input, pushes it to the history, then replaces
+ * the current input with the history entry
+ * 
+ * @param t The terminal structure
+ * @param his The history number to be retrieved.
+ * 
+ * @return the address of the first element of the array.
+ */
 void	ft_history_trigger(t_term *t, ssize_t his)
 {
 	char	*history;
 	ssize_t	row;
 
-	if (t->c_row == t->total_row)
+	if (t->c_row != t->total_row)
+		return ;
+	row = t->c_row;
+	ft_history_push(t);
+	ft_run_capability("vi");
+	history = (char *)vec_get(&t->v_history, t->v_history.len - (size_t)his);
+	ft_history_inp_update(t, history);
+	ft_history_reset_nl(t, t->nl_addr[t->history_row]);
+	ft_history_clear_line(t, row);
+	ft_flag_reset(t);
+	ft_print_input(t, t->c_row, 1);
+	if (!history)
 	{
-		row = t->c_row;
-		if (t->history_row == -1) // something to to with this value
-		{
-			if (t->input_cpy)
-				ft_strdel(&t->input_cpy);
-			t->input_cpy = ft_strsub(t->nl_addr[t->c_row], 0, ft_strlen(t->nl_addr[t->c_row]));
-			if (*t->history_buff)
-			{
-				ft_push_history(t);
-				ft_memset((void *)t->history_buff, '\0', ft_strlen(t->history_buff));
-			}
-			t->history_row = t->c_row;
-		}
-		t->c_row = t->history_row;
-		ft_run_capability("vi");	
-		history = (char *)vec_get(&t->v_history, t->v_history.len - (size_t)his);
-		if (history)
-		{
-			ft_memset((void *)t->nl_addr[t->c_row], '\0', ft_strlen(t->nl_addr[t->c_row]));
-			ft_history_cpy(t->nl_addr[t->c_row], history);
-		}
-		else
-		{
-			ft_memset((void *)t->nl_addr[t->c_row], '\0', ft_strlen(t->nl_addr[t->c_row]));
-			if (t->input_cpy)
-				ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
-		}
-		ft_reset_nl_addr_prototype(t, t->nl_addr[t->history_row]);
-		if (row > t->history_row)
-		{
-			ft_setcursor(0, ft_get_linenbr() - (row - t->history_row));
-			while (row > t->history_row)
-			{
-				ft_remove_nl_addr(t, row);
-				t->total_row--;
-				row--;
-			}
-		}
-		else
-			ft_setcursor(0, ft_get_linenbr());
-		ft_run_capability("cd");
-		ft_flag_reset(t);
-		ft_print_input(t, t->c_row, 1);
-		// ft_putnbr(t->c_col);
-		if (!history)
-			t->history_row = -1;
-		ft_run_capability("ve");
+		t->history_row = -1;
+		ft_strdel(&t->input_cpy);
 	}
+	ft_run_capability("ve");
 }

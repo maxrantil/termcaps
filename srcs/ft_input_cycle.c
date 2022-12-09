@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/08 20:34:03 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:36:54 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,6 @@ static int	ctrl_d(t_term *t)
 }
 
 /*
- * It handles the control keys
- *
- * @param t the term structure
- */
-static void	ft_ctrl(t_term *t)
-{
-	if (t->ch == CTRL_W)
-		ft_cut(t);
-	else if (t->ch == CTRL_U)
-		ft_copy(t);
-	else if (t->ch == CTRL_Y)
-		ft_paste(t);
-	else if (t->ch == CTRL_L)
-	{
-		ft_run_capability("cl");
-		ft_restart_cycle(t);
-	}
-}
-
-/*
  * It handles backspaces and escape sequences
  *
  * @param t the t_term struct
@@ -90,12 +70,18 @@ static int	ft_isprint_or_enter(t_term *t)
 			|| !ft_strcmp(t->nl_addr[t->c_row], t->delim))
 		{
 			ft_end_cycle(t);
-			// ft_restart_cycle(t);
 			return (1);
 		}
 		t->bslash = 0;
 	}
 	return (0);
+}
+
+static int	ctrl_d_exit(void)
+{
+	ft_putchar('\n');
+	ft_putendl("exit");
+	return (1);
 }
 
 /*
@@ -125,17 +111,11 @@ int	ft_input_cycle(t_term *t)
 			if (ctrl_d_ret == 1)
 				continue ;
 			if (ctrl_d_ret == -1)
-			{
-				ft_putchar('\n');
-				ft_putendl("exit");
-				return (1); 
-			}
+				return (ctrl_d_exit());
 		}
 		ft_ctrl(t);
 		ft_backspace_or_escape(t);
 		ft_bslash_handling(t);
-		// if (t->inp[t->index])
-		// 	ft_print_trail(t);
 		if (t->ch == -1)
 			ft_putstr_fd("error, ft_get_input()\n", STDERR_FILENO);
 	}

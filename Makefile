@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/12/08 22:53:51 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/09 10:31:52 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,17 +74,20 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_bslash_handling \
 				ft_copy \
 				ft_create_prompt_line \
+				ft_ctrl \
 				ft_cut \
 				ft_delete \
 				ft_deletion_shift \
 				ft_end_cycle \
 				ft_esc_parse \
+				ft_flag_reset \
 				ft_get_input \
 				ft_get_prompt_len \
 				ft_getline_nbr \
 				ft_heredoc_handling \
 				ft_history_file_get \
 				ft_history_get \
+				ft_history_reset_nl \
 				ft_history_trigger \
 				ft_history_write_to_file \
 				ft_history \

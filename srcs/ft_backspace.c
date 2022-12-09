@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:37:39 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/08 22:42:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 08:54:12 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void	backpace_continue(t_term *t, ssize_t row, ssize_t len)
 {
 	if (!t->c_col)
 	{
-		t->c_col = t->ws_col - 1;
 		t->c_row--;
+		t->c_col = t->ws_col - 1;
 		ft_setcursor(t->c_col, ft_get_linenbr() - 1);
 	}
 	else
 	{
-		ft_run_capability("le");
 		t->c_col--;
+		ft_run_capability("le");
 	}
 	if (!len)
 	{

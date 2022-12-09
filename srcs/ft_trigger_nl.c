@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 13:21:29 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 18:38:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:40:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	ft_trigger_nl(t_term *t)
 	if (len == t->ws_col)
 	{
 		if (ft_get_linenbr() == (t->ws_row - 1))
-		{
-			// t->start_row -= t->c_row;
 			ft_scroll_down();
-		}
 		t->total_row++;
 		if (t->nl_addr[t->c_row + 1])
-			ft_add_nl_mid_row(t, t->c_row + 1, t->index);
+		{
+			ft_run_capability("cd");
+			ft_reset_nl_addr(t);
+		}
 		else
 			ft_add_nl_last_row(t, t->inp, t->bytes);
 	}

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:25:34 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 12:21:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:28:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	ft_move_down(t_term *t, ssize_t prompt_len)
 
 static ssize_t	ft_col_diff(t_term *t, ssize_t len)
 {
-	int len_cur_row;
+	int	len_cur_row;
 
 	len_cur_row = &t->inp[t->index] - t->nl_addr[t->c_row];
 	if (len_cur_row > len)
@@ -67,7 +67,7 @@ static ssize_t	ft_col_diff(t_term *t, ssize_t len)
  */
 void	ft_line_down(t_term *t)
 {
-		ssize_t	len;
+	ssize_t	len;
 	ssize_t	prompt_len;
 	ssize_t	col;
 

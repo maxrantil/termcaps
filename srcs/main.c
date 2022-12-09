@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/08 20:00:00 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:40:59 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ static int	ft_getent(void)
 static int	ft_keyboard(t_term *t)
 {
 	int	ret;
-	
+
 	ft_init(t);
 	ret = ft_input_cycle(t);
 	if (t->nl_addr)
@@ -143,13 +143,12 @@ static int	ft_keyboard(t_term *t)
 	return (ret);
 }
 
-int main(void)
+int	main(void)
 {
 	struct termios	orig_termios;
 	t_term			t;
 	int				status;
 
-	
 	status = 1;
 	ft_getent();
 	orig_termios = ft_init_raw();

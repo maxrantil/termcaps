@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/08 16:04:46 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:30:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_end_cycle(t_term *t)
 		ft_putchar('\n');
 		vec_push(&t->v_history, t->history_buff);
 	}
-	if (!ft_strncmp(t->inp, "history", 7)) // I think this should be a built in
+	if (!ft_strncmp(t->inp, "history", 7))
 		ft_history(t);
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)
