@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_reset_nl.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:29:50 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 10:42:33 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:05:32 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_history_reset_nl(t_term *t, char *inp)
 	ssize_t	row;
 
 	i = -1;
+	col = 0;
 	row = t->c_row;
 	while (inp[++i])
 	{

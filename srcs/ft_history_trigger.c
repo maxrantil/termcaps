@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 10:43:40 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:03:02 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ static void	ft_history_clear_line(t_term *t, ssize_t row)
  */
 void	ft_history_trigger(t_term *t, ssize_t his)
 {
-	char	*history;
 	ssize_t	row;
+	char	*history;
 
 	if (t->c_row != t->total_row)
 		return ;
