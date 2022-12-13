@@ -14,10 +14,10 @@
 
 /**
  * It returns the length of the line at the given row
- * 
+ *
  * @param t the terminal structure
  * @param row the row of the cursor
- * 
+ *
  * @return The length of the line.
  */
 static int	line_len(t_term *t, ssize_t row)
@@ -34,7 +34,7 @@ static int	line_len(t_term *t, ssize_t row)
 /**
  * It transfers the changes
  * made to the cursor position to the terminal structure
- * 
+ *
  * @param t The terminal structure.
  * @param row the row of the cursor
  * @param col the column of the cursor
@@ -52,7 +52,7 @@ static void	transfer_changes(t_term *t, ssize_t row, ssize_t col, int mode)
 /**
  * It prints the input buffer to the terminal, and then moves the cursor
  * to the correct position
- * 
+ *
  * @param t the term structure
  * @param row the row of the cursor
  * @param mode 0 - normal, 1 - insert, 2 - delete
@@ -62,6 +62,7 @@ void	ft_print_input(t_term *t, ssize_t row, int mode)
 	int		len;
 	ssize_t	col;
 
+	col = 0;
 	while (t->nl_addr[row])
 	{
 		len = line_len(t, row);
