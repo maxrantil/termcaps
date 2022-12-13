@@ -6,7 +6,7 @@
 #    By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/17 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/12/09 10:31:52 by mbarutel         ###   ########.fr        #
+#    Updated: 2022/12/13 17:04:36 by mbarutel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_alt_mv \
 				ft_arrow_input \
 				ft_backspace \
+				ft_bslash_escape_check \
 				ft_bslash_handling \
 				ft_copy \
 				ft_create_prompt_line \
@@ -80,7 +81,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_deletion_shift \
 				ft_end_cycle \
 				ft_esc_parse \
-				ft_flag_reset \
+				ft_quote_flag_reset \
 				ft_get_input \
 				ft_get_prompt_len \
 				ft_getline_nbr \
@@ -107,6 +108,7 @@ FILES 		= 	ft_add_nl_last_row \
 				ft_print_trail \
 				ft_putc \
 				ft_quote_decrement \
+				ft_quote_flag_check \
 				ft_quote_handling \
 				ft_remove_nl_addr \
 				ft_reset_nl_addr \

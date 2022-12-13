@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:23:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 06:31:04 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:25:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,32 @@
  * @param t the term structure
  * @param num the number of characters to be deleted
  */
-void	ft_quote_decrement(t_term *t, int num)
+void	ft_quote_decrement(t_term *t, ssize_t index)
 {
-	int blash_loc;
-
-	blash_loc = t->index - (num - 1);
-	if (!(t->q_qty % 2) && (t->index < 2 || t->inp[blash_loc] != '\\'))
+	if (!(t->q_qty % 2))
 	{
-		t->quote = t->inp[t->index - num];
+		t->quote = t->inp[index];
 		t->q_qty--;
 	}
-	else if (((t->q_qty % 2) && t->quote == t->inp[t->index - num]) && (t->index < 2 || t->inp[blash_loc] != '\\'))
+	else if ((t->q_qty % 2) && t->quote == t->inp[index])
 	{
 		t->quote = 0;
 		t->q_qty--;
 	}
 }
+// void	ft_quote_decrement(t_term *t, int num)
+// {
+// 	int blash_loc;
+
+// 	blash_loc = t->index - (num - 1);
+// 	if (!(t->q_qty % 2) && (t->index < 2 || t->inp[blash_loc] != '\\'))
+// 	{
+// 		t->quote = t->inp[t->index - num];
+// 		t->q_qty--;
+// 	}
+// 	else if (((t->q_qty % 2) && t->quote == t->inp[t->index - num]) && (t->index < 2 || t->inp[blash_loc] != '\\'))
+// 	{
+// 		t->quote = 0;
+// 		t->q_qty--;
+// 	}
+// }
