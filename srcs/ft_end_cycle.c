@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 09:30:17 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:52:36 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	ft_end_cycle(t_term *t)
 	ft_memdel((void **)&t->nl_addr);
 	if (t->input_cpy)
 		ft_strdel(&t->input_cpy);
-	if (t->input_cpy)
-		ft_strdel(&t->input_cpy);
+	if (t->delim)
+		ft_strdel(&t->delim);
 }
