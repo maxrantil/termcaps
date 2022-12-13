@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history_trigger.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbarutel <mbarutel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/09 13:03:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:46:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_history_trigger(t_term *t, ssize_t his)
 	ft_history_inp_update(t, history);
 	ft_history_reset_nl(t, t->nl_addr[t->history_row]);
 	ft_history_clear_line(t, row);
-	ft_flag_reset(t);
+	ft_quote_flag_reset(t);
 	ft_print_input(t, t->c_row, 1);
 	if (!history)
 	{
