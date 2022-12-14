@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:04:06 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/12 14:52:36 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:20:17 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
  */
 void	ft_end_cycle(t_term *t)
 {
+	t->start_row = ft_get_linenbr();
 	if (t->bytes)
 	{
-		ft_memcpy(t->history_buff, t->inp, ft_strlen(t->inp));
+		ft_memcpy(t->history_buff, t->inp, t->bytes);
 		ft_nl_removal(t);
 		ft_putchar('\n');
 		vec_push(&t->v_history, t->history_buff);

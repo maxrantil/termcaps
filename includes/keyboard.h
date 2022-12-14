@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 11:26:02 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:31:15 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@
 # define MINI_PROMPT "> "
 
 # define BUFFSIZE   2048
-# define MAX_LINE   1024
+# define MAX_LINE   1024 //remove this later
 
 typedef struct clipboard
 {

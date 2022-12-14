@@ -6,11 +6,19 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/09 09:27:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:53:34 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
+
+static int calculate_linenbr(t_term *t)
+{
+	if (t->start_row + t->c_row >= (t->ws_row - 1))
+		return (t->start_row - t->c_row);
+	else
+		return (t->start_row + t->c_row);
+}
 
 /*
  * It moves the cursor to the right
@@ -28,7 +36,8 @@ static void	ft_right(t_term *t)
 	{
 		t->c_col = -1;
 		t->c_row++;
-		ft_setcursor(++t->c_col, (ssize_t)ft_get_linenbr() + 1);
+		// ft_setcursor(++t->c_col, (ssize_t)ft_get_linenbr() + 1);
+		ft_setcursor(++t->c_col, calculate_linenbr(t));
 	}
 	else
 	{

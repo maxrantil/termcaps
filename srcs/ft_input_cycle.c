@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:46:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/12/13 15:20:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 15:35:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	ft_backspace_or_escape(t_term *t)
  */
 static int	ft_isprint_or_enter(t_term *t)
 {
-	if (ft_isprint(t->ch) || t->ch == ENTER)
+	if ((ft_isprint(t->ch) || t->ch == ENTER) && t->bytes < BUFFSIZE)
 		ft_insertion(t);
 	if (t->ch == ENTER)
 	{
