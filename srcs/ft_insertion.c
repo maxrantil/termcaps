@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 17:05:47 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 12:01:14 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	ft_delim_fetch(t_term *t)
 static void	ft_insertion_char(t_term *t)
 {
 	ft_putc(t->ch);
-	ft_heredoc_handling(t, t->ch, t->index);
 	t->c_col++;
 	ft_shift_nl_addr(t, 1);
 	if (t->inp[t->index])
@@ -59,7 +58,13 @@ static void	ft_insertion_char(t_term *t)
 		if (!ft_bslash_escape_check(t, t->index - 1))
 			ft_quote_handling(t, t->inp[t->index - 1]);
 	}
-	if (t->inp[t->index - 1] == '\\')
+	if (t->inp[t->index - 1] == '<')
+	{
+		ft_heredoc_handling(t, t->index - 1);
+		if (!t->heredoc && t->delim)
+			ft_strdel(&t->delim);
+	}
+	else if (t->inp[t->index - 1] == '\\')
 		ft_quote_flag_check(t, t->index - 1);
 }
 
@@ -73,8 +78,13 @@ static void	ft_insertion_enter(t_term *t)
 {
 	if (!t->nl_addr[t->c_row + 1])
 	{
+		ft_delim_fetch(t);
+		// ft_printf("%d %s\n", t->heredoc, t->delim);
 		t->bslash = ft_bslash_escape_check(t, t->bytes);
-		if (t->q_qty % 2 || (t->heredoc && (t->delim && !ft_strcmp(t->nl_addr[t->c_row], t->delim))) || t->bslash)
+		if (t->q_qty % 2 \
+			|| (t->heredoc \
+			&& (t->delim && ft_strcmp(t->nl_addr[t->c_row], t->delim))) \
+			|| t->bslash)
 		{
 			t->history_row = -1;
 			ft_memcpy(t->history_buff, t->inp, t->bytes);
@@ -83,7 +93,6 @@ static void	ft_insertion_enter(t_term *t)
 			t->index = t->bytes;
 		}
 	}
-	ft_delim_fetch(t);
 }
 
 /*
