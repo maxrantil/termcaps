@@ -6,34 +6,11 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:59:10 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 16:46:20 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:33:06 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
-
-/**
- * It copies a string,
- * skipping over escaped characters
- * 
- * @param dst The destination string.
- * @param src The string to be copied.
- */
-static void	ft_history_cpy(char *dst, char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (src[i])
-	{
-		if (src[i] == '\\' && (src[i + 1] && src[i + 1] != '\'' \
-			&& src[i + 1] != '"'))
-			i++;
-		dst[j++] = src[i++];
-	}
-}
 
 /**
  * It copies the current input into a buffer, pushes the current input into
@@ -72,14 +49,14 @@ static void	ft_history_inp_update(t_term *t, char *history)
 	{
 		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
 		ft_strlen(t->nl_addr[t->c_row]));
-		ft_history_cpy(t->nl_addr[t->c_row], history);
+		ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
 	}
 	else
 	{
 		ft_memset((void *)t->nl_addr[t->c_row], '\0', \
 		ft_strlen(t->nl_addr[t->c_row]));
 		if (t->input_cpy)
-			ft_history_cpy(t->nl_addr[t->c_row], t->input_cpy);
+			ft_memcpy(t->nl_addr[t->c_row], history, ft_strlen(history));
 	}
 }
 

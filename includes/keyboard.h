@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 09:51:26 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 15:31:15 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:29:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	ft_alt_mv(t_term *t);
 void	ft_arrow_input(t_term *t);
 void	ft_backspace(t_term *t);
 int 	ft_bslash_escape_check(t_term *t, ssize_t pos);
-void	ft_bslash_handling(t_term *t);
 void	ft_copy(t_term *t);
 void	ft_create_prompt_line(t_term *t, ssize_t loc);
 void	ft_ctrl(t_term *t);

@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 07:56:09 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 12:01:14 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:32:20 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	ft_insertion_enter(t_term *t)
 	if (!t->nl_addr[t->c_row + 1])
 	{
 		ft_delim_fetch(t);
-		// ft_printf("%d %s\n", t->heredoc, t->delim);
 		t->bslash = ft_bslash_escape_check(t, t->bytes);
 		if (t->q_qty % 2 \
 			|| (t->heredoc \

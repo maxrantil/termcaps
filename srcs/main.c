@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 11:52:45 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/13 15:14:19 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:31:26 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static struct termios	ft_init_raw(void)
 		write(2, "error tcsetattr\n", 16);
 		exit(1);
 	}
-	ft_run_capability("cl");
 	return (orig_termios);
 }
 
@@ -151,15 +150,17 @@ int	main(void)
 
 	status = 1;
 	ft_getent();
-	orig_termios = ft_init_raw();
+	ft_run_capability("cle");
 	ft_history_get(&t);
 	while (status)
 	{
+		orig_termios = ft_init_raw();
 		if (ft_keyboard(&t) == 1 || ft_strcmp(t.inp, "exit") == 0)
 			status = 0;
 		else
 			ft_putendl(t.inp);
+		ft_disable_raw_mode(orig_termios);
 	}
 	ft_history_write_to_file(&t);
-	ft_disable_raw_mode(orig_termios);
+	return (0);
 }
