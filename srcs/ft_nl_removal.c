@@ -6,7 +6,7 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:00:30 by mbarutel          #+#    #+#             */
-/*   Updated: 2022/12/14 17:35:09 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/15 12:47:31 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,36 @@ int	ft_nl_removal_bslash_check(t_term *t, ssize_t pos)
 	return (0);
 }
 
+/**
+ * It takes a string, and if it finds a backslash, it replaces it with a
+ * semicolon and a space
+ * 
+ * @param t the term structure
+ * @param i the current position in the history buffer
+ * 
+ * @return The position of the last backslash.
+ */
+static int	ft_get_bslash_pos(t_term *t, int i)
+{
+	int	count;
+
+	count = i - 1;
+	while (count && t->history_buff[count] == '\\')
+		count--;
+	if (count)
+		count++;
+	if ((i - count) > 1)
+	{
+		t->history_buff[i++] = ';';
+		ft_memmove((void *)&t->history_buff[i + 1], \
+		(void *)&t->history_buff[i], ft_strlen(&t->history_buff[i]) + 1);
+		t->history_buff[i] = ' ';
+		return (i);
+	}
+	else
+		return (i - 1);
+}
+
 void	ft_nl_removal(t_term *t)
 {
 	int		k;
@@ -47,11 +77,9 @@ void	ft_nl_removal(t_term *t)
 	while (t->history_buff[++k])
 	{
 		i = k;
-		if (!quote && t->history_buff[i] == '\\')
-		{
-			if (t->history_buff[++i] == '\n')
-				i++;
-		}
+		if (!quote && t->history_buff[i] == '\n' \
+		&& ft_nl_removal_bslash_check(t, i))
+			k = ft_get_bslash_pos(t, i++);
 		else if ((t->history_buff[i] == S_QUO || t->history_buff[i] == D_QUO) \
 		&& !ft_nl_removal_bslash_check(t, i))
 		{
@@ -60,7 +88,7 @@ void	ft_nl_removal(t_term *t)
 			else if (quote == t->history_buff[i])
 				quote = 0;
 		}
-		ft_memmove((void *)&t->history_buff[k], (void *)&t->history_buff[i] \
-		, ft_strlen(&t->history_buff[i]) + 1);
+		ft_memmove((void *)&t->history_buff[k], (void *)&t->history_buff[i], \
+		ft_strlen(&t->history_buff[i]) + 1);
 	}
 }
