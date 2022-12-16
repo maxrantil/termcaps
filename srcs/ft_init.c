@@ -6,44 +6,57 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:58:29 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 10:28:51 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/09 09:39:44 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-// t_term		*g_term;
+t_term	*g_t;
 
-void	ft_init(t_term *term, char *input)
+/*
+ * It initializes all the variables in the t_term structure to zero
+ *
+ * @param t the structure that holds all the parameters
+ */
+static void	ft_init_to_zero(t_term *t)
 {
-	ft_init_signals();
-	term->ch = 0;
-	term->inp = input;
-	term->quote = 0;
-	term->q_qty = 0;
-	term->bytes = 0;
-	term->c_row = 0;
-	term->total_row = 0;
-	term->ws_col = 0;
-	term->ws_row = 0;
-	term->index = 0;
-	ft_history_get(term);
-	g_term = term;
-	term->nl_addr = NULL;
-	ft_window_size(term);
-	term->prompt_len = ft_strlen(PROMPT);
-	term->m_prompt_len = ft_strlen(MINI_PROMPT);
-	term->c_col = term->prompt_len;
-	term->input_cpy = NULL;
-	// term->nl_addr_cpy = NULL;
-	term->total_row_cpy = 0;
+	t->ch = 0;
+	t->quote = 0;
+	t->q_qty = 0;
+	t->bslash = 0;
+	t->bytes = 0;
+	t->c_row = 0;
+	t->total_row = 0;
+	t->ws_col = 0;
+	t->history_row = -1;
+	t->ws_row = 0;
+	t->index = 0;
+	t->heredoc = 0;
+	t->total_row_cpy = 0;
+	t->clipboard.type = 0;
+	t->his = 0;
 }
 
-/* void	kill_process(int sig)
+/*
+ * It initializes the terminal
+ *
+ * @param t the structure that holds all the information about the terminal.
+ */
+void	ft_init(t_term *t)
 {
-	if (sig == 3)
-	{
-		ft_disable_raw_mode();
-		kill(getpid(), SIGINT); //should not kill just give prompt again
-	}
-} */
+	ft_init_signals();
+	ft_memset(t->inp, '\0', BUFFSIZE);
+	ft_memset(t->history_buff, '\0', BUFFSIZE);
+	ft_init_to_zero(t);
+	t->start_row = ft_get_linenbr();
+	g_t = t;
+	t->nl_addr = NULL;
+	t->delim = NULL;
+	ft_window_size(t);
+	t->prompt_len = (ssize_t)ft_strlen(PROMPT);
+	t->m_prompt_len = (ssize_t)ft_strlen(MINI_PROMPT);
+	t->c_col = t->prompt_len;
+	t->input_cpy = NULL;
+	t->clipboard.buff = NULL;
+}

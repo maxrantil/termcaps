@@ -6,81 +6,86 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:31:54 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/03 16:30:31 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:15:58 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	ft_cursor_beginning(t_term *term)
+/*
+ * It moves the cursor to the beginning of the line
+ *
+ * @param t the term structure
+ */
+static void	ft_cursor_beginning(t_term *t)
 {
-	if (!term->c_row)
-	{
-		term->c_col = term->prompt_len;
-		term->index = 0;
-	}
+	t->c_col = ft_get_prompt_len(t, t->c_row);
+	if (!t->c_row)
+		t->index = 0;
 	else
-	{
-		if (is_prompt_line(term, term->c_row))
-			term->c_col = term->m_prompt_len;
-		else
-			term->c_col = 0;
-		term->index = term->nl_addr[term->c_row] - term->nl_addr[0];
-	}
-	ft_setcursor(term->c_col, term->c_row);
+		t->index = t->nl_addr[t->c_row] - t->nl_addr[0];
+	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
-static void	ft_cursor_end(t_term *term, char *input)
+/*
+ * It moves the cursor to the end of the line
+ *
+ * @param t the term structure
+ */
+static void	ft_cursor_end(t_term *t)
 {
-	size_t	len;
+	ssize_t	len;
 
-	len = term->index;
-	term->c_col = 0;
-	if (!term->c_row || is_prompt_line(term, term->c_row))
-	{
-		if (!term->c_row)
-			term->c_col = term->prompt_len;
-		else
-			term->c_col = term->m_prompt_len;
-	}
-	if (term->nl_addr[term->c_row + 1])
-		term->index = (term->nl_addr[term->c_row + 1] - term->nl_addr[0]) - 1;
+	len = t->index;
+	t->c_col = ft_get_prompt_len(t, t->c_row);
+	if (t->nl_addr[t->c_row + 1])
+		t->index = (t->nl_addr[t->c_row + 1] - t->nl_addr[0]) - 1;
 	else
-		term->index = term->bytes;
-	len = term->index - len;
-	term->c_col += &input[term->index] - term->nl_addr[term->c_row];
-	ft_setcursor(term->c_col, term->c_row);
+		t->index = t->bytes;
+	len = t->index - len;
+	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
+	ft_setcursor(t->c_col, ft_get_linenbr());
 }
 
-static void	shift_arrow(char *input, t_term *term)
+/*
+ * It moves the cursor to the beginning or end of the line
+ *
+ * @param t the term structure
+ */
+static void	shift_arrow(t_term *t)
 {
-	if (term->ch == 'D' && term->bytes)
-		ft_cursor_beginning(term);
-	if (term->ch == 'C')
-		ft_cursor_end(term, input);
+	if (t->ch == ARROW_RGHT && t->bytes)
+		ft_cursor_beginning(t);
+	if (t->ch == ARROW_LFT)
+		ft_cursor_end(t);
 }
 
-void	ft_esc_parse(t_term *term, char *input)
+/*
+ * It parses the escape sequence and calls the appropriate function
+ *
+ * @param t the term structure
+ */
+void	ft_esc_parse(t_term *t)
 {
-	term->ch = ft_get_input();
-	if (term->ch == '[')
+	t->ch = ft_get_input();
+	if (t->ch == '[')
 	{
-		term->ch = ft_get_input();
-		if (term->ch >= 'A' && term->ch <= 'D')
-			ft_arrow_input(term, input);
-		if (term->ch == 49)
-			ft_opt_mv(term, input);
-		if (term->ch == 'H' && term->bytes)
-			ft_cursor_beginning(term);
-		if (term->ch == 'F')
-			ft_cursor_end(term, input);
-		if (term->ch == '2')
+		t->ch = ft_get_input();
+		if (t->ch >= ARROW_UP && t->ch <= ARROW_RGHT)
+			ft_arrow_input(t);
+		if (t->ch == LINE_MV)
+			ft_alt_mv(t);
+		if (t->ch == CURS_BIGIN && t->bytes)
+			ft_cursor_beginning(t);
+		if (t->ch == CURS_END)
+			ft_cursor_end(t);
+		if (t->ch == KEY_SHIFT)
 		{
-			term->ch = ft_get_input();
-			shift_arrow(input, term);
+			t->ch = ft_get_input();
+			shift_arrow(t);
 		}
 	}
-	if (term->ch == 98 || term->ch == 102)
-		ft_opt_mv(term, input);
-	term->ch = 0;
+	if (t->ch == ALT_LFT || t->ch == ALT_RGHT)
+		ft_alt_mv(t);
+	t->ch = 0;
 }

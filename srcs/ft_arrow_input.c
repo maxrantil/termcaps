@@ -6,58 +6,83 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 16:27:59 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/06 18:12:16 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:38:45 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	ft_right(char *input, t_term *term)
+/*
+ * It moves the cursor to the right
+ *
+ * @param t the term structure
+ *
+ * @return The address of the next line break.
+ */
+static void	ft_right(t_term *t)
 {
-	if (term->index < term->bytes)
+	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1] \
+		&& ft_is_prompt_line(t, t->c_row + 1))
+		return ;
+	if (&t->inp[t->index] == &t->nl_addr[t->c_row + 1][-1])
 	{
-		if (term->nl_addr[term->c_row + 1])
-		{
-			if (&input[term->index] < (term->nl_addr[term->c_row + 1] - 1))
-			{
-				term->index++;
-				ft_setcursor(++term->c_col, term->c_row);
-			}
-		}
-		else
-		{
-			term->index++;
-			ft_setcursor(++term->c_col, term->c_row);
-		}
+		t->c_col = -1;
+		t->c_row++;
+		ft_setcursor(++t->c_col, (ssize_t)ft_get_linenbr() + 1);
 	}
+	else
+	{
+		t->c_col++;
+		ft_run_capability("nd");
+	}
+	t->index++;
 }
 
-static void	ft_left(char *input, t_term *term)
+/*
+ * It moves the cursor to the left
+ *
+ * @param t the term structure
+ *
+ * @return the number of lines that the input string
+ * 		occupies.
+ */
+static void	ft_left(t_term *t)
 {
-	term->index--;
-	term->c_col--;
-	if (&input[term->index + 1] == term->nl_addr[term->c_row])
+	if (&t->inp[t->index] == t->nl_addr[t->c_row] \
+		&& ft_is_prompt_line(t, t->c_row))
+		return ;
+	if (&t->inp[t->index] == t->nl_addr[t->c_row])
 	{
-		if (term->c_row == 1)
-			term->c_col = term->m_prompt_len;
-		else
-			term->c_col = term->prompt_len;
-		term->c_col += (term->nl_addr[term->c_row]
-				- term->nl_addr[--term->c_row]);
+		t->c_col = 0;
+		if (t->c_row == 1)
+			t->c_col = t->prompt_len;
+		else if (ft_is_prompt_line(t, t->c_row - 1))
+			t->c_col = t->m_prompt_len;
+		t->c_col += t->nl_addr[t->c_row] - t->nl_addr[t->c_row - 1];
+		t->c_row--;
+		ft_setcursor(--t->c_col, (ssize_t)ft_get_linenbr() - 1);
 	}
-	ft_setcursor(term->c_col, term->c_row);
+	else
+	{
+		t->c_col--;
+		ft_run_capability("le");
+	}
+	t->index--;
 }
 
-void	ft_arrow_input(t_term *term, char *input)
+/*
+ * It handles the arrow keys
+ *
+ * @param t the term structure
+ */
+void	ft_arrow_input(t_term *t)
 {
-	static size_t	his;
-
-	if (term->ch == 'D' && term->index)
-		ft_left(input, term);
-	else if (term->ch == 'C')
-		ft_right(input, term);
-	else if (term->ch == 'A' && his < term->v_history.len)
-		ft_history_trigger(term, input, ++his);
-	else if (term->ch == 'B' && his > 0)
-		ft_history_trigger(term, input, --his);
+	if (t->ch == ARROW_RGHT && t->index)
+		ft_left(t);
+	else if (t->ch == ARROW_LFT && t->index < t->bytes)
+		ft_right(t);
+	else if (t->ch == ARROW_UP && (size_t)t->his < t->v_history.len)
+		ft_history_trigger(t, ++t->his);
+	else if (t->ch == ARROW_DOWN && t->his > 0)
+		ft_history_trigger(t, --t->his);
 }

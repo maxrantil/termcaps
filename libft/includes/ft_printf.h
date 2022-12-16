@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 15:06:19 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/24 13:19:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_ftprintf
 	va_list				ap;
 	const char			*fmt;
 	int					space_count;
-	ssize_t				char_count;
+	size_t				char_count;
 	size_t				astx_flag;
 	size_t				len_va_arg;
 	int					plus_flag;

@@ -6,44 +6,49 @@
 /*   By: mbarutel <mbarutel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:25:07 by mrantil           #+#    #+#             */
-/*   Updated: 2022/11/07 12:44:08 by mbarutel         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:23:50 by mbarutel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-static void	set_new_cur_pos(t_term *term)
+/**
+ * It sets the cursor position
+ * to the position of the character at the current index
+ * 
+ * @param t the term structure
+ */
+static void	set_new_cur_pos(t_term *t)
 {
-	while (term->nl_addr[term->c_row] && &term->inp[term->index] >= term->nl_addr[term->c_row])
-		term->c_row++;
-	term->c_row--;
-	term->c_col = 0;
-	if (is_prompt_line(term, term->c_row))
-	{
-		if (!term->c_row)
-			term->c_col = term->prompt_len;
-		else
-			term->c_col = term->m_prompt_len;
-	}
-	term->c_col += &term->inp[term->index] - term->nl_addr[term->c_row];
-	ft_setcursor(term->c_col, term->c_row);
+	while (t->nl_addr[t->c_row] \
+	&& &t->inp[t->index] >= t->nl_addr[t->c_row])
+		t->c_row++;
+	t->c_row--;
+	t->c_col = ft_get_prompt_len(t, t->c_row);
+	t->c_col += &t->inp[t->index] - t->nl_addr[t->c_row];
+	ft_setcursor(t->c_col, t->c_row);
 }
 
-void	ft_window_size(t_term *term)
+/*
+ * It resets the cursor position and prints the trail of the input string
+ *
+ * @param t the term structure
+ */
+void	ft_window_size(t_term *t)
 {
 	struct winsize	size;
 
+	ft_run_capability("vi");
 	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
 		perror("TIOCGWINSZ");
-	term->ws_col = size.ws_col;
-	term->ws_row = size.ws_row;
-	if (*term->inp)
+	t->ws_col = size.ws_col;
+	t->ws_row = size.ws_row;
+	if (*t->inp)
 	{
-		term->quote = 0;
-		term->q_qty = 0;
-		reset_nl_addr(term, term->inp);
-		term->c_row = 0;
-		set_new_cur_pos(term);
-		ft_print_trail(term, term->inp);
+		ft_run_capability("cl");
+		ft_reset_nl_addr(t);
+		ft_print_input(t, 0, 0);
+		set_new_cur_pos(t);
 	}
+	ft_run_capability("ve");
 }

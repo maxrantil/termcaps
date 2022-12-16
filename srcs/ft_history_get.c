@@ -6,36 +6,34 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:56:28 by mrantil           #+#    #+#             */
-/*   Updated: 2022/10/25 08:49:436 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/29 16:41:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keyboard.h"
 
-/**
+/*
  * It reads the history file and stores it in a vector
- * O_CREAT If pathname does not exist, create it as a regular file.
- * O_RDONLY access modes: read/write
- * @param term The terminal structure.
+ *
+ * @param t the terminal structure
  */
-void	ft_history_get(t_term *term)
+void	ft_history_get(t_term *t)
 {
 	char	*buf;
-	char	*file;
 	int		fd;
 
-	vec_new(&term->v_history, 0, sizeof(char) * 256);
-	file = ft_strjoin(getenv("HOME"), "/.42sh_history");
-	fd = open(file, O_RDONLY | O_CREAT, 0644);
+	vec_new(&t->v_history, 0, sizeof(char) * BUFF_SIZE);
+	t->history_file = ft_history_file_get();
+	fd = open(t->history_file, O_RDONLY | O_CREAT, 0644);
 	if (fd)
 	{
+		buf = NULL;
 		while (get_next_line(fd, &buf) > 0)
 		{
-			vec_push(&term->v_history, buf);
+			vec_push(&t->v_history, buf);
 			ft_strdel(&buf);
 		}
 		ft_strdel(&buf);
 		close(fd);
 	}
-	ft_strdel(&file);
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 09:31:50 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/29 16:45:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/11/11 16:05:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	int		i;
+	size_t	i;
 	char	*ss;
 
 	if (!s)
 		return (NULL);
 	i = 0;
 	ss = ft_strnew(len);
-	if (!ss)
-		return (NULL);
-	while (len--)
+	while (i < len)
 		ss[i++] = s[start++];
-	ss[i] = '\0';
 	return (ss);
 }
